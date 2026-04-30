@@ -43,7 +43,7 @@ function CataloguePage() {
   const visible = filtered.slice(0, shown);
 
   const setCategory = (slug: string | undefined) => {
-    navigate({ search: (s) => ({ ...s, category: slug }) });
+    navigate({ search: (s: { category?: string; q?: string }) => ({ ...s, category: slug }) });
     setShown(PAGE_SIZE);
   };
 
