@@ -14,6 +14,7 @@ import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as CatalogueRouteImport } from './routes/catalogue'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProduitSlugRouteImport } from './routes/produit.$slug'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
@@ -40,12 +41,18 @@ const ProduitSlugRoute = ProduitSlugRouteImport.update({
   path: '/produit/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/catalogue': typeof CatalogueRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/api/chat': typeof ApiChatRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/catalogue': typeof CatalogueRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/api/chat': typeof ApiChatRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
 export interface FileRoutesById {
@@ -61,19 +69,33 @@ export interface FileRoutesById {
   '/catalogue': typeof CatalogueRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
+  '/api/chat': typeof ApiChatRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/catalogue' | '/categories' | '/contact' | '/produit/$slug'
+  fullPaths:
+    | '/'
+    | '/catalogue'
+    | '/categories'
+    | '/contact'
+    | '/api/chat'
+    | '/produit/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/catalogue' | '/categories' | '/contact' | '/produit/$slug'
+  to:
+    | '/'
+    | '/catalogue'
+    | '/categories'
+    | '/contact'
+    | '/api/chat'
+    | '/produit/$slug'
   id:
     | '__root__'
     | '/'
     | '/catalogue'
     | '/categories'
     | '/contact'
+    | '/api/chat'
     | '/produit/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -82,6 +104,7 @@ export interface RootRouteChildren {
   CatalogueRoute: typeof CatalogueRoute
   CategoriesRoute: typeof CategoriesRoute
   ContactRoute: typeof ContactRoute
+  ApiChatRoute: typeof ApiChatRoute
   ProduitSlugRoute: typeof ProduitSlugRoute
 }
 
@@ -122,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProduitSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -130,8 +160,18 @@ const rootRouteChildren: RootRouteChildren = {
   CatalogueRoute: CatalogueRoute,
   CategoriesRoute: CategoriesRoute,
   ContactRoute: ContactRoute,
+  ApiChatRoute: ApiChatRoute,
   ProduitSlugRoute: ProduitSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
