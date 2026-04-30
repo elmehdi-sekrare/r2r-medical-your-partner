@@ -40,70 +40,14 @@ export function AIAssistant() {
     setLoading(true);
 
     try {
-      const resp = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: next.filter((m) => m !== WELCOME).map(({ role, content }) => ({ role, content })),
-        }),
-      });
-
-      if (!resp.ok || !resp.body) {
-        const err = await resp.json().catch(() => ({ error: "Erreur réseau" }));
-        setMessages((p) => [
-          ...p,
-          { role: "assistant", content: `❌ ${err.error ?? "Une erreur est survenue."}` },
-        ]);
-        setLoading(false);
-        return;
-      }
-
-      const reader = resp.body.getReader();
-      const decoder = new TextDecoder();
-      let buf = "";
-      let assistant = "";
-      let pushed = false;
-
-      const upsert = (chunk: string) => {
-        assistant += chunk;
-        setMessages((prev) => {
-          if (!pushed) {
-            pushed = true;
-            return [...prev, { role: "assistant", content: assistant }];
-          }
-          const copy = prev.slice();
-          copy[copy.length - 1] = { role: "assistant", content: assistant };
-          return copy;
-        });
-      };
-
-      let done = false;
-      while (!done) {
-        const { value, done: d } = await reader.read();
-        if (d) break;
-        buf += decoder.decode(value, { stream: true });
-        let nl;
-        while ((nl = buf.indexOf("\n")) !== -1) {
-          let line = buf.slice(0, nl);
-          buf = buf.slice(nl + 1);
-          if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (!line.startsWith("data: ")) continue;
-          const json = line.slice(6).trim();
-          if (json === "[DONE]") {
-            done = true;
-            break;
-          }
-          try {
-            const parsed = JSON.parse(json);
-            const content: string | undefined = parsed.choices?.[0]?.delta?.content;
-            if (content) upsert(content);
-          } catch {
-            buf = line + "\n" + buf;
-            break;
-          }
-        }
-      }
-    } catch (e) {
+      const { chatWithAssistant } = await import("@/server/chat.functions");
+      const history = next
+        .filter((m) => m !== WELCOME)
+        .map(({ role, content }) => ({ role, content }));
+      const res = await chatWithAssistant({ data: { messages: history } });
+      const reply = "error" in res && res.error ? `❌ ${res.error}` : (res as { content: string }).content;
+      setMessages((p) => [...p, { role: "assistant", content: reply || "…" }]);
+    } catch {
       setMessages((p) => [
         ...p,
         { role: "assistant", content: "❌ Connexion impossible. Réessayez." },
