@@ -7,7 +7,7 @@ type ChatMsg = { role: "user" | "assistant"; content: string };
 export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
-      POST: async ({ request }) => {
+      POST: async ({ request }: { request: Request }) => {
         try {
           const { messages } = (await request.json()) as { messages: ChatMsg[] };
           const apiKey = process.env.LOVABLE_API_KEY;
