@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { GitCompare, Globe2, Heart, MessageCircle, Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 import { BrandLockup } from "@/components/Brand";
+import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { useI18n } from "@/lib/i18n";
 import { useCompare, useFavorites, useQuoteBasket } from "@/lib/quote";
 import { openWhatsApp } from "@/lib/whatsapp";
@@ -12,10 +13,16 @@ const NAV = [
   { to: "/", labelKey: "navHome" },
   { to: "/catalogue", labelKey: "navCatalog" },
   { to: "/categories", labelKey: "navCategories" },
+  { to: "/a-propos", labelKey: "navAbout" },
+  { to: "/blog", labelKey: "navBlog" },
+  { to: "/contact", labelKey: "navContact" },
+] as const;
+
+const MOBILE_EXTRA = [
   { to: "/catalogue-imprimable", labelKey: "navPdf" },
   { to: "/devis", labelKey: "navQuote" },
   { to: "/comparaison", labelKey: "navCompare" },
-  { to: "/contact", labelKey: "navContact" },
+  { to: "/favoris", labelKey: "favorites" },
 ] as const;
 
 export function Navbar() {
@@ -38,11 +45,11 @@ export function Navbar() {
         style={{ opacity: bg }}
       />
       <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-3 sm:px-6 lg:px-8">
-        <Link to="/" className="group">
+        <Link to="/" className="group shrink-0">
           <BrandLockup compact />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-1">
           {NAV.map((n) => {
             const active = n.to === "/" ? pathname === "/" : pathname.startsWith(n.to);
             return (
@@ -50,7 +57,7 @@ export function Navbar() {
                 key={n.to}
                 to={n.to}
                 className={cn(
-                  "px-4 py-2 text-sm font-medium rounded-full transition-colors relative",
+                  "px-3.5 py-2 text-sm font-medium rounded-full transition-colors relative",
                   active ? "text-primary" : "text-foreground/70 hover:text-foreground",
                 )}
               >
@@ -70,7 +77,7 @@ export function Navbar() {
         <div className="flex items-center gap-1.5 sm:gap-2">
           <Link
             to="/favoris"
-            className="hidden sm:inline-grid relative h-10 w-10 place-items-center rounded-full border border-border bg-card text-foreground hover:text-primary"
+            className="hidden sm:inline-grid relative h-9 w-9 place-items-center rounded-full border border-border bg-card text-foreground hover:text-primary sm:h-10 sm:w-10"
             title={t("favorites")}
           >
             <Heart className="h-4 w-4" />
@@ -82,7 +89,7 @@ export function Navbar() {
           </Link>
           <Link
             to="/comparaison"
-            className="hidden sm:inline-grid relative h-10 w-10 place-items-center rounded-full border border-border bg-card text-foreground hover:text-primary"
+            className="hidden sm:inline-grid relative h-9 w-9 place-items-center rounded-full border border-border bg-card text-foreground hover:text-primary sm:h-10 sm:w-10"
             title={t("comparison")}
           >
             <GitCompare className="h-4 w-4" />
@@ -111,6 +118,7 @@ export function Navbar() {
             <MessageCircle className="h-4 w-4" />
             WhatsApp
           </button>
+          <DarkModeToggle />
           <button
             onClick={toggleLanguage}
             className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-card px-2.5 text-xs font-bold hover:text-primary sm:h-10 sm:px-3"
@@ -121,7 +129,7 @@ export function Navbar() {
             {language === "fr" ? "AR" : "FR"}
           </button>
           <button
-            className="rounded-lg p-2 hover:bg-muted md:hidden"
+            className="rounded-lg p-2 hover:bg-muted lg:hidden"
             onClick={() => setOpen((o) => !o)}
             aria-label={t("menu")}
           >
@@ -134,7 +142,7 @@ export function Navbar() {
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden glass border-b border-border/60"
+          className="lg:hidden glass border-b border-border/60"
         >
           <div className="flex flex-col gap-1 px-4 py-4">
             {NAV.map((n) => (
@@ -147,29 +155,27 @@ export function Navbar() {
                 {t(n.labelKey)}
               </Link>
             ))}
-            <div className="mt-3 grid grid-cols-3 gap-2 border-t border-border pt-3">
-              <Link
-                to="/favoris"
-                onClick={() => setOpen(false)}
-                className="inline-flex h-11 items-center justify-center rounded-xl border border-border bg-card text-sm font-semibold"
-              >
-                Favoris
-              </Link>
-              <Link
-                to="/comparaison"
-                onClick={() => setOpen(false)}
-                className="inline-flex h-11 items-center justify-center rounded-xl border border-border bg-card text-sm font-semibold"
-              >
-                Comparer
-              </Link>
+            <div className="mt-2 border-t border-border pt-2">
+              {MOBILE_EXTRA.map((n) => (
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  onClick={() => setOpen(false)}
+                  className="px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+                >
+                  {t(n.labelKey)}
+                </Link>
+              ))}
+            </div>
+            <div className="mt-3 border-t border-border pt-3">
               <button
                 onClick={() => {
                   setOpen(false);
                   openWhatsApp();
                 }}
-                className="inline-flex h-11 items-center justify-center rounded-xl bg-whatsapp text-sm font-semibold text-whatsapp-foreground"
+                className="w-full inline-flex h-11 items-center justify-center rounded-xl bg-whatsapp text-sm font-semibold text-whatsapp-foreground"
               >
-                WhatsApp
+                <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp
               </button>
             </div>
           </div>
