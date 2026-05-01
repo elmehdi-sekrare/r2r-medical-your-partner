@@ -298,7 +298,7 @@ function HomePage() {
               >
                 {t("pdfCatalog")} <ArrowRight className="rtl-flip h-4 w-4" />
               </Link>
-            </motion.div>
+            </div>
             <motion.form
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
