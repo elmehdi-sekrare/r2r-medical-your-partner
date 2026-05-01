@@ -117,6 +117,9 @@ export function Footer() {
                 <span>{WHATSAPP_DISPLAY}</span>
               </li>
             </ul>
+            <div className="mt-6">
+              <Newsletter />
+            </div>
           </div>
         </div>
 
