@@ -257,32 +257,27 @@ function HomePage() {
         <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-7 px-4 py-6 pb-14 sm:px-6 sm:py-8 lg:grid-cols-2 lg:items-start lg:gap-10 lg:px-8 lg:py-10">
           <div>
-            <motion.span
-              initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+            <span
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-semibold uppercase tracking-wider"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
               {t("heroBadge")}
-            </motion.span>
+            </span>
             <h1 className="mt-4 font-display text-4xl font-bold leading-[0.98] sm:mt-5 sm:text-6xl lg:text-7xl">
               {[t("heroLine1"), t("heroLine2"), t("heroLine3")].map((line, i) => (
-                <motion.span
+                <span
                   key={line} className="block"
-                  initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.15 + i * 0.12, duration: 0.6 }}
                 >
                   {i === 2 ? <span className="gradient-accent-text">{line}</span> : line}
-                </motion.span>
+                </span>
               ))}
             </h1>
-            <motion.p
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
+            <p
               className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
             >
               {t("heroCopy")}
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }}
+            </p>
+            <div
               className="mt-7 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap"
             >
               <Link
@@ -303,11 +298,8 @@ function HomePage() {
               >
                 {t("pdfCatalog")} <ArrowRight className="rtl-flip h-4 w-4" />
               </Link>
-            </motion.div>
-            <motion.form
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.05 }}
+            </div>
+            <form
               onSubmit={(event) => {
                 event.preventDefault();
                 searchCatalogue();
@@ -331,11 +323,8 @@ function HomePage() {
                   {t("find")}
                 </button>
               </div>
-            </motion.form>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.15 }}
+            </form>
+            <div
               className="mt-4 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0"
             >
               {urgentNeeds.map((need) => (
@@ -348,14 +337,13 @@ function HomePage() {
                   <need.icon className="h-3.5 w-3.5" /> {need.label}
                 </Link>
               ))}
-            </motion.div>
+            </div>
           </div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4, duration: 0.8 }}
+          <div
             className="relative h-[360px] sm:h-[520px] lg:h-[560px]"
           >
             <HeroMedicalShowcase />
-          </motion.div>
+          </div>
         </div>
         <motion.div
           animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}

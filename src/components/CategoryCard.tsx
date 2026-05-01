@@ -16,7 +16,7 @@ export function CategoryCard({
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: true, margin: "50px" }}
       transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.4) }}
     >
       <Link

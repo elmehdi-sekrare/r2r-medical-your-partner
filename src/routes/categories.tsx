@@ -38,7 +38,7 @@ function CategoriesPage() {
               key={c.slug}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "50px" }}
               transition={{ duration: 0.6 }}
               className={`grid md:grid-cols-2 gap-6 items-center p-6 md:p-10 rounded-3xl bg-card border border-border shadow-soft ${reverse ? "md:[&>*:first-child]:order-2" : ""}`}
             >

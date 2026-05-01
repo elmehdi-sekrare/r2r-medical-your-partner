@@ -25,8 +25,9 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.4) }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "50px" }}
+      transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.2) }}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:border-primary/25 hover:shadow-elevated"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,transparent,oklch(0.42_0.09_200),oklch(0.66_0.18_145),transparent)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
