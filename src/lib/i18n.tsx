@@ -87,6 +87,8 @@ const DICTIONARY = {
     navQuote: "عرض سعر",
     navCompare: "مقارنة",
     navContact: "اتصال",
+    navAbout: "من نحن",
+    navBlog: "المدونة",
     favorites: "المفضلة",
     comparison: "المقارنة",
     quoteBasket: "سلة العرض",
