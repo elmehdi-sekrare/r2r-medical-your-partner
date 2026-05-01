@@ -13,6 +13,8 @@ const DICTIONARY = {
     navQuote: "Devis",
     navCompare: "Comparer",
     navContact: "Contact",
+    navAbout: "À propos",
+    navBlog: "Blog",
     favorites: "Favoris",
     comparison: "Comparaison",
     quoteBasket: "Panier devis",
