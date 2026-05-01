@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { CATEGORIES, PRODUCTS } from "@/data/products";
+import { Testimonials } from "@/components/Testimonials";
 import { BrandLockup, BrandSeal } from "@/components/Brand";
 import { CategoryCard } from "@/components/CategoryCard";
 import { ProductCard } from "@/components/ProductCard";
