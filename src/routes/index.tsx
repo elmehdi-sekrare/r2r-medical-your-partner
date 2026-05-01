@@ -257,13 +257,12 @@ function HomePage() {
         <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-7 px-4 py-6 pb-14 sm:px-6 sm:py-8 lg:grid-cols-2 lg:items-start lg:gap-10 lg:px-8 lg:py-10">
           <div>
-            <motion.span
-              initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+            <span
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-semibold uppercase tracking-wider"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
               {t("heroBadge")}
-            </motion.span>
+            </span>
             <h1 className="mt-4 font-display text-4xl font-bold leading-[0.98] sm:mt-5 sm:text-6xl lg:text-7xl">
               {[t("heroLine1"), t("heroLine2"), t("heroLine3")].map((line, i) => (
                 <motion.span
