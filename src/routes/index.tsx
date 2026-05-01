@@ -645,6 +645,8 @@ function HomePage() {
         </div>
       </section>
 
+      <Testimonials />
+
       {/* CTA */}
       <section className="py-24 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-3xl gradient-primary p-12 md:p-20 text-center shadow-hero">
