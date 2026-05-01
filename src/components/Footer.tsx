@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, FileText, MapPin, MessageCircle, ShieldCheck, Truck } from "lucide-react";
+import { Newsletter } from "@/components/Newsletter";
 import { BrandLockup, BrandSeal } from "@/components/Brand";
 import { CATEGORIES } from "@/data/products";
 import { useI18n } from "@/lib/i18n";
