@@ -272,12 +272,11 @@ function HomePage() {
                 </span>
               ))}
             </h1>
-            <motion.p
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
+            <p
               className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
             >
               {t("heroCopy")}
-            </motion.p>
+            </p>
             <motion.div
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }}
               className="mt-7 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap"
