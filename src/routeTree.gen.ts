@@ -16,7 +16,9 @@ import { Route as ComparaisonRouteImport } from './routes/comparaison'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as CatalogueImprimableRouteImport } from './routes/catalogue-imprimable'
 import { Route as CatalogueRouteImport } from './routes/catalogue'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProduitSlugRouteImport } from './routes/produit.$slug'
 import { Route as CategorieSlugRouteImport } from './routes/categorie.$slug'
@@ -57,9 +59,19 @@ const CatalogueRoute = CatalogueRouteImport.update({
   path: '/catalogue',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AProposRoute = AProposRouteImport.update({
+  id: '/a-propos',
+  path: '/a-propos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -85,7 +97,9 @@ const ApiChatRoute = ApiChatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
   '/admin': typeof AdminRoute
+  '/blog': typeof BlogRoute
   '/catalogue': typeof CatalogueRoute
   '/catalogue-imprimable': typeof CatalogueImprimableRoute
   '/categories': typeof CategoriesRoute
@@ -99,7 +113,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
   '/admin': typeof AdminRoute
+  '/blog': typeof BlogRoute
   '/catalogue': typeof CatalogueRoute
   '/catalogue-imprimable': typeof CatalogueImprimableRoute
   '/categories': typeof CategoriesRoute
@@ -114,7 +130,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
   '/admin': typeof AdminRoute
+  '/blog': typeof BlogRoute
   '/catalogue': typeof CatalogueRoute
   '/catalogue-imprimable': typeof CatalogueImprimableRoute
   '/categories': typeof CategoriesRoute
@@ -130,7 +148,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/a-propos'
     | '/admin'
+    | '/blog'
     | '/catalogue'
     | '/catalogue-imprimable'
     | '/categories'
@@ -144,7 +164,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/a-propos'
     | '/admin'
+    | '/blog'
     | '/catalogue'
     | '/catalogue-imprimable'
     | '/categories'
@@ -158,7 +180,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/a-propos'
     | '/admin'
+    | '/blog'
     | '/catalogue'
     | '/catalogue-imprimable'
     | '/categories'
@@ -173,7 +197,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AProposRoute: typeof AProposRoute
   AdminRoute: typeof AdminRoute
+  BlogRoute: typeof BlogRoute
   CatalogueRoute: typeof CatalogueRoute
   CatalogueImprimableRoute: typeof CatalogueImprimableRoute
   CategoriesRoute: typeof CategoriesRoute
@@ -237,11 +263,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CatalogueRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/a-propos': {
+      id: '/a-propos'
+      path: '/a-propos'
+      fullPath: '/a-propos'
+      preLoaderRoute: typeof AProposRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -277,7 +317,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AProposRoute: AProposRoute,
   AdminRoute: AdminRoute,
+  BlogRoute: BlogRoute,
   CatalogueRoute: CatalogueRoute,
   CatalogueImprimableRoute: CatalogueImprimableRoute,
   CategoriesRoute: CategoriesRoute,
