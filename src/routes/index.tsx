@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { CATEGORIES, PRODUCTS } from "@/data/products";
+import { Testimonials } from "@/components/Testimonials";
 import { BrandLockup, BrandSeal } from "@/components/Brand";
 import { CategoryCard } from "@/components/CategoryCard";
 import { ProductCard } from "@/components/ProductCard";
@@ -643,6 +644,8 @@ function HomePage() {
         </div>
         </div>
       </section>
+
+      <Testimonials />
 
       {/* CTA */}
       <section className="py-24 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -4,6 +4,8 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { AIAssistant } from "@/components/AIAssistant";
+import { BackToTop } from "@/components/BackToTop";
+import { CookieConsent } from "@/components/CookieConsent";
 import { I18nProvider } from "@/lib/i18n";
 
 function NotFoundComponent() {
@@ -103,6 +105,8 @@ function RootComponent() {
         <Footer />
         <WhatsAppFloat />
         <AIAssistant />
+        <BackToTop />
+        <CookieConsent />
       </div>
     </I18nProvider>
   );
