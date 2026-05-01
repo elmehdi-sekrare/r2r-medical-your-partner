@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { ProductThumb } from "@/components/ProductThumb";
 import { CATEGORIES, getProductsByCategory } from "@/data/products";
 import { getIcon } from "@/lib/icon-map";
 
@@ -50,13 +51,20 @@ function CategoriesPage() {
                 <div className="mt-5 inline-flex items-center px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-semibold">
                   {c.count} produits disponibles
                 </div>
-                <div className="mt-6">
+                <div className="mt-6 flex flex-wrap gap-3">
                   <Link
                     to="/catalogue"
                     search={{ category: c.slug }}
                     className="inline-flex items-center gap-2 h-11 px-5 rounded-full bg-primary text-primary-foreground font-semibold shadow-soft hover:shadow-elevated transition-shadow"
                   >
-                    Voir tous les produits <ArrowRight className="h-4 w-4" />
+                    Voir tous les produits <ArrowRight className="rtl-flip h-4 w-4" />
+                  </Link>
+                  <Link
+                    to="/categorie/$slug"
+                    params={{ slug: c.slug }}
+                    className="inline-flex items-center gap-2 h-11 px-5 rounded-full border border-border font-semibold hover:bg-muted"
+                  >
+                    Page catégorie <ArrowRight className="rtl-flip h-4 w-4" />
                   </Link>
                 </div>
               </div>
@@ -68,18 +76,16 @@ function CategoriesPage() {
                     params={{ slug: p.slug }}
                     className="group flex items-center gap-4 p-3 rounded-2xl bg-surface border border-border hover:border-primary transition-colors"
                   >
-                    <div className="h-16 w-16 shrink-0 rounded-xl bg-card border border-border overflow-hidden grid place-items-center">
-                      {p.image ? (
-                        <img src={p.image} alt={p.name} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-contain p-1" />
-                      ) : (
-                        <Icon className="h-7 w-7 text-primary/60" />
-                      )}
-                    </div>
+                    <ProductThumb
+                      product={p}
+                      className="grid h-16 w-16 shrink-0 place-items-center rounded-xl border border-border bg-card"
+                      imageClassName="p-1"
+                    />
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-sm truncate group-hover:text-primary transition-colors">{p.name}</p>
                       <p className="text-xs text-muted-foreground">En stock</p>
                     </div>
-                    <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                    <ArrowRight className="rtl-flip h-4 w-4 text-muted-foreground transition-all group-hover:text-primary group-hover:translate-x-1" />
                   </Link>
                 ))}
               </div>

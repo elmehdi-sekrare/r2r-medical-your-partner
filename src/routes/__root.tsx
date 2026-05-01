@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { AIAssistant } from "@/components/AIAssistant";
+import { I18nProvider } from "@/lib/i18n";
 
 function NotFoundComponent() {
   return (
@@ -45,13 +46,17 @@ export const Route = createRootRoute({
       { property: "og:title", content: "R2R Medical | Équipements Médicaux au Maroc" },
       { property: "og:description", content: "412 produits médicaux professionnels. Commande via WhatsApp." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://r2rmedical.ma" },
+      { name: "theme-color", content: "#006c70" },
+      { name: "robots", content: "index, follow" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      { rel: "canonical", href: "https://r2rmedical.ma" },
       { rel: "stylesheet", href: appCss },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap",
       },
     ],
     scripts: [
@@ -89,14 +94,16 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1 pt-16">
-        <Outlet />
-      </main>
-      <Footer />
-      <WhatsAppFloat />
-      <AIAssistant />
-    </div>
+    <I18nProvider>
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-1 pt-16">
+          <Outlet />
+        </main>
+        <Footer />
+        <WhatsAppFloat />
+        <AIAssistant />
+      </div>
+    </I18nProvider>
   );
 }

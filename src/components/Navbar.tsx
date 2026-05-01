@@ -1,22 +1,32 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { MessageCircle, Menu, X, Plus } from "lucide-react";
+import { GitCompare, Globe2, Heart, MessageCircle, Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
+import { BrandLockup } from "@/components/Brand";
+import { useI18n } from "@/lib/i18n";
+import { useCompare, useFavorites, useQuoteBasket } from "@/lib/quote";
 import { openWhatsApp } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { to: "/", label: "Accueil" },
-  { to: "/catalogue", label: "Catalogue" },
-  { to: "/categories", label: "Catégories" },
-  { to: "/contact", label: "Contact" },
-];
+  { to: "/", labelKey: "navHome" },
+  { to: "/catalogue", labelKey: "navCatalog" },
+  { to: "/categories", labelKey: "navCategories" },
+  { to: "/catalogue-imprimable", labelKey: "navPdf" },
+  { to: "/devis", labelKey: "navQuote" },
+  { to: "/comparaison", labelKey: "navCompare" },
+  { to: "/contact", labelKey: "navContact" },
+] as const;
 
 export function Navbar() {
   const { scrollY } = useScroll();
   const bg = useTransform(scrollY, [0, 80], [0, 1]);
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { totalQuantity } = useQuoteBasket();
+  const favorites = useFavorites();
+  const compare = useCompare();
+  const { language, t, toggleLanguage } = useI18n();
 
   return (
     <motion.header
@@ -27,14 +37,9 @@ export function Navbar() {
         className="absolute inset-0 glass border-b border-border/60"
         style={{ opacity: bg }}
       />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="relative h-9 w-9 rounded-xl gradient-primary grid place-items-center shadow-soft">
-            <Plus className="h-5 w-5 text-primary-foreground" strokeWidth={3} />
-          </div>
-          <span className="font-display font-bold text-lg tracking-tight">
-            R2R <span className="text-primary">Medical</span>
-          </span>
+      <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-3 sm:px-6 lg:px-8">
+        <Link to="/" className="group">
+          <BrandLockup compact />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -49,7 +54,7 @@ export function Navbar() {
                   active ? "text-primary" : "text-foreground/70 hover:text-foreground",
                 )}
               >
-                {n.label}
+                {t(n.labelKey)}
                 {active && (
                   <motion.span
                     layoutId="nav-active"
@@ -62,7 +67,43 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <Link
+            to="/favoris"
+            className="hidden sm:inline-grid relative h-10 w-10 place-items-center rounded-full border border-border bg-card text-foreground hover:text-primary"
+            title={t("favorites")}
+          >
+            <Heart className="h-4 w-4" />
+            {favorites.count > 0 && (
+              <span className="absolute -right-1 -top-1 min-w-5 h-5 rounded-full bg-primary px-1 text-[10px] font-bold leading-5 text-primary-foreground text-center">
+                {favorites.count}
+              </span>
+            )}
+          </Link>
+          <Link
+            to="/comparaison"
+            className="hidden sm:inline-grid relative h-10 w-10 place-items-center rounded-full border border-border bg-card text-foreground hover:text-primary"
+            title={t("comparison")}
+          >
+            <GitCompare className="h-4 w-4" />
+            {compare.count > 0 && (
+              <span className="absolute -right-1 -top-1 min-w-5 h-5 rounded-full bg-primary px-1 text-[10px] font-bold leading-5 text-primary-foreground text-center">
+                {compare.count}
+              </span>
+            )}
+          </Link>
+          <Link
+            to="/devis"
+            className="relative inline-grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-foreground hover:text-primary sm:h-10 sm:w-10"
+            title={t("quoteBasket")}
+          >
+            <ShoppingCart className="h-4 w-4" />
+            {totalQuantity > 0 && (
+              <span className="absolute -right-1 -top-1 min-w-5 h-5 rounded-full bg-primary px-1 text-[10px] font-bold leading-5 text-primary-foreground text-center">
+                {totalQuantity}
+              </span>
+            )}
+          </Link>
           <button
             onClick={() => openWhatsApp()}
             className="hidden sm:inline-flex items-center gap-2 h-10 px-4 rounded-full bg-whatsapp text-whatsapp-foreground font-semibold text-sm shadow-soft hover:shadow-elevated transition-shadow"
@@ -71,9 +112,18 @@ export function Navbar() {
             WhatsApp
           </button>
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-muted"
+            onClick={toggleLanguage}
+            className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-card px-2.5 text-xs font-bold hover:text-primary sm:h-10 sm:px-3"
+            aria-label={t("language")}
+            title={t("language")}
+          >
+            <Globe2 className="h-4 w-4" />
+            {language === "fr" ? "AR" : "FR"}
+          </button>
+          <button
+            className="rounded-lg p-2 hover:bg-muted md:hidden"
             onClick={() => setOpen((o) => !o)}
-            aria-label="Menu"
+            aria-label={t("menu")}
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -86,7 +136,7 @@ export function Navbar() {
           animate={{ opacity: 1, y: 0 }}
           className="md:hidden glass border-b border-border/60"
         >
-          <div className="px-4 py-4 flex flex-col gap-1">
+          <div className="flex flex-col gap-1 px-4 py-4">
             {NAV.map((n) => (
               <Link
                 key={n.to}
@@ -94,9 +144,34 @@ export function Navbar() {
                 onClick={() => setOpen(false)}
                 className="px-4 py-3 rounded-xl text-base font-medium hover:bg-muted"
               >
-                {n.label}
+                {t(n.labelKey)}
               </Link>
             ))}
+            <div className="mt-3 grid grid-cols-3 gap-2 border-t border-border pt-3">
+              <Link
+                to="/favoris"
+                onClick={() => setOpen(false)}
+                className="inline-flex h-11 items-center justify-center rounded-xl border border-border bg-card text-sm font-semibold"
+              >
+                Favoris
+              </Link>
+              <Link
+                to="/comparaison"
+                onClick={() => setOpen(false)}
+                className="inline-flex h-11 items-center justify-center rounded-xl border border-border bg-card text-sm font-semibold"
+              >
+                Comparer
+              </Link>
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  openWhatsApp();
+                }}
+                className="inline-flex h-11 items-center justify-center rounded-xl bg-whatsapp text-sm font-semibold text-whatsapp-foreground"
+              >
+                WhatsApp
+              </button>
+            </div>
           </div>
         </motion.div>
       )}

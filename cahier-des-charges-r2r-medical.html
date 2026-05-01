@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cahier des Charges - R2R Medical</title>
+    <style>
+      :root {
+        --ink: #17242a;
+        --muted: #637278;
+        --line: #d9e3e6;
+        --paper: #ffffff;
+        --soft: #f3f8f8;
+        --primary: #167486;
+        --primary-dark: #0e5260;
+        --accent: #21a67a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #e9f1f2;
+        color: var(--ink);
+        font-family:
+          Inter, "Segoe UI", Roboto, Arial, sans-serif;
+        line-height: 1.55;
+      }
+
+      .page {
+        width: min(1120px, calc(100% - 32px));
+        margin: 32px auto;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        box-shadow: 0 24px 70px rgba(14, 82, 96, 0.14);
+      }
+
+      .cover {
+        padding: 56px;
+        background:
+          linear-gradient(135deg, rgba(22, 116, 134, 0.94), rgba(33, 166, 122, 0.88)),
+          radial-gradient(circle at top right, rgba(255, 255, 255, 0.35), transparent 34%);
+        color: white;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 56px;
+      }
+
+      .logo {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.16);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        font-size: 30px;
+        font-weight: 900;
+      }
+
+      .brand strong {
+        display: block;
+        font-size: 24px;
+        letter-spacing: -0.02em;
+      }
+
+      .brand span {
+        opacity: 0.84;
+        font-size: 13px;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 760px;
+        font-size: 56px;
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+      }
+
+      .subtitle {
+        margin: 24px 0 0;
+        max-width: 760px;
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 18px;
+      }
+
+      .cover-meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-top: 44px;
+      }
+
+      .meta-card {
+        padding: 16px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.13);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .meta-card b {
+        display: block;
+        font-size: 22px;
+      }
+
+      .meta-card span {
+        font-size: 12px;
+        opacity: 0.78;
+      }
+
+      main {
+        padding: 44px 56px 60px;
+      }
+
+      section {
+        padding: 30px 0;
+        border-bottom: 1px solid var(--line);
+        break-inside: avoid;
+      }
+
+      section:last-child {
+        border-bottom: 0;
+      }
+
+      .section-title {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 28px;
+        margin-bottom: 22px;
+      }
+
+      h2 {
+        margin: 0;
+        color: var(--primary-dark);
+        font-size: 28px;
+        letter-spacing: -0.025em;
+      }
+
+      .section-kicker {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        max-width: 520px;
+      }
+
+      h3 {
+        margin: 0 0 8px;
+        font-size: 17px;
+        color: var(--ink);
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .grid.two {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .card {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--soft);
+      }
+
+      .card p,
+      li {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        height: 26px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: #e2f5ef;
+        color: #08754f;
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      ul {
+        margin: 10px 0 0;
+        padding-left: 18px;
+      }
+
+      li + li {
+        margin-top: 6px;
+      }
+
+      .feature-list {
+        columns: 2;
+        column-gap: 34px;
+        margin-top: 8px;
+      }
+
+      .feature-list li {
+        break-inside: avoid;
+        margin-bottom: 8px;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+
+      .table th,
+      .table td {
+        padding: 13px 14px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+        font-size: 14px;
+      }
+
+      .table th {
+        background: var(--soft);
+        color: var(--primary-dark);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .table tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .note {
+        padding: 18px 20px;
+        border-left: 4px solid var(--primary);
+        background: #eef8f9;
+        border-radius: 12px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .footer {
+        padding: 24px 56px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      @media print {
+        @page {
+          margin: 12mm;
+        }
+
+        body {
+          background: white;
+        }
+
+        .page {
+          width: auto;
+          margin: 0;
+          border: 0;
+          box-shadow: none;
+        }
+
+        .cover {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        .card,
+        .note,
+        .table th {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+
+      @media (max-width: 860px) {
+        .cover,
+        main,
+        .footer {
+          padding-left: 28px;
+          padding-right: 28px;
+        }
+
+        h1 {
+          font-size: 42px;
+        }
+
+        .cover-meta,
+        .grid,
+        .grid.two {
+          grid-template-columns: 1fr;
+        }
+
+        .feature-list {
+          columns: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <article class="page">
+      <header class="cover">
+        <div class="brand">
+          <div class="logo">+</div>
+          <div>
+            <strong>R2R Medical</strong>
+            <span>Plateforme web catalogue, devis et assistance commerciale</span>
+          </div>
+        </div>
+
+        <h1>Cahier des Charges Fonctionnel</h1>
+        <p class="subtitle">
+          Document de présentation des fonctionnalités existantes du site R2R Medical,
+          fournisseur d'équipements médicaux au Maroc.
+        </p>
+
+        <div class="cover-meta">
+          <div class="meta-card">
+            <b>412+</b>
+            <span>Produits médicaux</span>
+          </div>
+          <div class="meta-card">
+            <b>10</b>
+            <span>Catégories principales</span>
+          </div>
+          <div class="meta-card">
+            <b>FR / AR</b>
+            <span>Interface multilingue</span>
+          </div>
+          <div class="meta-card">
+            <b>WhatsApp</b>
+            <span>Devis et commandes</span>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>1. Objectif du site</h2>
+              <p class="section-kicker">
+                Positionner R2R Medical comme fournisseur professionnel d'équipements médicaux au Maroc.
+              </p>
+            </div>
+          </div>
+          <div class="note">
+            Le site permet aux visiteurs de découvrir les produits, filtrer le catalogue,
+            préparer une demande de devis, comparer des articles, contacter l'entreprise
+            sur WhatsApp et consulter les informations essentielles avant commande.
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>2. Identité et expérience générale</h2>
+              <p class="section-kicker">
+                Une interface moderne, médicale, professionnelle et orientée conversion.
+              </p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="card">
+              <span class="tag">Design</span>
+              <h3>Interface professionnelle</h3>
+              <p>Design médical moderne avec couleurs de confiance, cartes produits, icônes, sections claires et navigation stable.</p>
+            </div>
+            <div class="card">
+              <span class="tag">Responsive</span>
+              <h3>Compatible mobile et desktop</h3>
+              <p>Pages adaptées aux différents écrans, navigation mobile, filtres catalogue mobiles et mise en page responsive.</p>
+            </div>
+            <div class="card">
+              <span class="tag">Performance</span>
+              <h3>Application React moderne</h3>
+              <p>Projet construit avec Vite, React, TanStack Router et composants réutilisables pour une expérience fluide.</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>3. Pages existantes</h2>
+              <p class="section-kicker">
+                Liste des écrans déjà intégrés dans la plateforme.
+              </p>
+            </div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Page</th>
+                <th>Rôle fonctionnel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Accueil</td>
+                <td>Présentation de R2R Medical, recherche rapide, accès catalogue, raccourcis besoins urgents, produits mis en avant et appels à l'action.</td>
+              </tr>
+              <tr>
+                <td>Catalogue</td>
+                <td>Liste complète des produits avec recherche, filtres, tri, badges, favoris, comparaison et ajout au devis.</td>
+              </tr>
+              <tr>
+                <td>Catégories</td>
+                <td>Présentation des 10 univers médicaux avec échantillons de produits et liens vers les pages catégories.</td>
+              </tr>
+              <tr>
+                <td>Page catégorie SEO</td>
+                <td>Page dédiée pour chaque catégorie avec description, statistiques, produits populaires, produits avec prix et liens internes.</td>
+              </tr>
+              <tr>
+                <td>Page produit</td>
+                <td>Fiche détaillée avec image, catégorie, type, usage, disponibilité, prix/devis, livraison, support et produits similaires.</td>
+              </tr>
+              <tr>
+                <td>Demande de devis</td>
+                <td>Panier devis avec quantités, suppression, génération de message WhatsApp et envoi direct.</td>
+              </tr>
+              <tr>
+                <td>Favoris</td>
+                <td>Liste des produits sauvegardés par le visiteur dans son navigateur.</td>
+              </tr>
+              <tr>
+                <td>Comparaison</td>
+                <td>Comparaison de plusieurs produits sur la catégorie, le type, l'usage, la disponibilité et le prix.</td>
+              </tr>
+              <tr>
+                <td>Contact</td>
+                <td>Formulaire de demande guidée avec nom, téléphone, ville, produit, quantité et message envoyé via WhatsApp.</td>
+              </tr>
+              <tr>
+                <td>Catalogue imprimable</td>
+                <td>Version structurée du catalogue, imprimable ou exportable en PDF depuis le navigateur.</td>
+              </tr>
+              <tr>
+                <td>Admin catalogue</td>
+                <td>Interface locale de gestion des produits pour rechercher, modifier des brouillons et exporter les changements en JSON.</td>
+              </tr>
+              <tr>
+                <td>Assistant IA</td>
+                <td>Chat flottant capable de répondre aux questions, rechercher dans le catalogue et orienter vers WhatsApp.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>4. Catalogue produits</h2>
+              <p class="section-kicker">
+                Le catalogue est le coeur commercial du site.
+              </p>
+            </div>
+          </div>
+          <ul class="feature-list">
+            <li>Catalogue de 412 produits médicaux.</li>
+            <li>Organisation en 10 catégories principales.</li>
+            <li>Cartes produits avec image, nom, catégorie, disponibilité et type.</li>
+            <li>Gestion des images avec fallback visuel si l'image externe ne charge pas.</li>
+            <li>Recherche par nom, référence, catégorie, type, usage ou marque détectée.</li>
+            <li>Filtre par catégorie.</li>
+            <li>Filtre par disponibilité.</li>
+            <li>Filtre par type de produit.</li>
+            <li>Filtre par usage médical.</li>
+            <li>Tri par nom A-Z.</li>
+            <li>Tri par nom Z-A.</li>
+            <li>Tri par catégorie.</li>
+            <li>Tri avec produits à prix affiché en priorité.</li>
+            <li>Chargement progressif des produits.</li>
+            <li>Filtres desktop avec scroll interne.</li>
+            <li>Panneau de filtres mobile.</li>
+            <li>Section des produits récemment consultés.</li>
+          </ul>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>5. Système de devis et conversion</h2>
+              <p class="section-kicker">
+                Fonctionnalités destinées à transformer les visiteurs en demandes commerciales.
+              </p>
+            </div>
+          </div>
+          <div class="grid two">
+            <div class="card">
+              <h3>Panier devis</h3>
+              <ul>
+                <li>Ajout d'un produit au devis depuis le catalogue.</li>
+                <li>Ajout d'un produit au devis depuis la fiche produit.</li>
+                <li>Modification des quantités.</li>
+                <li>Suppression d'un produit de la demande.</li>
+                <li>Vidage complet du panier devis.</li>
+                <li>Compteur du panier visible dans la navigation.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>WhatsApp commercial</h3>
+              <ul>
+                <li>Message WhatsApp généré automatiquement.</li>
+                <li>Liste des produits et quantités incluse dans le message.</li>
+                <li>Champs préparés pour ville, nom et téléphone.</li>
+                <li>Bouton WhatsApp global.</li>
+                <li>Bouton WhatsApp par produit.</li>
+                <li>Formulaire contact transformé en message WhatsApp structuré.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>6. Favoris, comparaison et historique</h2>
+              <p class="section-kicker">
+                Fonctions d'aide à la décision pour les acheteurs professionnels.
+              </p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="card">
+              <h3>Favoris</h3>
+              <p>Le visiteur peut sauvegarder des produits favoris, les retrouver sur une page dédiée et voir le compteur dans la barre de navigation.</p>
+            </div>
+            <div class="card">
+              <h3>Comparaison</h3>
+              <p>Le visiteur peut comparer jusqu'à plusieurs produits sur des critères utiles : catégorie, type, usage, disponibilité et prix.</p>
+            </div>
+            <div class="card">
+              <h3>Récemment consultés</h3>
+              <p>Les produits visités sont mémorisés localement et affichés dans le catalogue pour faciliter le retour à une fiche produit.</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>7. Assistant IA</h2>
+              <p class="section-kicker">
+                Assistance intégrée pour orienter les visiteurs.
+              </p>
+            </div>
+          </div>
+          <ul class="feature-list">
+            <li>Assistant flottant accessible depuis toutes les pages.</li>
+            <li>Interface de chat avec messages utilisateur et assistant.</li>
+            <li>Questions rapides prédéfinies.</li>
+            <li>Connexion OpenAI configurée sur le modèle gpt-4o-mini.</li>
+            <li>Gestion des erreurs OpenAI.</li>
+            <li>Fallback local si la clé, le quota ou le service IA ne répond pas.</li>
+            <li>Recherche locale dans les produits du catalogue.</li>
+            <li>Suggestions de produits proches selon la question du visiteur.</li>
+            <li>Réponses en français orientées R2R Medical.</li>
+            <li>Orientation systématique vers WhatsApp pour devis et commandes.</li>
+          </ul>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>8. Multilingue FR / AR</h2>
+              <p class="section-kicker">
+                Première couche de traduction pour le marché marocain.
+              </p>
+            </div>
+          </div>
+          <div class="grid two">
+            <div class="card">
+              <h3>Français</h3>
+              <p>Interface principale en français pour les clients professionnels, cliniques, hôpitaux et distributeurs.</p>
+            </div>
+            <div class="card">
+              <h3>Arabe</h3>
+              <p>Sélecteur AR/FR dans la navigation, sauvegarde de la langue en localStorage et passage automatique en direction RTL.</p>
+            </div>
+          </div>
+          <p class="note" style="margin-top: 16px">
+            Les zones principales traduites incluent la navigation, l'accueil, les raccourcis, les sections commerciales et le pied de page.
+          </p>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>9. SEO et visibilité</h2>
+              <p class="section-kicker">
+                Éléments déjà intégrés pour améliorer la présence du site sur les moteurs de recherche.
+              </p>
+            </div>
+          </div>
+          <ul class="feature-list">
+            <li>Titres et descriptions meta sur les pages principales.</li>
+            <li>Meta description globale pour R2R Medical.</li>
+            <li>Mots-clés ciblés : équipement médical Maroc, matériel médical, oxygénothérapie, fauteuil roulant, tensiomètre.</li>
+            <li>Données structurées MedicalBusiness.</li>
+            <li>Données structurées Product sur les fiches produits.</li>
+            <li>Pages SEO dédiées par catégorie.</li>
+            <li>Liens internes entre catégories, catalogue et produits.</li>
+            <li>Open Graph title, description et images produits.</li>
+            <li>Page catalogue imprimable indexable et lisible.</li>
+          </ul>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>10. Catalogue PDF / impression</h2>
+              <p class="section-kicker">
+                Une page prête à être imprimée ou convertie en PDF.
+              </p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="card">
+              <h3>Catalogue imprimable</h3>
+              <p>Page spéciale avec produits groupés par catégorie, références et indication prix ou devis.</p>
+            </div>
+            <div class="card">
+              <h3>Export PDF navigateur</h3>
+              <p>Boutons Imprimer et Sauver en PDF via la fonction native du navigateur.</p>
+            </div>
+            <div class="card">
+              <h3>Styles d'impression</h3>
+              <p>CSS print dédié pour une sortie plus propre lors de l'impression ou conversion PDF.</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>11. Administration locale</h2>
+              <p class="section-kicker">
+                Interface de gestion brouillon pour préparer une future vraie administration.
+              </p>
+            </div>
+          </div>
+          <ul class="feature-list">
+            <li>Page admin catalogue.</li>
+            <li>Recherche produit dans l'admin.</li>
+            <li>Filtre admin par catégorie.</li>
+            <li>Modification locale du nom produit.</li>
+            <li>Modification locale de la catégorie.</li>
+            <li>Modification locale du prix.</li>
+            <li>Sauvegarde des modifications dans le navigateur.</li>
+            <li>Réinitialisation d'un produit modifié.</li>
+            <li>Réinitialisation de toutes les modifications locales.</li>
+            <li>Export JSON des changements.</li>
+          </ul>
+          <p class="note" style="margin-top: 16px">
+            Cette administration est un scaffold local. Une version production complète nécessitera authentification, base de données et stockage sécurisé.
+          </p>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>12. Navigation et composants globaux</h2>
+              <p class="section-kicker">
+                Éléments présents sur l'ensemble du site.
+              </p>
+            </div>
+          </div>
+          <ul class="feature-list">
+            <li>Navbar fixe avec effet visuel au scroll.</li>
+            <li>Menu responsive mobile.</li>
+            <li>Liens Accueil, Catalogue, Catégories, PDF, Devis, Comparer, Contact.</li>
+            <li>Compteur favoris.</li>
+            <li>Compteur comparaison.</li>
+            <li>Compteur panier devis.</li>
+            <li>Sélecteur de langue AR/FR.</li>
+            <li>Bouton WhatsApp global.</li>
+            <li>Bouton WhatsApp flottant.</li>
+            <li>Assistant IA flottant.</li>
+            <li>Footer avec navigation, catégories, contact et lien admin.</li>
+            <li>Page 404 personnalisée.</li>
+          </ul>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>13. Données et persistance locale</h2>
+              <p class="section-kicker">
+                Les fonctions côté visiteur conservent certaines informations dans le navigateur.
+              </p>
+            </div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Donnée</th>
+                <th>Stockage</th>
+                <th>Utilisation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Panier devis</td>
+                <td>localStorage</td>
+                <td>Conserver les produits sélectionnés et les quantités.</td>
+              </tr>
+              <tr>
+                <td>Favoris</td>
+                <td>localStorage</td>
+                <td>Retrouver les produits sauvegardés.</td>
+              </tr>
+              <tr>
+                <td>Comparaison</td>
+                <td>localStorage</td>
+                <td>Conserver les produits à comparer.</td>
+              </tr>
+              <tr>
+                <td>Produits récents</td>
+                <td>localStorage</td>
+                <td>Afficher les produits récemment consultés.</td>
+              </tr>
+              <tr>
+                <td>Langue</td>
+                <td>localStorage</td>
+                <td>Se souvenir du choix FR ou AR.</td>
+              </tr>
+              <tr>
+                <td>Brouillons admin</td>
+                <td>localStorage</td>
+                <td>Prévisualiser des modifications produits avant export.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <div class="section-title">
+            <div>
+              <h2>14. Stack technique</h2>
+              <p class="section-kicker">
+                Technologies et bibliothèques utilisées dans le projet.
+              </p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="card">
+              <h3>Frontend</h3>
+              <p>React, TypeScript, Vite, TanStack Router, TanStack Start.</p>
+            </div>
+            <div class="card">
+              <h3>Interface</h3>
+              <p>Tailwind CSS, Radix UI, lucide-react, framer-motion, composants UI réutilisables.</p>
+            </div>
+            <div class="card">
+              <h3>Services</h3>
+              <p>OpenAI API pour l'assistant, WhatsApp wa.me pour les devis et commandes.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>R2R Medical - Cahier des charges fonctionnel</span>
+        <span>Document préparé par elMehdi sekrare</span>
+      </footer>
+    </article>
+  </body>
+</html>

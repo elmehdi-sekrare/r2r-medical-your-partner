@@ -40,7 +40,7 @@ export function AIAssistant() {
     setLoading(true);
 
     try {
-      const { chatWithAssistant } = await import("@/server/chat.functions");
+      const { chatWithAssistant } = await import("@/chat.functions");
       const history = next
         .filter((m) => m !== WELCOME)
         .map(({ role, content }) => ({ role, content }));
@@ -64,23 +64,36 @@ export function AIAssistant() {
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 1.2, type: "spring", stiffness: 240, damping: 20 }}
-        whileHover={{ scale: 1.06 }}
-        whileTap={{ scale: 0.94 }}
-        className="fixed bottom-6 right-6 z-40 h-14 w-14 rounded-full gradient-primary text-primary-foreground grid place-items-center shadow-hero"
-        aria-label="Assistant IA"
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.96 }}
+        className="ai-float fixed bottom-4 right-4 z-40 flex items-center gap-3 rounded-full border border-primary/15 bg-card/95 p-2 text-left shadow-hero backdrop-blur transition-colors hover:border-primary/35 sm:bottom-6 sm:right-6 sm:pr-4"
+        aria-label="Assistant IA R2R Medical"
       >
-        {!open && <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-25" />}
-        <AnimatePresence mode="wait">
-          {open ? (
-            <motion.div key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}>
-              <X className="h-6 w-6" />
-            </motion.div>
-          ) : (
-            <motion.div key="b" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }}>
-              <Bot className="h-6 w-6" />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <span className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full gradient-primary text-primary-foreground shadow-soft sm:h-12 sm:w-12">
+          {!open && <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-25" />}
+          <AnimatePresence mode="wait">
+            {open ? (
+              <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}>
+                <X className="h-5 w-5" />
+              </motion.span>
+            ) : (
+              <motion.span key="b" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }}>
+                <Bot className="h-5 w-5" />
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </span>
+
+        {!open && (
+          <span className="hidden min-w-0 sm:block">
+            <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary">
+              <Sparkles className="h-3.5 w-3.5" /> Assistant IA
+            </span>
+            <span className="block max-w-40 truncate text-sm font-semibold text-foreground">
+              Que cherchez-vous ?
+            </span>
+          </span>
+        )}
       </motion.button>
 
       <AnimatePresence>
@@ -90,15 +103,15 @@ export function AIAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 320, damping: 28 }}
-            className="fixed bottom-24 right-6 z-40 w-[min(92vw,360px)] h-[min(70vh,520px)] rounded-3xl bg-card border border-border shadow-hero flex flex-col overflow-hidden"
+            className="ai-panel fixed inset-x-4 bottom-20 z-40 flex h-[min(72vh,520px)] flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-hero sm:inset-x-auto sm:bottom-24 sm:right-6 sm:w-[min(92vw,360px)]"
           >
             <div className="px-5 py-4 border-b border-border flex items-center gap-3 gradient-primary">
               <div className="h-10 w-10 rounded-full bg-background/20 backdrop-blur grid place-items-center">
                 <Sparkles className="h-5 w-5 text-primary-foreground" />
               </div>
               <div className="text-primary-foreground">
-                <p className="font-display font-bold text-sm">Assistant R2R</p>
-                <p className="text-xs opacity-80">En ligne · Réponses instantanées</p>
+                <p className="font-display font-bold text-sm">Assistant catalogue</p>
+                <p className="text-xs opacity-80">Aide produit · Devis · WhatsApp</p>
               </div>
             </div>
 

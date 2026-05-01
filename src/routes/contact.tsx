@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { MessageCircle, Mail, MapPin, Clock, Check } from "lucide-react";
 import { useState } from "react";
-import { openWhatsApp, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
+import { buildWhatsAppMessageUrl, openWhatsApp, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
@@ -16,6 +16,34 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    city: "",
+    product: "",
+    quantity: "",
+    message: "",
+  });
+
+  const update = (key: keyof typeof form, value: string) => {
+    setForm((current) => ({ ...current, [key]: value }));
+  };
+
+  const submitLead = () => {
+    const message = [
+      "Bonjour R2R Medical, je souhaite être contacté pour une demande de devis.",
+      "",
+      `Nom : ${form.name}`,
+      `Téléphone : ${form.phone}`,
+      `Ville : ${form.city}`,
+      `Produit recherché : ${form.product}`,
+      `Quantité : ${form.quantity || "À confirmer"}`,
+      `Message : ${form.message || "À confirmer"}`,
+    ].join("\n");
+
+    window.open(buildWhatsAppMessageUrl(message), "_blank", "noopener,noreferrer");
+    setSubmitted(true);
+  };
 
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
@@ -63,8 +91,8 @@ function ContactPage() {
           className="p-10 rounded-3xl bg-card border border-border shadow-soft"
         >
           <Mail className="h-10 w-10 text-primary" />
-          <h2 className="mt-5 font-display text-2xl font-bold">Par email</h2>
-          <p className="mt-2 text-sm text-muted-foreground">Laissez-nous votre adresse, nous vous recontactons sous 24h.</p>
+          <h2 className="mt-5 font-display text-2xl font-bold">Demande guidée</h2>
+          <p className="mt-2 text-sm text-muted-foreground">Remplissez les informations utiles, puis envoyez la demande sur WhatsApp.</p>
 
           {submitted ? (
             <div className="mt-8 p-6 rounded-2xl bg-success/10 border border-success/30 flex items-start gap-3">
@@ -76,27 +104,69 @@ function ContactPage() {
             </div>
           ) : (
             <form
-              onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
+              onSubmit={(e) => { e.preventDefault(); submitLead(); }}
               className="mt-6 space-y-4"
             >
-              <div>
-                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Nom</label>
-                <input
-                  type="text" required
-                  className="mt-1 w-full h-11 px-4 rounded-xl bg-muted border border-transparent focus:border-primary outline-none text-sm"
-                />
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Nom</label>
+                  <input
+                    type="text"
+                    required
+                    value={form.name}
+                    onChange={(event) => update("name", event.target.value)}
+                    className="mt-1 w-full h-11 px-4 rounded-xl bg-muted border border-transparent focus:border-primary outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Téléphone</label>
+                  <input
+                    type="tel"
+                    required
+                    value={form.phone}
+                    onChange={(event) => update("phone", event.target.value)}
+                    className="mt-1 w-full h-11 px-4 rounded-xl bg-muted border border-transparent focus:border-primary outline-none text-sm"
+                  />
+                </div>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Ville</label>
+                  <input
+                    type="text"
+                    required
+                    value={form.city}
+                    onChange={(event) => update("city", event.target.value)}
+                    className="mt-1 w-full h-11 px-4 rounded-xl bg-muted border border-transparent focus:border-primary outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Quantité</label>
+                  <input
+                    type="text"
+                    value={form.quantity}
+                    onChange={(event) => update("quantity", event.target.value)}
+                    className="mt-1 w-full h-11 px-4 rounded-xl bg-muted border border-transparent focus:border-primary outline-none text-sm"
+                  />
+                </div>
               </div>
               <div>
-                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email</label>
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Produit</label>
                 <input
-                  type="email" required
+                  type="text"
+                  required
+                  value={form.product}
+                  onChange={(event) => update("product", event.target.value)}
+                  placeholder="Produit recherché ou catégorie"
                   className="mt-1 w-full h-11 px-4 rounded-xl bg-muted border border-transparent focus:border-primary outline-none text-sm"
                 />
               </div>
               <div>
                 <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
                 <textarea
-                  rows={4} required
+                  rows={4}
+                  value={form.message}
+                  onChange={(event) => update("message", event.target.value)}
                   className="mt-1 w-full px-4 py-3 rounded-xl bg-muted border border-transparent focus:border-primary outline-none text-sm resize-none"
                 />
               </div>
@@ -104,7 +174,7 @@ function ContactPage() {
                 type="submit"
                 className="w-full h-12 rounded-xl bg-primary text-primary-foreground font-semibold shadow-soft hover:shadow-elevated transition-shadow"
               >
-                Envoyer
+                Envoyer sur WhatsApp
               </button>
             </form>
           )}

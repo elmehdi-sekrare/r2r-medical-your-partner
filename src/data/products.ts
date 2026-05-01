@@ -4217,3 +4217,45 @@ export const PRODUCTS: Product[] = [
 export const getProductBySlug = (slug: string) => PRODUCTS.find(p => p.slug === slug);
 export const getProductsByCategory = (slug: string) => PRODUCTS.filter(p => p.categorySlug === slug);
 export const getCategory = (slug: string) => CATEGORIES.find(c => c.slug === slug);
+
+export type ProductMeta = {
+  availability: "Disponible" | "Sur commande" | "Devis requis";
+  productType: string;
+  useCase: string;
+  brand: string;
+  hasPrice: boolean;
+};
+
+const TYPE_RULES: Array<{ match: RegExp; type: string; useCase: string }> = [
+  { match: /fauteuil|canne|bequille|béquille|deambulateur|déambulateur/i, type: "Aide à la mobilité", useCase: "Mobilité patient" },
+  { match: /concentrateur|oxygene|oxygène|nebuliseur|nébuliseur|cpap|apap|masque nasal|ventilateur/i, type: "Respiratoire", useCase: "Oxygénothérapie" },
+  { match: /tensiometre|tensiomètre|stethoscope|stéthoscope|ecg|oxymetre|oxymètre|moniteur/i, type: "Diagnostic", useCase: "Diagnostic & monitoring" },
+  { match: /gant|masque|tablier|charlotte|hygiene|hygiène/i, type: "Protection", useCase: "Hygiène médicale" },
+  { match: /pince|ciseaux|bistouri|trocart|biopsie|chirurgical/i, type: "Instrument", useCase: "Bloc opératoire" },
+  { match: /pansement|compresse|gaze|strip|suture/i, type: "Soin", useCase: "Soins infirmiers" },
+  { match: /autoclave|sterilis|stérilis|indicateur/i, type: "Stérilisation", useCase: "Stérilisation" },
+  { match: /attelle|ceinture|orthese|orthèse|genou|cheville|poignet/i, type: "Orthopédie", useCase: "Maintien & rééducation" },
+];
+
+const BRAND_RULES: Array<{ match: RegExp; brand: string }> = [
+  { match: /3m|tegaderm|steri strip/i, brand: "3M" },
+  { match: /bard/i, brand: "Bard" },
+  { match: /yuwell|yu-/i, brand: "Yuwell" },
+];
+
+export function getProductMeta(product: Product): ProductMeta {
+  const text = `${product.name} ${product.rawName} ${product.category}`;
+  const typeRule = TYPE_RULES.find((rule) => rule.match.test(text));
+  const brandRule = BRAND_RULES.find((rule) => rule.match.test(text));
+
+  return {
+    availability: product.price ? "Disponible" : "Devis requis",
+    productType: typeRule?.type ?? product.category.split(" & ")[0],
+    useCase: typeRule?.useCase ?? product.category,
+    brand: brandRule?.brand ?? "R2R Medical",
+    hasPrice: Boolean(product.price),
+  };
+}
+
+export const PRODUCT_TYPES = Array.from(new Set(PRODUCTS.map((product) => getProductMeta(product).productType))).sort();
+export const PRODUCT_USE_CASES = Array.from(new Set(PRODUCTS.map((product) => getProductMeta(product).useCase))).sort();

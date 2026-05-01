@@ -9,16 +9,37 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as FavorisRouteImport } from './routes/favoris'
+import { Route as DevisRouteImport } from './routes/devis'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ComparaisonRouteImport } from './routes/comparaison'
 import { Route as CategoriesRouteImport } from './routes/categories'
+import { Route as CatalogueImprimableRouteImport } from './routes/catalogue-imprimable'
 import { Route as CatalogueRouteImport } from './routes/catalogue'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProduitSlugRouteImport } from './routes/produit.$slug'
+import { Route as CategorieSlugRouteImport } from './routes/categorie.$slug'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
+const FavorisRoute = FavorisRouteImport.update({
+  id: '/favoris',
+  path: '/favoris',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevisRoute = DevisRouteImport.update({
+  id: '/devis',
+  path: '/devis',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComparaisonRoute = ComparaisonRouteImport.update({
+  id: '/comparaison',
+  path: '/comparaison',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoriesRoute = CategoriesRouteImport.update({
@@ -26,9 +47,19 @@ const CategoriesRoute = CategoriesRouteImport.update({
   path: '/categories',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CatalogueImprimableRoute = CatalogueImprimableRouteImport.update({
+  id: '/catalogue-imprimable',
+  path: '/catalogue-imprimable',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CatalogueRoute = CatalogueRouteImport.update({
   id: '/catalogue',
   path: '/catalogue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +72,11 @@ const ProduitSlugRoute = ProduitSlugRouteImport.update({
   path: '/produit/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategorieSlugRoute = CategorieSlugRouteImport.update({
+  id: '/categorie/$slug',
+  path: '/categorie/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
@@ -49,72 +85,135 @@ const ApiChatRoute = ApiChatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/catalogue': typeof CatalogueRoute
+  '/catalogue-imprimable': typeof CatalogueImprimableRoute
   '/categories': typeof CategoriesRoute
+  '/comparaison': typeof ComparaisonRoute
   '/contact': typeof ContactRoute
+  '/devis': typeof DevisRoute
+  '/favoris': typeof FavorisRoute
   '/api/chat': typeof ApiChatRoute
+  '/categorie/$slug': typeof CategorieSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/catalogue': typeof CatalogueRoute
+  '/catalogue-imprimable': typeof CatalogueImprimableRoute
   '/categories': typeof CategoriesRoute
+  '/comparaison': typeof ComparaisonRoute
   '/contact': typeof ContactRoute
+  '/devis': typeof DevisRoute
+  '/favoris': typeof FavorisRoute
   '/api/chat': typeof ApiChatRoute
+  '/categorie/$slug': typeof CategorieSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/catalogue': typeof CatalogueRoute
+  '/catalogue-imprimable': typeof CatalogueImprimableRoute
   '/categories': typeof CategoriesRoute
+  '/comparaison': typeof ComparaisonRoute
   '/contact': typeof ContactRoute
+  '/devis': typeof DevisRoute
+  '/favoris': typeof FavorisRoute
   '/api/chat': typeof ApiChatRoute
+  '/categorie/$slug': typeof CategorieSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/catalogue'
+    | '/catalogue-imprimable'
     | '/categories'
+    | '/comparaison'
     | '/contact'
+    | '/devis'
+    | '/favoris'
     | '/api/chat'
+    | '/categorie/$slug'
     | '/produit/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/catalogue'
+    | '/catalogue-imprimable'
     | '/categories'
+    | '/comparaison'
     | '/contact'
+    | '/devis'
+    | '/favoris'
     | '/api/chat'
+    | '/categorie/$slug'
     | '/produit/$slug'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/catalogue'
+    | '/catalogue-imprimable'
     | '/categories'
+    | '/comparaison'
     | '/contact'
+    | '/devis'
+    | '/favoris'
     | '/api/chat'
+    | '/categorie/$slug'
     | '/produit/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   CatalogueRoute: typeof CatalogueRoute
+  CatalogueImprimableRoute: typeof CatalogueImprimableRoute
   CategoriesRoute: typeof CategoriesRoute
+  ComparaisonRoute: typeof ComparaisonRoute
   ContactRoute: typeof ContactRoute
+  DevisRoute: typeof DevisRoute
+  FavorisRoute: typeof FavorisRoute
   ApiChatRoute: typeof ApiChatRoute
+  CategorieSlugRoute: typeof CategorieSlugRoute
   ProduitSlugRoute: typeof ProduitSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/favoris': {
+      id: '/favoris'
+      path: '/favoris'
+      fullPath: '/favoris'
+      preLoaderRoute: typeof FavorisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/devis': {
+      id: '/devis'
+      path: '/devis'
+      fullPath: '/devis'
+      preLoaderRoute: typeof DevisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comparaison': {
+      id: '/comparaison'
+      path: '/comparaison'
+      fullPath: '/comparaison'
+      preLoaderRoute: typeof ComparaisonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/categories': {
@@ -124,11 +223,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoriesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/catalogue-imprimable': {
+      id: '/catalogue-imprimable'
+      path: '/catalogue-imprimable'
+      fullPath: '/catalogue-imprimable'
+      preLoaderRoute: typeof CatalogueImprimableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/catalogue': {
       id: '/catalogue'
       path: '/catalogue'
       fullPath: '/catalogue'
       preLoaderRoute: typeof CatalogueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -145,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProduitSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/categorie/$slug': {
+      id: '/categorie/$slug'
+      path: '/categorie/$slug'
+      fullPath: '/categorie/$slug'
+      preLoaderRoute: typeof CategorieSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -157,10 +277,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   CatalogueRoute: CatalogueRoute,
+  CatalogueImprimableRoute: CatalogueImprimableRoute,
   CategoriesRoute: CategoriesRoute,
+  ComparaisonRoute: ComparaisonRoute,
   ContactRoute: ContactRoute,
+  DevisRoute: DevisRoute,
+  FavorisRoute: FavorisRoute,
   ApiChatRoute: ApiChatRoute,
+  CategorieSlugRoute: CategorieSlugRoute,
   ProduitSlugRoute: ProduitSlugRoute,
 }
 export const routeTree = rootRouteImport
