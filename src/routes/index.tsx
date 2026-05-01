@@ -277,8 +277,7 @@ function HomePage() {
             >
               {t("heroCopy")}
             </p>
-            <motion.div
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }}
+            <div
               className="mt-7 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap"
             >
               <Link
