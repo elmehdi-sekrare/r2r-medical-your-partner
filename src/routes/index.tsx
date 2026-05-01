@@ -265,13 +265,11 @@ function HomePage() {
             </span>
             <h1 className="mt-4 font-display text-4xl font-bold leading-[0.98] sm:mt-5 sm:text-6xl lg:text-7xl">
               {[t("heroLine1"), t("heroLine2"), t("heroLine3")].map((line, i) => (
-                <motion.span
+                <span
                   key={line} className="block"
-                  initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.15 + i * 0.12, duration: 0.6 }}
                 >
                   {i === 2 ? <span className="gradient-accent-text">{line}</span> : line}
-                </motion.span>
+                </span>
               ))}
             </h1>
             <motion.p
