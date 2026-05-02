@@ -29,6 +29,7 @@ export function Navbar() {
   const { scrollY } = useScroll();
   const bg = useTransform(scrollY, [0, 80], [0, 1]);
   const [open, setOpen] = useState(false);
+  const [megaOpen, setMegaOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { totalQuantity } = useQuoteBasket();
   const favorites = useFavorites();
