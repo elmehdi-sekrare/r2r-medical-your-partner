@@ -12,6 +12,33 @@ import { addToQuote, toggleCompare, toggleFavorite, useCompare, useFavorites } f
 import { cn } from "@/lib/utils";
 import { openWhatsApp } from "@/lib/whatsapp";
 
+export function ProductImageFallback({
+  categorySlug,
+  compact = false,
+  productName,
+}: {
+  categorySlug: string;
+  compact?: boolean;
+  productName?: string;
+}) {
+  const cat = getCategory(categorySlug);
+  const Icon = getIcon(cat?.icon ?? "Package");
+  return (
+    <div className="relative flex h-full flex-col items-center justify-center gap-2 p-4">
+      <div className={cn(
+        "grid place-items-center rounded-2xl bg-primary-soft text-primary",
+        compact ? "h-10 w-10" : "h-16 w-16",
+      )}>
+        <Icon className={compact ? "h-5 w-5" : "h-8 w-8"} />
+      </div>
+      {!compact && <BrandMark className="mt-1" />}
+      {productName && compact && (
+        <p className="text-center text-[10px] font-semibold text-muted-foreground line-clamp-2">{productName}</p>
+      )}
+    </div>
+  );
+}
+
 export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const [errored, setErrored] = useState(false);
   const cat = getCategory(product.categorySlug);
