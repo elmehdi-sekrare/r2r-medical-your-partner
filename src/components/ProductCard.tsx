@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { ArrowRight, GitCompare, Heart, MessageCircle, ShoppingCart } from "lucide-react";
+import { ArrowRight, Eye, GitCompare, Heart, MessageCircle, ShoppingCart } from "lucide-react";
 import { useState } from "react";
+import { openQuickView } from "@/lib/quick-view";
 import { AvailabilityBadge, PriceStatusBadge } from "@/components/AvailabilityBadge";
 import { BrandMark } from "@/components/Brand";
 import { FadeInView } from "@/components/FadeIn";
