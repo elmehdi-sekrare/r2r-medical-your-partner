@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import type { Category } from "@/data/products";
 import { getIcon } from "@/lib/icon-map";
+import { FadeInView } from "@/components/FadeIn";
 
 export function CategoryCard({
   category,
@@ -13,12 +13,7 @@ export function CategoryCard({
 }) {
   const Icon = getIcon(category.icon);
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "50px" }}
-      transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.4) }}
-    >
+    <FadeInView delay={Math.min(index * 0.06, 0.4)} duration={0.5}>
       <Link
         to="/catalogue"
         search={{ category: category.slug }}
@@ -43,6 +38,6 @@ export function CategoryCard({
           </div>
         </div>
       </Link>
-    </motion.div>
+    </FadeInView>
   );
 }

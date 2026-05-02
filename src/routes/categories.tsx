@@ -1,3 +1,4 @@
+import { useHasMounted } from "@/hooks/useHasMounted";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/categories")({
 });
 
 function CategoriesPage() {
+  const mounted = useHasMounted();
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center max-w-2xl mx-auto mb-16">
@@ -37,7 +39,7 @@ function CategoriesPage() {
           return (
             <motion.section
               key={c.slug}
-              initial={{ opacity: 0, y: 30 }}
+              initial={mounted ? { opacity: 0, y: 30 } : false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "50px" }}
               transition={{ duration: 0.6 }}

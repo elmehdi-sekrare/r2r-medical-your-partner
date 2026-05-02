@@ -1,12 +1,15 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { Navbar } from "@/components/Navbar";
+import { QuickViewModal } from "@/components/QuickViewModal";
+import { useQuickView } from "@/lib/quick-view";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { AIAssistant } from "@/components/AIAssistant";
 import { BackToTop } from "@/components/BackToTop";
 import { CookieConsent } from "@/components/CookieConsent";
 import { ReassuranceStrip } from "@/components/ReassuranceStrip";
+import { SocialProofTicker } from "@/components/SocialProofTicker";
 import { I18nProvider } from "@/lib/i18n";
 import { DEFAULT_OG_IMAGE, SITE_URL, canonical, seoMeta } from "@/lib/seo";
 
@@ -93,6 +96,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const quickView = useQuickView();
   return (
     <I18nProvider>
       <div className="min-h-screen flex flex-col">
@@ -105,7 +109,9 @@ function RootComponent() {
         <WhatsAppFloat />
         <AIAssistant />
         <BackToTop />
+        <SocialProofTicker />
         <CookieConsent />
+        <QuickViewModal product={quickView.product} open={quickView.open} onClose={quickView.close} />
       </div>
     </I18nProvider>
   );
