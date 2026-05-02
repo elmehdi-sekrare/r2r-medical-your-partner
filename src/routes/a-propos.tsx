@@ -55,28 +55,59 @@ function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/70" />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-          <div className="max-w-2xl">
-            <span className="text-xs font-semibold uppercase tracking-wider text-primary">À propos de R2R Medical</span>
-            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
-              Votre partenaire <span className="gradient-accent-text">médical de confiance</span> au Maroc
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              Depuis notre création, R2R Medical s'engage à fournir aux professionnels de santé marocains
-              des équipements médicaux de qualité supérieure, accompagnés d'un service client irréprochable.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to="/catalogue"
-                className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 font-semibold text-primary-foreground shadow-soft"
-              >
-                Explorer le catalogue <ArrowRight className="h-4 w-4" />
-              </Link>
-              <button
-                onClick={() => openWhatsApp()}
-                className="inline-flex h-12 items-center gap-2 rounded-full bg-whatsapp px-6 font-semibold text-whatsapp-foreground shadow-soft"
-              >
-                <MessageCircle className="h-4 w-4" /> Nous contacter
-              </button>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_520px] lg:items-center">
+            <div className="max-w-2xl">
+              <span className="text-xs font-semibold uppercase tracking-wider text-primary">À propos de R2R Medical</span>
+              <h1 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
+                Votre partenaire <span className="gradient-accent-text">médical de confiance</span> au Maroc
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+                Depuis notre création, R2R Medical s'engage à fournir aux professionnels de santé marocains
+                des équipements médicaux de qualité supérieure, accompagnés d'un service client irréprochable.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  to="/catalogue"
+                  className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 font-semibold text-primary-foreground shadow-soft"
+                >
+                  Explorer le catalogue <ArrowRight className="h-4 w-4" />
+                </Link>
+                <button
+                  onClick={() => openWhatsApp()}
+                  className="inline-flex h-12 items-center gap-2 rounded-full bg-whatsapp px-6 font-semibold text-whatsapp-foreground shadow-soft"
+                >
+                  <MessageCircle className="h-4 w-4" /> Nous contacter
+                </button>
+              </div>
+            </div>
+
+            <div className="relative hidden lg:block">
+              <div className="absolute -inset-6 rounded-[2.5rem] bg-primary-soft/60 blur-3xl" />
+              <div className="relative overflow-hidden rounded-[2rem] border border-primary/15 bg-card shadow-hero">
+                <div className="relative h-[420px]">
+                  <img src={heroImg} alt="Équipement médical professionnel R2R Medical" className="h-full w-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent" />
+                  <div className="absolute left-6 top-6 rounded-2xl border border-white/20 bg-white/15 px-4 py-3 text-white shadow-soft backdrop-blur">
+                    <BrandSeal />
+                  </div>
+                  <div className="absolute bottom-6 left-6 right-6 rounded-3xl border border-white/20 bg-white/90 p-5 shadow-elevated backdrop-blur">
+                    <p className="text-xs font-bold uppercase tracking-wider text-primary">Fournisseur médical agréé Maroc</p>
+                    <p className="mt-2 font-display text-2xl font-bold">Équipements professionnels, accompagnement humain.</p>
+                    <div className="mt-4 grid grid-cols-3 gap-3">
+                      {[
+                        ["412+", "Produits"],
+                        ["10", "Catégories"],
+                        ["7j/7", "Support"],
+                      ].map(([value, label]) => (
+                        <div key={label} className="rounded-2xl bg-surface p-3 text-center">
+                          <p className="font-display text-xl font-bold text-primary">{value}</p>
+                          <p className="mt-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

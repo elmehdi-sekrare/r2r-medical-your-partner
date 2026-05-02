@@ -65,7 +65,6 @@ export function Footer() {
               {[
                 { to: "/", label: t("navHome") },
                 { to: "/catalogue", label: t("navCatalog") },
-                { to: "/catalogue-imprimable", label: t("pdfCatalog") },
                 { to: "/categories", label: t("navCategories") },
                 { to: "/devis", label: t("quoteRequest") },
                 { to: "/comparaison", label: t("navCompare") },

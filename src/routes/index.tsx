@@ -169,7 +169,12 @@ function HeroMedicalShowcase() {
   const loopProducts = [...carouselProducts, ...carouselProducts];
 
   return (
-    <div className="absolute inset-0 overflow-hidden rounded-3xl border border-border bg-card shadow-hero">
+    <motion.div
+      className="absolute inset-0 overflow-hidden rounded-3xl border border-border bg-card shadow-hero"
+      initial={{ opacity: 0, y: 34, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.85, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,oklch(0.9_0.06_190),transparent_28%),radial-gradient(circle_at_82%_18%,oklch(0.9_0.11_155),transparent_30%),linear-gradient(145deg,white,oklch(0.97_0.02_190)_58%,oklch(0.92_0.08_165))]" />
       <div className="absolute inset-0 brand-circuit opacity-60" />
       <motion.div
@@ -227,7 +232,7 @@ function HeroMedicalShowcase() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -245,6 +250,8 @@ function HomePage() {
     { label: t("needDiagnostic"), q: "tensiometre", icon: ClipboardList },
     { label: t("needHygiene"), q: "masque", icon: ShieldCheck },
   ];
+  const heroText = [t("heroLine1"), t("heroLine2"), t("heroLine3")];
+  const heroEase = [0.22, 1, 0.36, 1] as const;
 
   const searchCatalogue = () => {
     const trimmed = query.trim();
@@ -258,27 +265,40 @@ function HomePage() {
         <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-7 px-4 py-6 pb-14 sm:px-6 sm:py-8 lg:grid-cols-2 lg:items-start lg:gap-10 lg:px-8 lg:py-10">
           <div>
-            <span
+            <motion.span
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: heroEase }}
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-semibold uppercase tracking-wider"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
               {t("heroBadge")}
-            </span>
+            </motion.span>
             <h1 className="mt-4 font-display text-4xl font-bold leading-[0.98] sm:mt-5 sm:text-6xl lg:text-7xl">
-              {[t("heroLine1"), t("heroLine2"), t("heroLine3")].map((line, i) => (
-                <span
-                  key={line} className="block"
+              {heroText.map((line, i) => (
+                <motion.span
+                  key={line}
+                  initial={{ opacity: 0, y: 34 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.12 + i * 0.1, ease: heroEase }}
+                  className="block"
                 >
                   {i === 2 ? <span className="gradient-accent-text">{line}</span> : line}
-                </span>
+                </motion.span>
               ))}
             </h1>
-            <p
+            <motion.p
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.44, ease: heroEase }}
               className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
             >
               {t("heroCopy")}
-            </p>
-            <div
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.58, ease: heroEase }}
               className="mt-7 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap"
             >
               <Link
@@ -293,14 +313,11 @@ function HomePage() {
               >
                 <MessageCircle className="h-4 w-4" /> {t("contactUs")}
               </button>
-              <Link
-                to="/catalogue-imprimable"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-border bg-card px-6 font-semibold shadow-soft hover:bg-muted"
-              >
-                {t("pdfCatalog")} <ArrowRight className="rtl-flip h-4 w-4" />
-              </Link>
-            </div>
-            <form
+            </motion.div>
+            <motion.form
+              initial={{ opacity: 0, y: 22, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.72, ease: heroEase }}
               onSubmit={(event) => {
                 event.preventDefault();
                 searchCatalogue();
@@ -324,8 +341,11 @@ function HomePage() {
                   {t("find")}
                 </button>
               </div>
-            </form>
-            <div
+            </motion.form>
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.86, ease: heroEase }}
               className="mt-4 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0"
             >
               {urgentNeeds.map((need) => (
@@ -338,13 +358,16 @@ function HomePage() {
                   <need.icon className="h-3.5 w-3.5" /> {need.label}
                 </Link>
               ))}
-            </div>
+            </motion.div>
           </div>
-          <div
+          <motion.div
+            initial={{ opacity: 0, x: 28 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.85, delay: 0.22, ease: heroEase }}
             className="relative h-[360px] sm:h-[520px] lg:h-[560px]"
           >
             <HeroMedicalShowcase />
-          </div>
+          </motion.div>
         </div>
         <motion.div
           animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}

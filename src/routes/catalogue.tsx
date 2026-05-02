@@ -17,7 +17,6 @@ const searchSchema = z.object({
   availability: z.string().optional(),
   sort: z.string().optional(),
 });
-
 export const Route = createFileRoute("/catalogue")({
   validateSearch: searchSchema,
   component: CataloguePage,

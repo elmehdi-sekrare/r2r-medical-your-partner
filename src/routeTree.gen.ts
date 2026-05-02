@@ -14,7 +14,6 @@ import { Route as DevisRouteImport } from './routes/devis'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ComparaisonRouteImport } from './routes/comparaison'
 import { Route as CategoriesRouteImport } from './routes/categories'
-import { Route as CatalogueImprimableRouteImport } from './routes/catalogue-imprimable'
 import { Route as CatalogueRouteImport } from './routes/catalogue'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -22,7 +21,10 @@ import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProduitSlugRouteImport } from './routes/produit.$slug'
 import { Route as CategorieSlugRouteImport } from './routes/categorie.$slug'
+import { Route as BlogTestProduitRouteImport } from './routes/blog.test-produit'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as BlogTestProduitSlugRouteImport } from './routes/blog.test-produit.$slug'
 
 const FavorisRoute = FavorisRouteImport.update({
   id: '/favoris',
@@ -47,11 +49,6 @@ const ComparaisonRoute = ComparaisonRouteImport.update({
 const CategoriesRoute = CategoriesRouteImport.update({
   id: '/categories',
   path: '/categories',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CatalogueImprimableRoute = CatalogueImprimableRouteImport.update({
-  id: '/catalogue-imprimable',
-  path: '/catalogue-imprimable',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogueRoute = CatalogueRouteImport.update({
@@ -89,60 +86,81 @@ const CategorieSlugRoute = CategorieSlugRouteImport.update({
   path: '/categorie/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogTestProduitRoute = BlogTestProduitRouteImport.update({
+  id: '/test-produit',
+  path: '/test-produit',
+  getParentRoute: () => BlogRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
+} as any)
+const BlogTestProduitSlugRoute = BlogTestProduitSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogTestProduitRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/admin': typeof AdminRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/catalogue': typeof CatalogueRoute
-  '/catalogue-imprimable': typeof CatalogueImprimableRoute
   '/categories': typeof CategoriesRoute
   '/comparaison': typeof ComparaisonRoute
   '/contact': typeof ContactRoute
   '/devis': typeof DevisRoute
   '/favoris': typeof FavorisRoute
   '/api/chat': typeof ApiChatRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog/test-produit': typeof BlogTestProduitRouteWithChildren
   '/categorie/$slug': typeof CategorieSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
+  '/blog/test-produit/$slug': typeof BlogTestProduitSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/admin': typeof AdminRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/catalogue': typeof CatalogueRoute
-  '/catalogue-imprimable': typeof CatalogueImprimableRoute
   '/categories': typeof CategoriesRoute
   '/comparaison': typeof ComparaisonRoute
   '/contact': typeof ContactRoute
   '/devis': typeof DevisRoute
   '/favoris': typeof FavorisRoute
   '/api/chat': typeof ApiChatRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog/test-produit': typeof BlogTestProduitRouteWithChildren
   '/categorie/$slug': typeof CategorieSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
+  '/blog/test-produit/$slug': typeof BlogTestProduitSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/admin': typeof AdminRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/catalogue': typeof CatalogueRoute
-  '/catalogue-imprimable': typeof CatalogueImprimableRoute
   '/categories': typeof CategoriesRoute
   '/comparaison': typeof ComparaisonRoute
   '/contact': typeof ContactRoute
   '/devis': typeof DevisRoute
   '/favoris': typeof FavorisRoute
   '/api/chat': typeof ApiChatRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog/test-produit': typeof BlogTestProduitRouteWithChildren
   '/categorie/$slug': typeof CategorieSlugRoute
   '/produit/$slug': typeof ProduitSlugRoute
+  '/blog/test-produit/$slug': typeof BlogTestProduitSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -152,15 +170,17 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blog'
     | '/catalogue'
-    | '/catalogue-imprimable'
     | '/categories'
     | '/comparaison'
     | '/contact'
     | '/devis'
     | '/favoris'
     | '/api/chat'
+    | '/blog/$slug'
+    | '/blog/test-produit'
     | '/categorie/$slug'
     | '/produit/$slug'
+    | '/blog/test-produit/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -168,15 +188,17 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blog'
     | '/catalogue'
-    | '/catalogue-imprimable'
     | '/categories'
     | '/comparaison'
     | '/contact'
     | '/devis'
     | '/favoris'
     | '/api/chat'
+    | '/blog/$slug'
+    | '/blog/test-produit'
     | '/categorie/$slug'
     | '/produit/$slug'
+    | '/blog/test-produit/$slug'
   id:
     | '__root__'
     | '/'
@@ -184,24 +206,25 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blog'
     | '/catalogue'
-    | '/catalogue-imprimable'
     | '/categories'
     | '/comparaison'
     | '/contact'
     | '/devis'
     | '/favoris'
     | '/api/chat'
+    | '/blog/$slug'
+    | '/blog/test-produit'
     | '/categorie/$slug'
     | '/produit/$slug'
+    | '/blog/test-produit/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AProposRoute: typeof AProposRoute
   AdminRoute: typeof AdminRoute
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   CatalogueRoute: typeof CatalogueRoute
-  CatalogueImprimableRoute: typeof CatalogueImprimableRoute
   CategoriesRoute: typeof CategoriesRoute
   ComparaisonRoute: typeof ComparaisonRoute
   ContactRoute: typeof ContactRoute
@@ -247,13 +270,6 @@ declare module '@tanstack/react-router' {
       path: '/categories'
       fullPath: '/categories'
       preLoaderRoute: typeof CategoriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/catalogue-imprimable': {
-      id: '/catalogue-imprimable'
-      path: '/catalogue-imprimable'
-      fullPath: '/catalogue-imprimable'
-      preLoaderRoute: typeof CatalogueImprimableRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/catalogue': {
@@ -305,6 +321,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategorieSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/test-produit': {
+      id: '/blog/test-produit'
+      path: '/test-produit'
+      fullPath: '/blog/test-produit'
+      preLoaderRoute: typeof BlogTestProduitRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -312,16 +342,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/test-produit/$slug': {
+      id: '/blog/test-produit/$slug'
+      path: '/$slug'
+      fullPath: '/blog/test-produit/$slug'
+      preLoaderRoute: typeof BlogTestProduitSlugRouteImport
+      parentRoute: typeof BlogTestProduitRoute
+    }
   }
 }
+
+interface BlogTestProduitRouteChildren {
+  BlogTestProduitSlugRoute: typeof BlogTestProduitSlugRoute
+}
+
+const BlogTestProduitRouteChildren: BlogTestProduitRouteChildren = {
+  BlogTestProduitSlugRoute: BlogTestProduitSlugRoute,
+}
+
+const BlogTestProduitRouteWithChildren = BlogTestProduitRoute._addFileChildren(
+  BlogTestProduitRouteChildren,
+)
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+  BlogTestProduitRoute: typeof BlogTestProduitRouteWithChildren
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+  BlogTestProduitRoute: BlogTestProduitRouteWithChildren,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AProposRoute: AProposRoute,
   AdminRoute: AdminRoute,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   CatalogueRoute: CatalogueRoute,
-  CatalogueImprimableRoute: CatalogueImprimableRoute,
   CategoriesRoute: CategoriesRoute,
   ComparaisonRoute: ComparaisonRoute,
   ContactRoute: ContactRoute,
