@@ -96,6 +96,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const quickView = useQuickView();
   return (
     <I18nProvider>
       <div className="min-h-screen flex flex-col">
