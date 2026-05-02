@@ -81,6 +81,7 @@ function HeroPulse() {
 }
 
 function HeroCatalogueShowcase() {
+  const mounted = useHasMounted();
   const showcaseProducts = [
     PRODUCTS.find((product) => product.slug === "concentrateur-doxygene"),
     PRODUCTS.find((product) => product.rawName.includes("FAUTEUIL")),
@@ -160,6 +161,7 @@ function HeroCatalogueShowcase() {
 }
 
 function HeroMedicalShowcase() {
+  const mounted = useHasMounted();
   const carouselProducts = [
     PRODUCTS.find((product) => product.slug === "concentrateur-doxygene"),
     PRODUCTS.find((product) => product.rawName.includes("FAUTEUIL")),
@@ -239,6 +241,7 @@ function HeroMedicalShowcase() {
 }
 
 function HomePage() {
+  const mounted = useHasMounted();
   const navigate = useNavigate();
   const { t } = useI18n();
   const [query, setQuery] = useState("");
