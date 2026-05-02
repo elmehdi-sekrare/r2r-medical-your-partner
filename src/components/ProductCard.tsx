@@ -2,9 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, GitCompare, Heart, MessageCircle, ShoppingCart } from "lucide-react";
 import { useState } from "react";
+import { AvailabilityBadge, PriceStatusBadge } from "@/components/AvailabilityBadge";
+import { BrandMark } from "@/components/Brand";
 import type { Product } from "@/data/products";
 import { getCategory, getProductMeta } from "@/data/products";
-import { BrandMark } from "@/components/Brand";
 import { getIcon } from "@/lib/icon-map";
 import { addToQuote, toggleCompare, toggleFavorite, useCompare, useFavorites } from "@/lib/quote";
 import { cn } from "@/lib/utils";
@@ -20,7 +21,6 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
   const compared = compare.isCompared(product);
   const meta = getProductMeta(product);
   const categoryLabel = cat?.name.split(" & ")[0] ?? product.category;
-  const priceLabel = product.price ? `${product.price} MAD` : "Sur devis";
 
   return (
     <motion.div
@@ -28,7 +28,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "50px" }}
       transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.2) }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:border-primary/25 hover:shadow-elevated"
+      className="interactive-lift group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft hover:border-primary/25"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,transparent,oklch(0.42_0.09_200),oklch(0.66_0.18_145),transparent)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
@@ -38,7 +38,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         className="relative block overflow-hidden bg-[radial-gradient(circle_at_50%_30%,white,oklch(0.96_0.012_200))] p-3"
       >
         <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border/70 bg-card shadow-sm">
-          <div className="absolute inset-0 brand-circuit opacity-25" />
+          <div className="absolute inset-0 brand-circuit opacity-25 transition-opacity duration-300 group-hover:opacity-40" />
           {!errored && product.image ? (
             <img
               src={product.image}
@@ -58,9 +58,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           <span className="rounded-full border border-primary/15 bg-background/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary backdrop-blur">
             {categoryLabel}
           </span>
-          <span className="rounded-full border border-success/20 bg-success/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-success backdrop-blur">
-            {meta.availability}
-          </span>
+          <AvailabilityBadge availability={meta.availability} compact className="backdrop-blur" />
         </div>
 
         <div className="absolute right-5 top-5 flex flex-col gap-1.5 opacity-100 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
@@ -96,14 +94,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           <span className="line-clamp-1 text-[11px] font-semibold text-muted-foreground">
             {meta.productType}
           </span>
-          <span
-            className={cn(
-              "shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider",
-              product.price ? "bg-primary-soft text-primary" : "bg-muted text-muted-foreground",
-            )}
-          >
-            {priceLabel}
-          </span>
+          <PriceStatusBadge price={product.price} compact />
         </div>
 
         <Link

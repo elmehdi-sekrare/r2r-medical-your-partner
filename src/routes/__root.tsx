@@ -6,7 +6,9 @@ import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { AIAssistant } from "@/components/AIAssistant";
 import { BackToTop } from "@/components/BackToTop";
 import { CookieConsent } from "@/components/CookieConsent";
+import { ReassuranceStrip } from "@/components/ReassuranceStrip";
 import { I18nProvider } from "@/lib/i18n";
+import { DEFAULT_OG_IMAGE, SITE_URL, canonical, seoMeta } from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -33,28 +35,22 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "R2R Medical | Équipements Médicaux Professionnels au Maroc | 412 Produits" },
-      {
-        name: "description",
-        content:
-          "Fournisseur leader d'équipements médicaux au Maroc. Oxygénothérapie, diagnostic, orthopédie, instruments chirurgicaux. 412 produits disponibles. Contactez-nous sur WhatsApp.",
-      },
+      ...seoMeta({
+        title: "R2R Medical | Équipements Médicaux Professionnels au Maroc",
+        description:
+          "Fournisseur d'équipements médicaux au Maroc : oxygénothérapie, diagnostic, orthopédie, instruments chirurgicaux, devis WhatsApp et livraison nationale.",
+      }),
       {
         name: "keywords",
         content:
           "équipement médical Maroc, matériel médical Maroc, fournisseur médical Maroc, oxygénothérapie, fauteuil roulant Maroc, stéthoscope Maroc, tensiomètre Maroc",
       },
       { name: "author", content: "R2R Medical" },
-      { property: "og:title", content: "R2R Medical | Équipements Médicaux au Maroc" },
-      { property: "og:description", content: "412 produits médicaux professionnels. Commande via WhatsApp." },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://r2rmedical.ma" },
       { name: "theme-color", content: "#006c70" },
       { name: "robots", content: "index, follow" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "canonical", href: "https://r2rmedical.ma" },
+      ...canonical("/"),
       { rel: "stylesheet", href: appCss },
       {
         rel: "stylesheet",
@@ -68,9 +64,11 @@ export const Route = createRootRoute({
           "@context": "https://schema.org",
           "@type": "MedicalBusiness",
           name: "R2R Medical",
-          url: "https://r2rmedical.ma",
+          url: SITE_URL,
+          image: DEFAULT_OG_IMAGE,
           address: { "@type": "PostalAddress", addressCountry: "MA" },
           description: "Fournisseur d'équipements médicaux professionnels au Maroc",
+          areaServed: { "@type": "Country", name: "Morocco" },
         }),
       },
     ],
@@ -102,6 +100,7 @@ function RootComponent() {
         <main className="flex-1 pt-16">
           <Outlet />
         </main>
+        <ReassuranceStrip />
         <Footer />
         <WhatsAppFloat />
         <AIAssistant />

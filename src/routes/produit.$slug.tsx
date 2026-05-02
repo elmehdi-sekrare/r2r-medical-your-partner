@@ -11,16 +11,20 @@ import {
   GitCompare,
   Headphones,
   MessageCircle,
+  Minus,
+  Plus,
   Ruler,
   ShieldCheck,
   ShoppingCart,
   Truck,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { AvailabilityBadge, PriceStatusBadge } from "@/components/AvailabilityBadge";
 import { getCategory, getProductBySlug, getProductMeta, getProductsByCategory } from "@/data/products";
 import { ProductCard, ProductImageFallback } from "@/components/ProductCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { addToQuote, recordRecentlyViewed, toggleCompare, toggleFavorite, useCompare, useFavorites } from "@/lib/quote";
+import { canonical, seoMeta } from "@/lib/seo";
 import { openWhatsApp } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/produit/$slug")({
@@ -43,16 +47,14 @@ export const Route = createFileRoute("/produit/$slug")({
     const p = loaderData?.product;
     if (!p) return { meta: [{ title: "Produit — R2R Medical" }] };
     return {
-      meta: [
-        { title: `${p.name} | R2R Medical Maroc` },
-        {
-          name: "description",
-          content: `${p.name} — ${p.category}. Disponible chez R2R Medical, votre fournisseur d'équipements médicaux au Maroc. Devis WhatsApp.`,
-        },
-        { property: "og:title", content: `${p.name} | R2R Medical` },
-        { property: "og:image", content: p.image },
-        { property: "og:type", content: "product" },
-      ],
+      meta: seoMeta({
+        title: `${p.name} | R2R Medical Maroc`,
+        description: `${p.name} - ${p.category}. Préparez votre devis avec R2R Medical, fournisseur d'équipements médicaux au Maroc.`,
+        path: `/produit/${p.slug}`,
+        image: p.image,
+        type: "product",
+      }),
+      links: canonical(`/produit/${p.slug}`),
       scripts: [
         {
           type: "application/ld+json",
@@ -63,6 +65,7 @@ export const Route = createFileRoute("/produit/$slug")({
             image: p.image,
             category: p.category,
             sku: p.slug,
+            url: `https://r2rmedical.ma/produit/${p.slug}`,
             brand: { "@type": "Brand", name: "R2R Medical" },
             offers: {
               "@type": "Offer",
@@ -81,6 +84,7 @@ function ProductPage() {
   const { product } = Route.useLoaderData();
   const cat = getCategory(product.categorySlug);
   const [imgErr, setImgErr] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const favorites = useFavorites();
   const compare = useCompare();
   const favorite = favorites.isFavorite(product);
@@ -94,7 +98,7 @@ function ProductPage() {
     recordRecentlyViewed(product);
   }, [product]);
 
-  const description = `Le ${product.name} est un dispositif médical professionnel de haute qualité, conçu pour les établissements de santé et professionnels médicaux. Disponible auprès de R2R Medical, votre fournisseur de confiance au Maroc.`;
+  const description = `${product.name} appartient à la catégorie ${product.category}. Cette fiche aide à préparer une demande claire pour confirmer la disponibilité, les détails techniques, les accessoires compatibles et les conditions de livraison avec R2R Medical.`;
   const technicalSpecs = [
     { label: "Famille produit", value: meta.productType },
     { label: "Usage principal", value: meta.useCase },
@@ -109,10 +113,15 @@ function ProductPage() {
     "Préciser la ville de livraison et le délai souhaité",
     "Demander une fiche technique si le produit équipe un service médical",
   ];
+  const advisorPoints = [
+    `Usage conseillé : ${meta.useCase}`,
+    `Type de demande : ${product.price ? "prix affiché + confirmation" : "devis personnalisé"}`,
+    "Validation recommandée avec un conseiller avant commande",
+  ];
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+      <div className="mx-auto max-w-7xl px-4 pb-28 pt-8 sm:px-6 lg:px-8 lg:py-12">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-muted-foreground mb-6 flex-wrap">
           <Link to="/" className="hover:text-primary">Accueil</Link>
@@ -124,42 +133,79 @@ function ProductPage() {
           <span className="text-foreground font-medium truncate max-w-[200px]">{product.name}</span>
         </nav>
 
-        <div className="grid lg:grid-cols-2 gap-10">
+        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
           {/* Image */}
-          <div className="relative aspect-square rounded-3xl bg-surface border border-border overflow-hidden shadow-soft">
+          <div className="relative overflow-hidden rounded-[2rem] border border-border bg-[radial-gradient(circle_at_20%_10%,white,oklch(0.95_0.018_190))] p-3 shadow-hero">
+            <div className="absolute inset-0 brand-circuit opacity-25" />
+            <div className="absolute left-5 top-5 z-10 flex flex-wrap gap-2">
+              <AvailabilityBadge availability={meta.availability} className="backdrop-blur" />
+              <span className="rounded-full border border-primary/15 bg-background/85 px-3 py-1.5 text-xs font-bold text-primary backdrop-blur">
+                {meta.productType}
+              </span>
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-3xl border border-border/70 bg-card">
             {!imgErr && product.image ? (
               <img
                 src={product.image}
                 alt={product.name}
                 referrerPolicy="no-referrer"
                 onError={() => setImgErr(true)}
-                className="w-full h-full object-contain p-8"
+                className="h-full w-full object-contain p-8 sm:p-10"
               />
             ) : (
               <ProductImageFallback categorySlug={product.categorySlug} />
             )}
+            </div>
+            <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
+              <div className="rounded-2xl border border-primary/10 bg-primary-soft/40 px-4 py-3">
+                <p className="text-xs font-bold uppercase tracking-wider text-primary">Conseil R2R</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Confirmez fiche technique, accessoires et disponibilité avant achat.
+                </p>
+              </div>
             <a
               href={product.sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-card/95 backdrop-blur border border-border text-xs font-medium hover:bg-card"
+                className="inline-flex h-11 items-center justify-center gap-1.5 rounded-full border border-border bg-card px-4 text-xs font-bold hover:bg-muted"
             >
-              Voir sur le site original <ExternalLink className="h-3 w-3" />
+                Source produit <ExternalLink className="h-3 w-3" />
             </a>
+            </div>
           </div>
 
           {/* Info */}
           <div className="flex flex-col lg:sticky lg:top-24 lg:self-start">
-            <span className="inline-flex self-start items-center px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-semibold uppercase tracking-wider">
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                to="/catalogue"
+                search={{ category: product.categorySlug }}
+                className="inline-flex items-center rounded-full bg-primary-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary hover:bg-primary hover:text-primary-foreground"
+              >
               {cat?.name}
-            </span>
+              </Link>
+              <span className="inline-flex rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold text-muted-foreground">
+                Réf. {product.slug}
+              </span>
+            </div>
             <h1 className="mt-4 font-display text-3xl md:text-4xl font-bold leading-tight tracking-tight">
               {product.name}
             </h1>
-            <div className="mt-4 h-px bg-border" />
+            <div className="mt-5 grid gap-2 sm:grid-cols-3">
+              {[
+                { icon: ShieldCheck, label: "Fournisseur pro" },
+                { icon: Truck, label: "Livraison Maroc" },
+                { icon: Headphones, label: "Conseil WhatsApp" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-2 rounded-2xl border border-border bg-card px-3 py-2 text-xs font-bold text-foreground/80 shadow-soft">
+                  <item.icon className="h-4 w-4 text-primary" />
+                  {item.label}
+                </div>
+              ))}
+            </div>
             <p className="mt-6 text-muted-foreground leading-relaxed">{description}</p>
 
-            <dl className="mt-8 grid grid-cols-2 gap-4">
+            <dl className="mt-7 grid grid-cols-2 gap-3">
               {[
                 { k: "Catégorie", v: cat?.name },
                 { k: "Type", v: meta.productType },
@@ -167,24 +213,51 @@ function ProductPage() {
                 { k: "Marque", v: meta.brand },
                 { k: "Référence", v: product.slug },
                 { k: "Disponibilité", v: meta.availability },
-                { k: "Prix", v: product.price ? `${product.price} MAD` : "Sur devis" },
                 { k: "Livraison", v: "Tout le Maroc" },
               ].map(({ k, v }) => (
-                <div key={k} className="p-4 rounded-xl bg-surface border border-border">
+                <div key={k} className="rounded-2xl border border-border bg-surface p-4">
                   <dt className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{k}</dt>
-                  <dd className="mt-1 text-sm font-medium truncate">{v}</dd>
+                  <dd className="mt-1 truncate text-sm font-bold">{v}</dd>
                 </div>
               ))}
+              <div className="rounded-2xl border border-border bg-surface p-4">
+                <dt className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Prix</dt>
+                <dd className="mt-2">
+                  <PriceStatusBadge price={product.price} compact />
+                </dd>
+              </div>
             </dl>
 
-            <div className="mt-6 flex items-center gap-2 text-sm text-success">
-              <Check className="h-4 w-4" /> {meta.availability} — devis instantané sur WhatsApp
-            </div>
-
             {/* CTA */}
-            <div className="mt-8 grid gap-3 rounded-3xl border border-border bg-card p-3 shadow-elevated">
+            <div className="mt-8 rounded-3xl border border-border bg-card p-4 shadow-elevated">
+              <div className="mb-4 flex flex-col gap-3 border-b border-border pb-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="font-display text-lg font-bold">Préparer une demande</p>
+                  <p className="text-sm text-muted-foreground">Choisissez la quantité puis ajoutez au panier devis.</p>
+                </div>
+                <div className="inline-flex h-12 w-fit items-center rounded-full border border-border bg-surface p-1">
+                  <button
+                    type="button"
+                    onClick={() => setQuantity((value) => Math.max(1, value - 1))}
+                    className="grid h-10 w-10 place-items-center rounded-full hover:bg-card"
+                    aria-label="Réduire la quantité"
+                  >
+                    <Minus className="h-4 w-4" />
+                  </button>
+                  <span className="min-w-10 text-center font-display text-lg font-bold">{quantity}</span>
+                  <button
+                    type="button"
+                    onClick={() => setQuantity((value) => Math.min(99, value + 1))}
+                    className="grid h-10 w-10 place-items-center rounded-full hover:bg-card"
+                    aria-label="Augmenter la quantité"
+                  >
+                    <Plus className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
               <button
-                onClick={() => addToQuote(product)}
+                  onClick={() => addToQuote(product, quantity)}
                 className="inline-flex items-center justify-center gap-2 h-14 px-6 rounded-2xl bg-primary text-primary-foreground font-bold text-base shadow-elevated hover:shadow-hero transition-shadow"
               >
                 <ShoppingCart className="h-5 w-5" /> Ajouter au devis
@@ -195,6 +268,8 @@ function ProductPage() {
               >
                 <MessageCircle className="h-5 w-5" /> Commander via WhatsApp
               </button>
+              </div>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
               <button
                 onClick={() => toggleFavorite(product)}
                 className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-2xl border border-border text-sm font-medium hover:bg-muted"
@@ -209,6 +284,18 @@ function ProductPage() {
                 <GitCompare className={`h-4 w-4 ${compared ? "text-primary" : ""}`} />
                 {compared ? "Retirer du comparateur" : "Ajouter au comparateur"}
               </button>
+              </div>
+              <div className="mt-4 rounded-2xl bg-primary-soft/45 p-4">
+                <p className="text-xs font-bold uppercase tracking-wider text-primary">Résumé pour le conseiller</p>
+                <ul className="mt-3 space-y-2">
+                  {advisorPoints.map((point) => (
+                    <li key={point} className="flex gap-2 text-sm text-muted-foreground">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -367,6 +454,43 @@ function ProductPage() {
             </div>
           </section>
         )}
+      </div>
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-card/95 px-3 py-3 shadow-hero backdrop-blur lg:hidden">
+        <div className="mx-auto grid max-w-xl grid-cols-[auto_1fr_1fr] items-center gap-2">
+          <div className="inline-flex h-12 items-center rounded-full border border-border bg-surface p-1">
+            <button
+              type="button"
+              onClick={() => setQuantity((value) => Math.max(1, value - 1))}
+              className="grid h-10 w-9 place-items-center rounded-full hover:bg-card"
+              aria-label="Réduire la quantité"
+            >
+              <Minus className="h-4 w-4" />
+            </button>
+            <span className="min-w-8 text-center font-display text-lg font-bold">{quantity}</span>
+            <button
+              type="button"
+              onClick={() => setQuantity((value) => Math.min(99, value + 1))}
+              className="grid h-10 w-9 place-items-center rounded-full hover:bg-card"
+              aria-label="Augmenter la quantité"
+            >
+              <Plus className="h-4 w-4" />
+            </button>
+          </div>
+          <button
+            onClick={() => addToQuote(product, quantity)}
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-primary px-3 text-sm font-bold text-primary-foreground shadow-soft"
+          >
+            <ShoppingCart className="h-4 w-4" />
+            Devis
+          </button>
+          <button
+            onClick={() => openWhatsApp(product.name)}
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-whatsapp px-3 text-sm font-bold text-whatsapp-foreground shadow-soft"
+          >
+            <MessageCircle className="h-4 w-4" />
+            WhatsApp
+          </button>
+        </div>
       </div>
     </>
   );

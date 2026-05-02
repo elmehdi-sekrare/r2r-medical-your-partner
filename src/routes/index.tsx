@@ -21,6 +21,7 @@ import { BrandLockup, BrandSeal } from "@/components/Brand";
 import { CategoryCard } from "@/components/CategoryCard";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductThumb } from "@/components/ProductThumb";
+import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { useCounter } from "@/hooks/useCounter";
 import { useI18n } from "@/lib/i18n";
 import { openWhatsApp, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
@@ -240,6 +241,7 @@ function HomePage() {
   const navigate = useNavigate();
   const { t } = useI18n();
   const [query, setQuery] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
   const featured = PRODUCTS.filter((product) => product.price).slice(0, 4);
   const requested = PRODUCTS.filter((product) =>
     /concentrateur|fauteuil|tensiometre|stethoscope|masque|nebuliseur|pansement/i.test(product.rawName),
@@ -330,8 +332,17 @@ function HomePage() {
                   <input
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
+                    onFocus={() => setSearchFocused(true)}
+                    onBlur={() => window.setTimeout(() => setSearchFocused(false), 120)}
                     placeholder={t("searchPlaceholder")}
                     className="dir-search-input h-11 w-full rounded-xl bg-muted pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-primary"
+                  />
+                  <SearchSuggestions
+                    query={query}
+                    open={searchFocused}
+                    onPickQuery={setQuery}
+                    onClose={() => setSearchFocused(false)}
+                    className="sm:w-[min(92vw,560px)]"
                   />
                 </div>
                 <button

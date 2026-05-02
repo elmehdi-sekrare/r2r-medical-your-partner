@@ -5,7 +5,9 @@ import { useMemo, useState } from "react";
 import { CATEGORIES, PRODUCTS, PRODUCT_TYPES, PRODUCT_USE_CASES, getProductMeta } from "@/data/products";
 import { EmptyState } from "@/components/EmptyState";
 import { ProductCard } from "@/components/ProductCard";
+import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { useRecentlyViewed } from "@/lib/quote";
+import { canonical, seoMeta } from "@/lib/seo";
 import { buildWhatsAppMessageUrl } from "@/lib/whatsapp";
 import { z } from "zod";
 
@@ -21,14 +23,19 @@ export const Route = createFileRoute("/catalogue")({
   validateSearch: searchSchema,
   component: CataloguePage,
   head: () => ({
-    meta: [
-      { title: "Catalogue — R2R Medical | 412 Équipements Médicaux" },
-      { name: "description", content: "Parcourez nos 412 produits médicaux professionnels par catégorie. Devis WhatsApp instantané." },
-    ],
+    meta: seoMeta({
+      title: "Catalogue médical R2R | Équipements médicaux au Maroc",
+      description:
+        "Parcourez le catalogue R2R Medical : oxygénothérapie, diagnostic, mobilité, protection, soins et dispositifs médicaux avec devis WhatsApp.",
+      path: "/catalogue",
+    }),
+    links: canonical("/catalogue"),
   }),
 });
 
 const PAGE_SIZE = 24;
+
+const availabilityLabel = (value: string) => (value === "Devis requis" ? "Sur devis" : value);
 
 const SEARCH_SYNONYMS: Record<string, string[]> = {
   o2: ["oxygene", "oxygenotherapie", "respiratoire", "concentrateur", "bouteille"],
@@ -65,6 +72,7 @@ function CataloguePage() {
   const [query, setQuery] = useState(q ?? "");
   const [shown, setShown] = useState(PAGE_SIZE);
   const [mobileFilters, setMobileFilters] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
   const recent = useRecentlyViewed();
 
   const filtered = useMemo(() => {
@@ -100,7 +108,7 @@ function CataloguePage() {
     selectedCategory && `Catégorie: ${selectedCategory.name}`,
     type && `Type: ${type}`,
     use && `Usage: ${use}`,
-    availability && `Disponibilité: ${availability}`,
+    availability && `Disponibilité: ${availabilityLabel(availability)}`,
   ].filter(Boolean) as string[];
   const quickCategories = CATEGORIES.filter((item) =>
     ["oxygenotherapie", "mobilite", "diagnostic", "protection"].includes(item.slug),
@@ -138,11 +146,13 @@ function CataloguePage() {
 
       <div>
         <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Recherche produit</label>
-        <div className="mt-2 relative">
+        <div className="relative mt-2">
           <Search className="dir-search-icon absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
             value={query}
             onChange={(e) => { setQuery(e.target.value); setShown(PAGE_SIZE); }}
+            onFocus={() => setSearchFocused(true)}
+            onBlur={() => window.setTimeout(() => setSearchFocused(false), 120)}
             placeholder="Nom du produit…"
             className="dir-search-input h-11 w-full rounded-xl border border-transparent bg-muted pl-10 pr-9 text-sm outline-none focus:border-primary"
           />
@@ -151,6 +161,15 @@ function CataloguePage() {
               <X className="h-4 w-4" />
             </button>
           )}
+          <SearchSuggestions
+            query={query}
+            open={searchFocused}
+            onPickQuery={(value) => {
+              setQuery(value);
+              setShown(PAGE_SIZE);
+            }}
+            onClose={() => setSearchFocused(false)}
+          />
         </div>
       </div>
 
@@ -165,7 +184,7 @@ function CataloguePage() {
                 availability === option ? "bg-primary text-primary-foreground" : "bg-muted hover:bg-primary-soft"
               }`}
             >
-              {option}
+              {availabilityLabel(option)}
             </button>
           ))}
         </div>
@@ -325,7 +344,7 @@ function CataloguePage() {
         <div className="lg:hidden mb-4">
           <button
             onClick={() => setMobileFilters(true)}
-            className="inline-flex items-center gap-2 h-11 px-4 rounded-xl bg-card border border-border shadow-soft text-sm font-medium"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-sm font-bold shadow-soft"
           >
             <SlidersHorizontal className="h-4 w-4" /> Filtres
           </button>
@@ -339,16 +358,35 @@ function CataloguePage() {
               onClick={() => setMobileFilters(false)}
             >
               <motion.div
-                initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }}
+                initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
                 transition={{ type: "spring", stiffness: 320, damping: 30 }}
                 onClick={(e) => e.stopPropagation()}
-                className="h-full w-[85vw] max-w-sm bg-card p-6 overflow-y-auto"
+                className="absolute inset-x-0 bottom-0 max-h-[86dvh] overflow-hidden rounded-t-[2rem] border border-border bg-card shadow-hero"
               >
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="font-display font-bold">Filtres</h2>
-                  <button onClick={() => setMobileFilters(false)}><X className="h-5 w-5" /></button>
+                <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-card px-5 py-4">
+                  <div>
+                    <h2 className="font-display text-xl font-bold">Filtres catalogue</h2>
+                    <p className="text-xs text-muted-foreground">{filtered.length} produits trouvés</p>
+                  </div>
+                  <button
+                    onClick={() => setMobileFilters(false)}
+                    className="grid h-10 w-10 place-items-center rounded-full border border-border bg-surface"
+                    aria-label="Fermer les filtres"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
                 </div>
-                {FilterPanel}
+                <div className="max-h-[calc(86dvh-8rem)] overflow-y-auto p-5 pb-24">
+                  {FilterPanel}
+                </div>
+                <div className="absolute inset-x-0 bottom-0 border-t border-border bg-card/95 p-4 backdrop-blur">
+                  <button
+                    onClick={() => setMobileFilters(false)}
+                    className="inline-flex h-11 w-full items-center justify-center rounded-full bg-primary px-5 text-sm font-bold text-primary-foreground"
+                  >
+                    Voir les produits
+                  </button>
+                </div>
               </motion.div>
             </motion.div>
           )}

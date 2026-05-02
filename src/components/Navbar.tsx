@@ -46,7 +46,7 @@ export function Navbar() {
       <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-3 sm:px-6 lg:px-8">
         <Link
           to="/"
-          className="group inline-flex shrink-0 items-center rounded-full border border-transparent transition-colors hover:border-primary/10 hover:bg-card/60"
+          className="group inline-flex min-w-0 shrink items-center rounded-full border border-transparent transition-colors hover:border-primary/10 hover:bg-card/60 sm:shrink-0"
         >
           <BrandLockup compact />
         </Link>
@@ -120,10 +120,12 @@ export function Navbar() {
             <MessageCircle className="h-4 w-4" />
             WhatsApp
           </button>
-          <DarkModeToggle />
+          <div className="hidden min-[420px]:block">
+            <DarkModeToggle />
+          </div>
           <button
             onClick={toggleLanguage}
-            className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-xs font-bold shadow-soft transition-colors hover:border-primary/25 hover:text-primary"
+            className="hidden h-10 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-xs font-bold shadow-soft transition-colors hover:border-primary/25 hover:text-primary min-[420px]:inline-flex"
             aria-label={t("language")}
             title={t("language")}
           >
@@ -144,43 +146,69 @@ export function Navbar() {
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden glass border-b border-border/60"
+          className="lg:hidden glass border-b border-border/60 shadow-elevated"
         >
-          <div className="flex flex-col gap-1 px-4 py-4">
-            <div className="mb-3 rounded-2xl border border-primary/15 bg-primary-soft/60 px-4 py-3 text-sm font-semibold text-primary">
-              Fournisseur agréé Maroc
+          <div className="max-h-[calc(100vh-4rem)] overflow-y-auto px-4 py-4">
+            <div className="mb-3 grid grid-cols-3 gap-2 rounded-2xl border border-primary/15 bg-primary-soft/60 p-2 text-center">
+              {[
+                { label: t("favorites"), value: favorites.count },
+                { label: t("comparison"), value: compare.count },
+                { label: t("quoteBasket"), value: totalQuantity },
+              ].map((item) => (
+                <div key={item.label} className="rounded-xl bg-card/70 px-2 py-2">
+                  <p className="font-display text-lg font-bold text-primary">{item.value}</p>
+                  <p className="truncate text-[10px] font-bold uppercase tracking-wide text-muted-foreground">{item.label}</p>
+                </div>
+              ))}
             </div>
-            {NAV.map((n) => (
-              <Link
-                key={n.to}
-                to={n.to}
-                onClick={() => setOpen(false)}
-                className="px-4 py-3 rounded-xl text-base font-medium hover:bg-muted"
-              >
-                {t(n.labelKey)}
-              </Link>
-            ))}
-            <div className="mt-2 border-t border-border pt-2">
+            <div className="grid gap-1">
+              {NAV.map((n) => {
+                const active = n.to === "/" ? pathname === "/" : pathname.startsWith(n.to);
+                return (
+                  <Link
+                    key={n.to}
+                    to={n.to}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "rounded-xl px-4 py-3 text-base font-bold",
+                      active ? "bg-primary text-primary-foreground" : "hover:bg-muted",
+                    )}
+                  >
+                    {t(n.labelKey)}
+                  </Link>
+                );
+              })}
+            </div>
+            <div className="mt-3 grid gap-1 border-t border-border pt-3">
               {MOBILE_EXTRA.map((n) => (
                 <Link
                   key={n.to}
                   to={n.to}
                   onClick={() => setOpen(false)}
-                  className="px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+                  className="rounded-xl px-4 py-3 text-sm font-semibold text-muted-foreground hover:bg-muted hover:text-foreground"
                 >
                   {t(n.labelKey)}
                 </Link>
               ))}
             </div>
-            <div className="mt-3 border-t border-border pt-3">
+            <div className="mt-3 grid grid-cols-[1fr_auto_auto] gap-2 border-t border-border pt-3">
               <button
                 onClick={() => {
                   setOpen(false);
                   openWhatsApp();
                 }}
-                className="w-full inline-flex h-11 items-center justify-center rounded-xl bg-whatsapp text-sm font-semibold text-whatsapp-foreground"
+                className="inline-flex h-11 items-center justify-center rounded-xl bg-whatsapp text-sm font-bold text-whatsapp-foreground"
               >
                 <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp
+              </button>
+              <DarkModeToggle />
+              <button
+                onClick={toggleLanguage}
+                className="inline-flex h-11 items-center gap-1.5 rounded-xl border border-border bg-card px-3 text-xs font-bold shadow-soft"
+                aria-label={t("language")}
+              >
+                <Globe2 className="h-4 w-4" />
+                {language === "fr" ? "AR" : "FR"}
               </button>
             </div>
           </div>

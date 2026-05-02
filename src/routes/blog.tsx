@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, Calendar, Clock, Tag } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, CheckCircle2, Clock, ClipboardCheck, MessageCircle, Search, Tag } from "lucide-react";
 import { BlogNav } from "@/components/BlogNav";
 import { BLOG_ARTICLES } from "@/data/blog";
 
@@ -24,6 +24,7 @@ function BlogPage() {
   }
 
   const featuredArticle = BLOG_ARTICLES[0];
+  const categories = Array.from(new Set(BLOG_ARTICLES.map((article) => article.category)));
 
   return (
     <div className="relative overflow-hidden">
@@ -31,12 +32,12 @@ function BlogPage() {
       <div className="absolute inset-x-0 top-0 -z-10 h-[460px] grid-pattern opacity-60" />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-12 max-w-3xl text-center">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
           <span className="inline-flex rounded-full bg-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-primary">
-            Blog & Ressources
+            Centre de ressources R2R
           </span>
           <h1 className="mt-5 font-display text-4xl font-bold leading-tight md:text-6xl">
-            Guides médicaux pour acheter avec plus de confiance.
+            Guides médicaux pour choisir avec plus de confiance.
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
             Des contenus courts, utiles et orientés terrain pour comparer, préparer un devis et choisir le bon équipement médical.
@@ -44,6 +45,23 @@ function BlogPage() {
         </div>
 
         <BlogNav />
+
+        <section className="mb-12 grid gap-4 rounded-[2rem] border border-primary/15 bg-card/85 p-4 shadow-elevated backdrop-blur md:grid-cols-3 md:p-5">
+          {[
+            { icon: ClipboardCheck, title: "Guides vérifiables", text: "Critères pratiques, usage terrain et points à confirmer avant devis." },
+            { icon: Search, title: `${categories.length} thèmes`, text: categories.join(", ") },
+            { icon: MessageCircle, title: "Lien direct au devis", text: "Chaque contenu oriente vers le catalogue, le contact ou le bon type de produit." },
+          ].map((item) => {
+            const Icon = item.icon;
+            return (
+              <div key={item.title} className="rounded-[1.4rem] border border-border bg-surface p-5">
+                <Icon className="h-5 w-5 text-primary" />
+                <p className="mt-3 font-display text-lg font-bold">{item.title}</p>
+                <p className="mt-1 text-sm leading-6 text-muted-foreground">{item.text}</p>
+              </div>
+            );
+          })}
+        </section>
 
         {/* Featured article */}
         <motion.article
@@ -89,7 +107,16 @@ function BlogPage() {
           </Link>
         </motion.article>
 
-        {/* Article grid */}
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-primary">Bibliothèque conseils</p>
+            <h2 className="mt-2 font-display text-3xl font-bold">Articles récents</h2>
+          </div>
+          <Link to="/blog/test-produit" className="inline-flex h-11 items-center gap-2 rounded-full border border-border bg-card px-5 text-sm font-bold shadow-soft hover:border-primary/30">
+            Voir les tests produit <ArrowRight className="h-4 w-4 rtl-flip" />
+          </Link>
+        </div>
+
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {BLOG_ARTICLES.slice(1).map((article, i) => (
             <motion.article
@@ -132,6 +159,29 @@ function BlogPage() {
             </motion.article>
           ))}
         </div>
+
+        <section className="mt-16 grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
+          <div className="rounded-[2rem] border border-border bg-card p-7 shadow-soft">
+            <p className="text-xs font-bold uppercase tracking-wider text-primary">Méthode éditoriale</p>
+            <h2 className="mt-3 font-display text-3xl font-bold">Un blog fait pour aider à décider.</h2>
+            <p className="mt-4 leading-7 text-muted-foreground">
+              Les articles R2R ne remplacent pas l'avis médical. Ils servent à préparer une demande claire :
+              besoin, usage, quantité, accessoires, livraison et support.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {[
+              "Identifier le besoin réel avant la référence produit.",
+              "Comparer les critères utiles plutôt que seulement le prix.",
+              "Relier chaque conseil à une action simple : catalogue, devis ou contact.",
+            ].map((point) => (
+              <div key={point} className="rounded-[1.5rem] border border-primary/15 bg-primary-soft p-5">
+                <CheckCircle2 className="h-5 w-5 text-primary" />
+                <p className="mt-4 text-sm font-semibold leading-6">{point}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* Newsletter CTA */}
         <section className="mt-20 overflow-hidden rounded-[2rem] border border-primary/15 bg-[linear-gradient(135deg,var(--primary),oklch(0.34_0.08_210))] p-8 text-center text-primary-foreground shadow-hero md:p-14">

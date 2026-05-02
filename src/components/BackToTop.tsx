@@ -19,7 +19,7 @@ export function BackToTop() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-24 right-4 z-30 grid h-11 w-11 place-items-center rounded-full border border-border bg-card text-foreground shadow-elevated backdrop-blur hover:text-primary sm:bottom-28 sm:right-6"
+          className="fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom))] right-3 z-30 grid h-10 w-10 place-items-center rounded-full border border-border bg-card text-foreground shadow-elevated backdrop-blur hover:text-primary sm:bottom-28 sm:right-6 sm:h-11 sm:w-11"
           aria-label="Retour en haut"
         >
           <ArrowUp className="h-5 w-5" />

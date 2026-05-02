@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, MessageCircle, Tag } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, ListChecks, MessageCircle, Tag } from "lucide-react";
 import { BLOG_ARTICLES, getBlogArticle } from "@/data/blog";
 
 export const Route = createFileRoute("/blog/$slug")({
@@ -54,16 +54,26 @@ export const Route = createFileRoute("/blog/$slug")({
 function BlogArticlePage() {
   const { article } = Route.useLoaderData();
   const relatedArticles = BLOG_ARTICLES.filter((item) => item.slug !== article.slug).slice(0, 3);
+  const checklist = [
+    "Produit ou usage recherché",
+    "Quantité approximative",
+    "Ville de livraison",
+    "Contraintes importantes",
+  ];
 
   return (
-    <article className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
-      <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80">
-        <ArrowLeft className="h-4 w-4 rtl-flip" />
-        Retour au blog
-      </Link>
+    <article className="relative overflow-hidden">
+      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_18%_18%,oklch(0.78_0.13_180_/_0.24),transparent_34%),linear-gradient(180deg,oklch(0.97_0.03_195),transparent)]" />
+      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] grid-pattern opacity-50" />
 
-      <header className="mt-8 overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
-        <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+        <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80">
+          <ArrowLeft className="h-4 w-4 rtl-flip" />
+          Retour au blog
+        </Link>
+
+      <header className="mt-8 overflow-hidden rounded-[2rem] border border-primary/15 bg-card shadow-hero">
+        <div className="grid lg:grid-cols-[1fr_0.9fr]">
           <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-12">
             <div className="flex flex-wrap items-center gap-3 text-xs">
               <span className="inline-flex items-center gap-1 rounded-full bg-primary-soft px-3 py-1 font-semibold text-primary">
@@ -87,6 +97,19 @@ function BlogArticlePage() {
               <span className="h-1 w-1 rounded-full bg-border" />
               <span>Conseils pratiques pour professionnels et acheteurs médicaux</span>
             </div>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              {[
+                ["Objectif", "Mieux choisir"],
+                ["Format", "Guide pratique"],
+                ["Action", "Préparer un devis"],
+              ].map(([label, value]) => (
+                <div key={label} className="rounded-2xl border border-border bg-surface p-4">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{label}</p>
+                  <p className="mt-1 text-sm font-bold">{value}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="relative min-h-[280px] overflow-hidden lg:min-h-[520px]">
@@ -98,8 +121,9 @@ function BlogArticlePage() {
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div className="min-w-0">
-          <section className="rounded-3xl border border-border bg-surface p-6 sm:p-8">
-            <p className="text-lg leading-8 text-foreground">{article.intro}</p>
+          <section className="rounded-[2rem] border border-primary/15 bg-card p-6 shadow-soft sm:p-8">
+            <p className="text-xs font-bold uppercase tracking-wider text-primary">Résumé éditorial</p>
+            <p className="mt-3 text-lg leading-8 text-foreground">{article.intro}</p>
           </section>
 
           <section className="mt-8 rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-8">
@@ -115,8 +139,8 @@ function BlogArticlePage() {
           </section>
 
           <div className="mt-8 space-y-8">
-            {article.sections.map((section) => (
-              <section key={section.title} className="rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-8">
+            {article.sections.map((section, index) => (
+              <section id={`section-${index + 1}`} key={section.title} className="scroll-mt-28 rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-8">
                 <h2 className="font-display text-2xl font-bold">{section.title}</h2>
                 <div className="mt-4 space-y-4">
                   {section.body.map((paragraph) => (
@@ -129,13 +153,36 @@ function BlogArticlePage() {
             ))}
           </div>
 
-          <section className="mt-8 rounded-3xl border border-primary/20 bg-primary-soft p-6 sm:p-8">
+          <section className="mt-8 rounded-[2rem] border border-primary/20 bg-primary-soft p-6 sm:p-8">
             <h2 className="font-display text-2xl font-bold">Conclusion</h2>
             <p className="mt-4 leading-8 text-muted-foreground">{article.conclusion}</p>
+          </section>
+
+          <section className="mt-8 rounded-[2rem] border border-border bg-surface p-6 sm:p-8">
+            <h2 className="font-display text-2xl font-bold">Note importante</h2>
+            <p className="mt-4 leading-8 text-muted-foreground">
+              Ce contenu aide à préparer une demande de matériel. Il ne remplace pas une prescription médicale,
+              une validation clinique ou les recommandations du fabricant.
+            </p>
           </section>
         </div>
 
         <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
+          <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary">Dans cet article</p>
+            <div className="mt-4 space-y-3">
+              {article.sections.map((section, index) => (
+                <a
+                  key={section.title}
+                  href={`#section-${index + 1}`}
+                  className="block rounded-2xl bg-surface px-4 py-3 text-sm font-semibold transition hover:text-primary"
+                >
+                  {section.title}
+                </a>
+              ))}
+            </div>
+          </div>
+
           <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
             <p className="text-xs font-semibold uppercase tracking-wider text-primary">Besoin d'un conseil ?</p>
             <h2 className="mt-2 font-display text-2xl font-bold">Parlez à R2R Medical</h2>
@@ -148,6 +195,19 @@ function BlogArticlePage() {
             >
               Demander conseil <MessageCircle className="h-4 w-4" />
             </Link>
+          </div>
+
+          <div className="rounded-3xl border border-primary/15 bg-primary-soft p-6">
+            <ListChecks className="h-6 w-6 text-primary" />
+            <p className="mt-3 font-display text-xl font-bold">Avant de contacter R2R</p>
+            <div className="mt-4 space-y-3">
+              {checklist.map((item) => (
+                <div key={item} className="flex gap-3 text-sm font-semibold">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
 
           {article.relatedCategorySlug ? (
@@ -176,6 +236,7 @@ function BlogArticlePage() {
             </div>
           </div>
         </aside>
+      </div>
       </div>
     </article>
   );

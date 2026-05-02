@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Building2, Check, FileText, MessageCircle, Minus, Plus, Printer, Search, Trash2 } from "lucide-react";
+import { ArrowLeft, Building2, Check, ClipboardList, FileText, MapPin, MessageCircle, Minus, PackageCheck, Plus, Printer, Search, ShieldCheck, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { PriceStatusBadge } from "@/components/AvailabilityBadge";
 import { EmptyState } from "@/components/EmptyState";
 import { ProductThumb } from "@/components/ProductThumb";
 import { saveQuoteLead } from "@/lib/leads";
@@ -36,6 +37,8 @@ function QuotePage() {
   });
 
   const messagePreview = useMemo(() => buildQuoteMessage(lines, details), [details, lines]);
+  const completedFields = [details.name, details.company, details.phone, details.city].filter(Boolean).length;
+  const completion = Math.round((completedFields / 4) * 100);
 
   const updateDetails = (key: keyof Omit<Required<QuoteRequestDetails>, "lineNotes">, value: string) => {
     setDetails((current) => ({ ...current, [key]: value }));
@@ -58,7 +61,7 @@ function QuotePage() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <Link
         to="/catalogue"
         className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary"
@@ -66,24 +69,36 @@ function QuotePage() {
         <ArrowLeft className="h-4 w-4" /> Retour au catalogue
       </Link>
 
-      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <section className="relative mt-6 overflow-hidden rounded-[2rem] border border-border bg-card p-6 shadow-hero sm:p-8">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_10%,oklch(0.93_0.04_195),transparent_35%),radial-gradient(circle_at_90%_10%,oklch(0.9_0.08_165),transparent_34%)]" />
+        <div className="absolute inset-0 grid-pattern opacity-25" />
+        <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight">
+            <div className="inline-flex items-center gap-2 rounded-full bg-primary-soft px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary">
+              <ClipboardList className="h-3.5 w-3.5" /> Devis professionnel
+            </div>
+            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-5xl">
             Demande de devis
           </h1>
-          <p className="mt-2 text-muted-foreground">
-            {totalQuantity} produit{totalQuantity > 1 ? "s" : ""} dans votre sélection.
+            <p className="mt-3 max-w-2xl text-muted-foreground">
+              Préparez une demande claire avec produits, quantités, ville et notes. Le message WhatsApp est généré automatiquement.
           </p>
         </div>
-        {lines.length > 0 && (
-          <button
-            onClick={() => clearQuote()}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-border px-4 text-sm font-medium hover:bg-muted"
-          >
-            <Trash2 className="h-4 w-4" /> Vider
-          </button>
-        )}
-      </div>
+          <div className="grid min-w-[min(100%,360px)] grid-cols-3 gap-3">
+            {[
+              { label: "Produits", value: lines.length, icon: PackageCheck },
+              { label: "Quantité", value: totalQuantity, icon: ClipboardList },
+              { label: "Profil", value: `${completion}%`, icon: Building2 },
+            ].map((item) => (
+              <div key={item.label} className="rounded-2xl border border-border bg-background/80 p-4 shadow-soft backdrop-blur">
+                <item.icon className="h-5 w-5 text-primary" />
+                <p className="mt-2 font-display text-2xl font-bold">{item.value}</p>
+                <p className="text-xs text-muted-foreground">{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {lines.length === 0 ? (
         <div className="mt-12">
@@ -111,76 +126,129 @@ function QuotePage() {
           </EmptyState>
         </div>
       ) : (
-        <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_380px]">
-          <div className="space-y-3">
+        <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_400px]">
+          <div className="space-y-5">
+            <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-4 shadow-soft sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="font-display text-lg font-bold">1. Produits sélectionnés</p>
+                <p className="text-sm text-muted-foreground">
+                  Vérifiez les quantités et ajoutez une note si un modèle, une dimension ou une urgence doit être précisé.
+                </p>
+              </div>
+              <button
+                onClick={() => clearQuote()}
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-border px-4 text-sm font-medium hover:bg-muted"
+              >
+                <Trash2 className="h-4 w-4" /> Vider
+              </button>
+            </div>
+
             {lines.map(({ product, quantity }) => (
               <div
                 key={product.slug}
-                className="grid grid-cols-[72px_1fr] gap-4 rounded-2xl border border-border bg-card p-4 shadow-soft sm:grid-cols-[88px_1fr_auto]"
+                className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-shadow hover:shadow-elevated"
               >
-                <Link
-                  to="/produit/$slug"
-                  params={{ slug: product.slug }}
-                  className="aspect-square overflow-hidden rounded-xl bg-surface"
-                >
-                  <ProductThumb product={product} className="h-full w-full" imageClassName="p-2" />
-                </Link>
-                <div className="min-w-0">
+                <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,var(--primary),var(--whatsapp))]" />
+                <div className="grid gap-0 md:grid-cols-[190px_1fr]">
                   <Link
                     to="/produit/$slug"
                     params={{ slug: product.slug }}
-                    className="font-display font-semibold hover:text-primary"
+                    className="relative min-h-44 overflow-hidden border-b border-border bg-[radial-gradient(circle_at_50%_25%,white,oklch(0.95_0.018_190))] p-4 md:border-b-0 md:border-r"
                   >
-                    {product.name}
+                    <div className="absolute inset-0 brand-circuit opacity-20" />
+                    <ProductThumb
+                      product={product}
+                      className="relative h-full min-h-36 rounded-2xl border border-border bg-card shadow-sm"
+                      imageClassName="p-3"
+                    />
                   </Link>
-                  <p className="mt-1 text-sm text-muted-foreground">{product.category}</p>
-                  <textarea
-                    value={details.lineNotes[product.slug] ?? ""}
-                    onChange={(event) => updateLineNote(product.slug, event.target.value)}
-                    placeholder="Note pour ce produit : dimensions, modèle, urgence..."
-                    rows={2}
-                    className="mt-3 w-full resize-none rounded-xl border border-transparent bg-muted px-3 py-2 text-xs outline-none focus:border-primary"
-                  />
-                  <div className="mt-3 flex items-center gap-2">
-                    <button
-                      onClick={() => updateQuoteQuantity(product.slug, quantity - 1)}
-                      className="grid h-8 w-8 place-items-center rounded-lg border border-border hover:bg-muted"
-                      aria-label="Réduire la quantité"
-                    >
-                      <Minus className="h-3.5 w-3.5" />
-                    </button>
-                    <span className="grid h-8 min-w-10 place-items-center rounded-lg bg-muted px-3 text-sm font-semibold">
-                      {quantity}
-                    </span>
-                    <button
-                      onClick={() => updateQuoteQuantity(product.slug, quantity + 1)}
-                      className="grid h-8 w-8 place-items-center rounded-lg border border-border hover:bg-muted"
-                      aria-label="Augmenter la quantité"
-                    >
-                      <Plus className="h-3.5 w-3.5" />
-                    </button>
+
+                  <div className="grid gap-4 p-4 xl:grid-cols-[1fr_190px]">
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap gap-2">
+                        <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
+                          {product.category}
+                        </span>
+                        <PriceStatusBadge price={product.price} compact />
+                      </div>
+                      <Link
+                        to="/produit/$slug"
+                        params={{ slug: product.slug }}
+                        className="mt-3 block font-display text-xl font-bold leading-tight hover:text-primary"
+                      >
+                        {product.name}
+                      </Link>
+                      <p className="mt-2 line-clamp-1 text-sm text-muted-foreground">
+                        Référence devis : {product.slug}
+                      </p>
+                      <textarea
+                        value={details.lineNotes[product.slug] ?? ""}
+                        onChange={(event) => updateLineNote(product.slug, event.target.value)}
+                        placeholder="Note : dimensions, modèle, urgence..."
+                        rows={2}
+                        className="mt-4 w-full resize-none rounded-2xl border border-transparent bg-muted px-3 py-2 text-sm outline-none focus:border-primary"
+                      />
+                    </div>
+
+                    <div className="grid min-h-[176px] place-items-center rounded-2xl border border-border bg-surface p-3">
+                      <div className="grid w-full gap-5">
+                      <div className="grid justify-items-center">
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Quantité</p>
+                        <div className="mt-2 inline-flex h-11 items-center rounded-full border border-border bg-card p-1">
+                          <button
+                            onClick={() => updateQuoteQuantity(product.slug, quantity - 1)}
+                            className="grid h-9 w-9 place-items-center rounded-full hover:bg-muted"
+                            aria-label="Réduire la quantité"
+                          >
+                            <Minus className="h-3.5 w-3.5" />
+                          </button>
+                          <span className="min-w-10 text-center font-display text-lg font-bold">
+                            {quantity}
+                          </span>
+                          <button
+                            onClick={() => updateQuoteQuantity(product.slug, quantity + 1)}
+                            className="grid h-9 w-9 place-items-center rounded-full hover:bg-muted"
+                            aria-label="Augmenter la quantité"
+                          >
+                            <Plus className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => removeFromQuote(product.slug)}
+                        className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-xl border border-border bg-card px-3 text-sm font-medium hover:bg-muted xl:w-full"
+                        aria-label={`Retirer ${product.name} du devis`}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        <span>Retirer</span>
+                      </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <button
-                  onClick={() => removeFromQuote(product.slug)}
-                  className="col-span-2 inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-border text-sm font-medium hover:bg-muted sm:col-span-1 sm:self-center sm:px-3"
-                >
-                  <Trash2 className="h-4 w-4" /> Retirer
-                </button>
               </div>
             ))}
           </div>
 
-          <aside className="h-fit space-y-4 rounded-2xl border border-border bg-card p-5 shadow-soft lg:sticky lg:top-24">
+          <aside className="h-fit space-y-4 rounded-3xl border border-border bg-card p-5 shadow-hero lg:sticky lg:top-24">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-primary-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
                 <Building2 className="h-3.5 w-3.5" /> Devis professionnel
               </div>
-              <h2 className="mt-3 font-display text-xl font-bold">Informations de demande</h2>
+              <h2 className="mt-3 font-display text-xl font-bold">2. Informations client</h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                Ces informations préparent un message WhatsApp complet et enregistrent la demande dans
-                l'espace admin local.
+                Ces informations préparent un message WhatsApp complet pour accélérer la réponse de R2R Medical.
               </p>
+            </div>
+
+            <div className="rounded-2xl border border-border bg-surface p-3">
+              <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                <span>Profil complété</span>
+                <span>{completion}%</span>
+              </div>
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
+                <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${completion}%` }} />
+              </div>
             </div>
 
             {submitted && (
@@ -263,8 +331,21 @@ function QuotePage() {
               </label>
             </div>
 
+            <div className="grid gap-2 rounded-2xl border border-primary/15 bg-primary-soft/35 p-4">
+              {[
+                { icon: ShieldCheck, text: "Disponibilité et délai confirmés par conseiller" },
+                { icon: MapPin, text: "Ville utilisée pour préparer la livraison" },
+                { icon: MessageCircle, text: "Message WhatsApp prêt à envoyer" },
+              ].map((item) => (
+                <div key={item.text} className="flex gap-2 text-xs font-semibold text-foreground/80">
+                  <item.icon className="h-4 w-4 shrink-0 text-primary" />
+                  {item.text}
+                </div>
+              ))}
+            </div>
+
             <details className="rounded-xl border border-border bg-surface p-3">
-              <summary className="cursor-pointer text-sm font-semibold">Aperçu du message</summary>
+              <summary className="cursor-pointer text-sm font-semibold">3. Aperçu du message</summary>
               <pre className="mt-3 max-h-48 overflow-y-auto whitespace-pre-wrap text-xs leading-relaxed text-muted-foreground">
                 {messagePreview}
               </pre>

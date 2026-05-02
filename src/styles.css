@@ -177,6 +177,24 @@
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-elevated { box-shadow: var(--shadow-elevated); }
   .shadow-hero { box-shadow: var(--shadow-hero); }
+  .interactive-lift {
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      box-shadow 220ms ease,
+      background-color 220ms ease,
+      color 220ms ease;
+  }
+  .interactive-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-elevated);
+  }
+  .focus-ring {
+    outline: none;
+  }
+  .focus-ring:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 22%, transparent);
+  }
   .grid-pattern {
     background-image:
       linear-gradient(to right, oklch(0.42 0.09 200 / 0.06) 1px, transparent 1px),
@@ -191,6 +209,9 @@
       linear-gradient(90deg, transparent 0 18%, oklch(0.42 0.09 200 / 0.14) 18% 19%, transparent 19%),
       linear-gradient(0deg, transparent 0 68%, oklch(0.42 0.09 200 / 0.1) 68% 69%, transparent 69%);
     background-size: 72px 72px;
+  }
+  .soft-pulse {
+    animation: soft-pulse 3.4s ease-in-out infinite;
   }
   .rtl-flip {
     transition: transform 180ms ease;
@@ -232,6 +253,18 @@
   75%,
   100% {
     transform: translateX(180px) rotate(12deg);
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.035);
   }
 }
 

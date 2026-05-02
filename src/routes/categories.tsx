@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { PriceStatusBadge } from "@/components/AvailabilityBadge";
 import { ProductThumb } from "@/components/ProductThumb";
 import { CATEGORIES, getProductsByCategory } from "@/data/products";
 import { getIcon } from "@/lib/icon-map";
@@ -83,7 +84,9 @@ function CategoriesPage() {
                     />
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-sm truncate group-hover:text-primary transition-colors">{p.name}</p>
-                      <p className="text-xs text-muted-foreground">En stock</p>
+                      <div className="mt-1">
+                        <PriceStatusBadge price={p.price} compact />
+                      </div>
                     </div>
                     <ArrowRight className="rtl-flip h-4 w-4 text-muted-foreground transition-all group-hover:text-primary group-hover:translate-x-1" />
                   </Link>

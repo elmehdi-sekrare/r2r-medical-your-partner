@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { CATEGORIES, PRODUCTS } from "@/data/products";
 
-const SYSTEM_PROMPT = `Tu es l'assistant virtuel de R2R Medical, fournisseur d'équipements médicaux professionnels au Maroc. Tu parles uniquement en français. Tu aides les clients à trouver des produits parmi ces 10 catégories : Oxygénothérapie & Respiratoire, Anesthésie & Réanimation, Dispositifs Médicaux & Consommables, Diagnostic & Monitoring, Orthopédie & Maintien, Protection & Hygiène, Mobilité & Aide au Déplacement, Instruments Chirurgicaux, Pansements & Soins, Stérilisation. Total : 412 produits. Pour toute commande ou devis, dirige systématiquement l'utilisateur vers WhatsApp. Réponds de façon concise, professionnelle et chaleureuse en 2-4 phrases maximum.`;
+const SYSTEM_PROMPT = `Tu es l'assistant virtuel de R2R Medical, fournisseur d'équipements médicaux professionnels au Maroc. Tu parles uniquement en français. Tu aides les clients à trouver des produits parmi ces 10 catégories : Oxygénothérapie & Respiratoire, Anesthésie & Réanimation, Dispositifs Médicaux & Consommables, Diagnostic & Monitoring, Orthopédie & Maintien, Protection & Hygiène, Mobilité & Aide au Déplacement, Instruments Chirurgicaux, Pansements & Soins, Stérilisation. Total : 412 produits. Pour toute commande ou devis, demande le produit, la quantité et la ville, puis dirige vers WhatsApp. Ne donne pas de diagnostic médical et n'invente pas de disponibilité exacte. Réponds de façon concise, professionnelle et chaleureuse en 2-4 phrases maximum.`;
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -18,10 +18,14 @@ function getFallbackReply(messages: Msg[]) {
 
   if (matches.length > 0) {
     const list = matches.map((product) => `- ${product.name} (${product.category})`).join("\n");
-    return `Oui, voici des produits proches dans notre catalogue :\n${list}\n\nPour confirmer la disponibilité et recevoir un devis, envoyez la sélection sur WhatsApp.`;
+    return `Oui, voici des produits proches dans notre catalogue :\n${list}\n\nPour avancer, indiquez la quantité souhaitée et votre ville. L'équipe R2R Medical confirmera disponibilité, prix et délai sur WhatsApp.`;
   }
 
-  if (last.includes("catégorie") || last.includes("categorie")) {
+  if (last.includes("oxyg") || last.includes("respiration") || last.includes("respiratoire")) {
+    return "Pour l'oxygène et la respiration, R2R Medical peut vous orienter vers les concentrateurs, masques, nébuliseurs, CPAP/APAP et accessoires respiratoires. Précisez l'usage recherché, la quantité et la ville pour préparer un devis WhatsApp.";
+  }
+
+  if (last.includes("catégorie") || last.includes("categorie") || last.includes("produit")) {
     return `Nous proposons ${CATEGORIES.length} catégories : oxygénothérapie, anesthésie, consommables, diagnostic, orthopédie, hygiène, mobilité, instruments chirurgicaux, pansements et stérilisation. Dites-moi le type de produit recherché et je vous oriente.`;
   }
 

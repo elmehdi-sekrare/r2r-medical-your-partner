@@ -22,7 +22,7 @@ export function CategoryCard({
       <Link
         to="/catalogue"
         search={{ category: category.slug }}
-        className="group relative flex flex-col h-full p-6 rounded-2xl bg-card border border-border shadow-soft hover:shadow-elevated transition-all hover:-translate-y-1 overflow-hidden"
+        className="interactive-lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-soft hover:border-primary/25"
       >
         <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-primary-soft opacity-50 group-hover:scale-125 transition-transform duration-500" />
         <div className="relative">
