@@ -4,6 +4,7 @@ import { ArrowRight, GitCompare, Heart, MessageCircle, ShoppingCart } from "luci
 import { useState } from "react";
 import { AvailabilityBadge, PriceStatusBadge } from "@/components/AvailabilityBadge";
 import { BrandMark } from "@/components/Brand";
+import { FadeInView } from "@/components/FadeIn";
 import type { Product } from "@/data/products";
 import { getCategory, getProductMeta } from "@/data/products";
 import { getIcon } from "@/lib/icon-map";
@@ -23,11 +24,9 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
   const categoryLabel = cat?.name.split(" & ")[0] ?? product.category;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "50px" }}
-      transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.2) }}
+    <FadeInView
+      delay={Math.min(index * 0.04, 0.2)}
+      duration={0.4}
       className="interactive-lift group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft hover:border-primary/25"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,transparent,oklch(0.42_0.09_200),oklch(0.66_0.18_145),transparent)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -49,132 +48,86 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
               className="relative h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
             />
           ) : (
-            <ProductImageFallback categorySlug={product.categorySlug} compact productName={product.name} />
+            <div className="relative flex h-full flex-col items-center justify-center gap-2 p-4">
+              <div className="grid h-16 w-16 place-items-center rounded-2xl bg-primary-soft text-primary">
+                <Icon className="h-8 w-8" />
+              </div>
+              <BrandMark className="mt-1" />
+            </div>
           )}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-background/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
         </div>
-
-        <div className="absolute left-5 top-5 flex max-w-[calc(100%-6rem)] flex-wrap gap-1.5">
-          <span className="rounded-full border border-primary/15 bg-background/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary backdrop-blur">
-            {categoryLabel}
-          </span>
-          <AvailabilityBadge availability={meta.availability} compact className="backdrop-blur" />
-        </div>
-
-        <div className="absolute right-5 top-5 flex flex-col gap-1.5 opacity-100 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
-          <button
-            type="button"
-            onClick={(event) => {
-              event.preventDefault();
-              toggleFavorite(product);
-            }}
-            className="grid h-9 w-9 place-items-center rounded-full border border-border bg-background/95 text-foreground shadow-soft backdrop-blur hover:text-primary"
-            aria-label={
-              favorite ? `Retirer ${product.name} des favoris` : `Ajouter ${product.name} aux favoris`
-            }
-          >
-            <Heart className={cn("h-4 w-4", favorite && "fill-primary text-primary")} />
-          </button>
-          <button
-            type="button"
-            onClick={(event) => {
-              event.preventDefault();
-              toggleCompare(product);
-            }}
-            className="grid h-9 w-9 place-items-center rounded-full border border-border bg-background/95 text-foreground shadow-soft backdrop-blur hover:text-primary"
-            aria-label={compared ? `Retirer ${product.name} du comparateur` : `Comparer ${product.name}`}
-          >
-            <GitCompare className={cn("h-4 w-4", compared && "text-primary")} />
-          </button>
+        <div className="absolute left-4 top-4 flex items-center gap-1.5">
+          <PriceStatusBadge product={product} />
         </div>
       </Link>
 
       <div className="flex flex-1 flex-col p-4 pt-3">
-        <div className="mb-2 flex items-center justify-between gap-2">
-          <span className="line-clamp-1 text-[11px] font-semibold text-muted-foreground">
-            {meta.productType}
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 rounded-full bg-surface px-2 py-0.5 text-[10px] font-semibold text-muted-foreground">
+            <Icon className="h-3 w-3" />
+            {categoryLabel}
           </span>
-          <PriceStatusBadge price={product.price} compact />
+          <AvailabilityBadge product={product} />
         </div>
-
         <Link
           to="/produit/$slug"
           params={{ slug: product.slug }}
-          className="font-display min-h-[2.75rem] text-base font-bold leading-snug line-clamp-2 hover:text-primary"
-          title={product.name}
+          className="mt-2 font-display text-sm font-bold leading-snug hover:text-primary transition-colors line-clamp-2"
         >
           {product.name}
         </Link>
-        <p className="mt-2 line-clamp-1 text-xs text-muted-foreground">{meta.useCase}</p>
-
-        <div className="mt-auto grid grid-cols-[1fr_auto_auto] gap-2 pt-4">
-          <Link
-            to="/produit/$slug"
-            params={{ slug: product.slug }}
-            className="inline-flex h-10 items-center justify-center gap-1.5 rounded-xl bg-primary px-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+        {product.price && (
+          <p className="mt-2 font-display text-lg font-bold text-primary">
+            {product.price}
+          </p>
+        )}
+        <div className="mt-auto flex items-center gap-1.5 pt-4 border-t border-border">
+          <button
+            onClick={() => toggleFavorite(product)}
+            title="Favoris"
+            className={cn(
+              "grid h-9 w-9 place-items-center rounded-lg border transition-colors",
+              favorite
+                ? "border-red-200 bg-red-50 text-red-500 dark:border-red-800 dark:bg-red-950"
+                : "border-border bg-surface text-muted-foreground hover:text-primary",
+            )}
           >
-            Voir détails <ArrowRight className="rtl-flip h-3.5 w-3.5" />
-          </Link>
+            <Heart className={cn("h-4 w-4", favorite && "fill-current")} />
+          </button>
+          <button
+            onClick={() => toggleCompare(product)}
+            title="Comparer"
+            className={cn(
+              "grid h-9 w-9 place-items-center rounded-lg border transition-colors",
+              compared
+                ? "border-primary/30 bg-primary-soft text-primary"
+                : "border-border bg-surface text-muted-foreground hover:text-primary",
+            )}
+          >
+            <GitCompare className="h-4 w-4" />
+          </button>
           <button
             onClick={() => addToQuote(product)}
-            className="grid h-10 w-10 place-items-center rounded-xl bg-primary-soft text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-            aria-label={`Ajouter ${product.name} au devis`}
+            className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-surface text-muted-foreground transition-colors hover:text-primary"
             title="Ajouter au devis"
           >
             <ShoppingCart className="h-4 w-4" />
           </button>
+          <Link
+            to="/produit/$slug"
+            params={{ slug: product.slug }}
+            className="ml-auto inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-3 py-2 text-xs font-semibold text-foreground/80 hover:text-primary transition-colors"
+          >
+            Détails <ArrowRight className="rtl-flip h-3 w-3" />
+          </Link>
           <button
             onClick={() => openWhatsApp(product.name)}
-            className="grid h-10 w-10 place-items-center rounded-xl bg-whatsapp text-whatsapp-foreground transition-opacity hover:opacity-90"
-            aria-label={`Commander ${product.name} sur WhatsApp`}
-            title="Commander sur WhatsApp"
+            className="inline-flex items-center gap-1 rounded-lg bg-whatsapp px-3 py-2 text-xs font-bold text-whatsapp-foreground"
           >
-            <MessageCircle className="h-4 w-4" />
+            <MessageCircle className="h-3 w-3" />
           </button>
         </div>
       </div>
-    </motion.div>
-  );
-}
-
-export function ProductImageFallback({
-  categorySlug,
-  compact = false,
-  productName,
-}: {
-  categorySlug: string;
-  compact?: boolean;
-  productName?: string;
-}) {
-  const cat = getCategory(categorySlug);
-  const Icon = getIcon(cat?.icon ?? "Package");
-  return (
-    <div className="relative grid h-full w-full place-items-center overflow-hidden bg-[radial-gradient(circle_at_50%_25%,white,oklch(0.94_0.018_190))] p-5">
-      <div className="absolute inset-0 brand-circuit opacity-30" />
-      <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full border border-primary/15" />
-      <div className="absolute -bottom-12 -left-8 h-32 w-32 rounded-full bg-primary-soft/70 blur-2xl" />
-      <div className="relative flex max-w-[92%] flex-col items-center text-center">
-        <BrandMark className={cn("rounded-2xl", compact ? "h-10 w-10" : "h-12 w-12")} />
-        <div
-          className={cn(
-            "mt-4 grid place-items-center rounded-full border border-primary/15 bg-card/80 text-primary shadow-soft backdrop-blur",
-            compact ? "h-16 w-16" : "h-24 w-24",
-          )}
-        >
-          <Icon className={cn(compact ? "h-8 w-8" : "h-12 w-12")} strokeWidth={1.35} />
-        </div>
-        <p
-          className={cn(
-            "mt-4 font-display font-bold leading-tight text-foreground",
-            compact ? "line-clamp-1 text-xs" : "line-clamp-2 text-base",
-          )}
-        >
-          {productName ?? cat?.name ?? "Produit médical"}
-        </p>
-        <p className={cn("mt-1 text-muted-foreground", compact ? "text-[10px]" : "text-xs")}>
-          Image en cours de chargement
-        </p>
-      </div>
-    </div>
+    </FadeInView>
   );
 }
