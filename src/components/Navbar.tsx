@@ -53,27 +53,35 @@ export function Navbar() {
           <BrandLockup compact />
         </Link>
 
-        <nav className="hidden items-center gap-1 rounded-full border border-border/70 bg-card/70 p-1 shadow-soft backdrop-blur lg:flex">
+        <nav className="relative hidden items-center gap-1 rounded-full border border-border/70 bg-card/70 p-1 shadow-soft backdrop-blur lg:flex">
           {NAV.map((n) => {
             const active = n.to === "/" ? pathname === "/" : pathname.startsWith(n.to);
+            const isCat = n.to === "/categories";
             return (
-              <Link
+              <div
                 key={n.to}
-                to={n.to}
-                className={cn(
-                  "relative rounded-full px-3.5 py-2 text-sm font-semibold transition-colors",
-                  active ? "text-primary" : "text-foreground/65 hover:text-foreground",
-                )}
+                className="relative"
+                onMouseEnter={() => isCat && setMegaOpen(true)}
+                onMouseLeave={() => isCat && setMegaOpen(false)}
               >
-                <span className="relative z-10">{t(n.labelKey)}</span>
-                {active && (
-                  <motion.span
-                    layoutId="nav-active"
-                    className="absolute inset-0 rounded-full bg-primary-soft"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </Link>
+                <Link
+                  to={n.to}
+                  className={cn(
+                    "relative rounded-full px-3.5 py-2 text-sm font-semibold transition-colors inline-block",
+                    active ? "text-primary" : "text-foreground/65 hover:text-foreground",
+                  )}
+                >
+                  <span className="relative z-10">{t(n.labelKey)}</span>
+                  {active && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-0 rounded-full bg-primary-soft"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </Link>
+                {isCat && <MegaMenu open={megaOpen} />}
+              </div>
             );
           })}
         </nav>
