@@ -18,6 +18,7 @@ export const Route = createFileRoute("/blog")({
 });
 
 function BlogPage() {
+  const mounted = useHasMounted();
   const location = useLocation();
 
   if (location.pathname !== "/blog") {

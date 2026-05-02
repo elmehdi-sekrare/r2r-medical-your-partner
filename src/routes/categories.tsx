@@ -18,6 +18,7 @@ export const Route = createFileRoute("/categories")({
 });
 
 function CategoriesPage() {
+  const mounted = useHasMounted();
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center max-w-2xl mx-auto mb-16">
