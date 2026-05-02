@@ -111,6 +111,7 @@ function RootComponent() {
         <BackToTop />
         <SocialProofTicker />
         <CookieConsent />
+        <QuickViewModal product={quickView.product} open={quickView.open} onClose={quickView.close} />
       </div>
     </I18nProvider>
   );
