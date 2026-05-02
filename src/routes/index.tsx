@@ -15,6 +15,7 @@ import {
   Truck,
 } from "lucide-react";
 import { useRef, useState } from "react";
+import { useHasMounted } from "@/hooks/useHasMounted";
 import { CATEGORIES, PRODUCTS } from "@/data/products";
 import { Testimonials } from "@/components/Testimonials";
 import { BrandLockup, BrandSeal } from "@/components/Brand";
