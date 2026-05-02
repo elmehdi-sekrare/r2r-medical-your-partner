@@ -121,8 +121,8 @@ function HeroCatalogueShowcase() {
           {showcaseProducts.map((product, index) => (
             <motion.div
               key={product.slug}
-              initial={mounted ? { opacity: 0, y: 18 }}
-              animate={mounted ? { opacity: 1, y: 0 }}
+              initial={mounted ? { opacity: 0, y: 18 } : false}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55 + index * 0.12, duration: 0.55 }}
               className="group relative overflow-hidden rounded-2xl border border-border bg-background p-3 shadow-soft"
             >
@@ -175,8 +175,8 @@ function HeroMedicalShowcase() {
   return (
     <motion.div
       className="absolute inset-0 overflow-hidden rounded-3xl border border-border bg-card shadow-hero"
-      initial={mounted ? { opacity: 0, y: 34, scale: 0.96 }}
-      animate={mounted ? { opacity: 1, y: 0, scale: 1 }}
+      initial={mounted ? { opacity: 0, y: 34, scale: 0.96 } : false}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.85, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,oklch(0.9_0.06_190),transparent_28%),radial-gradient(circle_at_82%_18%,oklch(0.9_0.11_155),transparent_30%),linear-gradient(145deg,white,oklch(0.97_0.02_190)_58%,oklch(0.92_0.08_165))]" />
@@ -272,8 +272,8 @@ function HomePage() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-7 px-4 py-6 pb-14 sm:px-6 sm:py-8 lg:grid-cols-2 lg:items-start lg:gap-10 lg:px-8 lg:py-10">
           <div>
             <motion.span
-              initial={mounted ? { opacity: 0, y: 18 }}
-              animate={mounted ? { opacity: 1, y: 0 }}
+              initial={mounted ? { opacity: 0, y: 18 } : false}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, ease: heroEase }}
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-semibold uppercase tracking-wider"
             >
@@ -284,8 +284,8 @@ function HomePage() {
               {heroText.map((line, i) => (
                 <motion.span
                   key={line}
-                  initial={mounted ? { opacity: 0, y: 34 }}
-                  animate={mounted ? { opacity: 1, y: 0 }}
+                  initial={mounted ? { opacity: 0, y: 34 } : false}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.12 + i * 0.1, ease: heroEase }}
                   className="block"
                 >
@@ -294,16 +294,16 @@ function HomePage() {
               ))}
             </h1>
             <motion.p
-              initial={mounted ? { opacity: 0, y: 22 }}
-              animate={mounted ? { opacity: 1, y: 0 }}
+              initial={mounted ? { opacity: 0, y: 22 } : false}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.44, ease: heroEase }}
               className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
             >
               {t("heroCopy")}
             </motion.p>
             <motion.div
-              initial={mounted ? { opacity: 0, y: 20 }}
-              animate={mounted ? { opacity: 1, y: 0 }}
+              initial={mounted ? { opacity: 0, y: 20 } : false}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.58, ease: heroEase }}
               className="mt-7 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap"
             >
@@ -321,8 +321,8 @@ function HomePage() {
               </button>
             </motion.div>
             <motion.form
-              initial={mounted ? { opacity: 0, y: 22, scale: 0.98 }}
-              animate={mounted ? { opacity: 1, y: 0, scale: 1 }}
+              initial={mounted ? { opacity: 0, y: 22, scale: 0.98 } : false}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.72, ease: heroEase }}
               onSubmit={(event) => {
                 event.preventDefault();
@@ -358,8 +358,8 @@ function HomePage() {
               </div>
             </motion.form>
             <motion.div
-              initial={mounted ? { opacity: 0, y: 18 }}
-              animate={mounted ? { opacity: 1, y: 0 }}
+              initial={mounted ? { opacity: 0, y: 18 } : false}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.86, ease: heroEase }}
               className="mt-4 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0"
             >
@@ -376,8 +376,8 @@ function HomePage() {
             </motion.div>
           </div>
           <motion.div
-            initial={mounted ? { opacity: 0, x: 28 }}
-            animate={mounted ? { opacity: 1, x: 0 }}
+            initial={mounted ? { opacity: 0, x: 28 } : false}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.85, delay: 0.22, ease: heroEase }}
             className="relative h-[360px] sm:h-[520px] lg:h-[560px]"
           >
@@ -518,7 +518,7 @@ function HomePage() {
             ].map((item, index) => (
               <motion.div
                 key={item.title}
-                initial={mounted ? { opacity: 0, y: 18 }}
+                initial={mounted ? { opacity: 0, y: 18 } : false}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.08 }}
@@ -666,7 +666,7 @@ function HomePage() {
           ].map((f, i) => (
             <motion.div
               key={f.title}
-              initial={mounted ? { opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
+              initial={mounted ? { opacity: 0, x: i % 2 === 0 ? -30 : 30 } : false}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
