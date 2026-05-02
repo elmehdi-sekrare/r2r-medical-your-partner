@@ -1,3 +1,4 @@
+import { useHasMounted } from "@/hooks/useHasMounted";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -37,7 +38,7 @@ function CategoriesPage() {
           return (
             <motion.section
               key={c.slug}
-              initial={{ opacity: 0, y: 30 }}
+              initial={mounted ? { opacity: 0, y: 30 } : false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "50px" }}
               transition={{ duration: 0.6 }}

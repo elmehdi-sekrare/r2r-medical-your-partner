@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { MessageCircle, Mail, MapPin, Clock, Check } from "lucide-react";
 import { useState } from "react";
+import { useHasMounted } from "@/hooks/useHasMounted";
 import { buildWhatsAppMessageUrl, openWhatsApp, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 
 export const Route = createFileRoute("/contact")({
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const mounted = useHasMounted();
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -60,7 +62,7 @@ function ContactPage() {
       <div className="grid lg:grid-cols-2 gap-8">
         {/* WhatsApp CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          initial={mounted ? { opacity: 0, y: 20 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="relative overflow-hidden p-10 rounded-3xl gradient-primary text-primary-foreground shadow-hero"
         >
           <div className="absolute inset-0 grid-pattern opacity-15" />
@@ -87,7 +89,7 @@ function ContactPage() {
 
         {/* Form */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+          initial={mounted ? { opacity: 0, y: 20 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
           className="p-10 rounded-3xl bg-card border border-border shadow-soft"
         >
           <Mail className="h-10 w-10 text-primary" />
