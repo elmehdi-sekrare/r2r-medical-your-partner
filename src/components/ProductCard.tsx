@@ -140,6 +140,13 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           >
             <ShoppingCart className="h-4 w-4" />
           </button>
+          <button
+            onClick={() => openQuickView(product)}
+            className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-surface text-muted-foreground transition-colors hover:text-primary"
+            title="Aperçu rapide"
+          >
+            <Eye className="h-4 w-4" />
+          </button>
           <Link
             to="/produit/$slug"
             params={{ slug: product.slug }}
