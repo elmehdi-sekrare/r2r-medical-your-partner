@@ -84,7 +84,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           )}
         </div>
         <div className="absolute left-4 top-4 flex items-center gap-1.5">
-          <PriceStatusBadge product={product} />
+          <PriceStatusBadge price={product.price} />
         </div>
       </Link>
 
@@ -94,7 +94,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
             <Icon className="h-3 w-3" />
             {categoryLabel}
           </span>
-          <AvailabilityBadge product={product} />
+          <AvailabilityBadge availability={meta.availability} compact />
         </div>
         <Link
           to="/produit/$slug"
