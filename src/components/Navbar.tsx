@@ -4,6 +4,7 @@ import { GitCompare, Globe2, Heart, MessageCircle, Menu, ShoppingCart, X } from 
 import { useState } from "react";
 import { BrandLockup } from "@/components/Brand";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
+import { MegaMenu } from "@/components/MegaMenu";
 import { useI18n } from "@/lib/i18n";
 import { useCompare, useFavorites, useQuoteBasket } from "@/lib/quote";
 import { openWhatsApp } from "@/lib/whatsapp";
