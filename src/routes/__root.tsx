@@ -1,6 +1,8 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { Navbar } from "@/components/Navbar";
+import { QuickViewModal } from "@/components/QuickViewModal";
+import { useQuickView } from "@/lib/quick-view";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { AIAssistant } from "@/components/AIAssistant";
