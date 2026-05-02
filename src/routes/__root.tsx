@@ -106,6 +106,7 @@ function RootComponent() {
         <WhatsAppFloat />
         <AIAssistant />
         <BackToTop />
+        <SocialProofTicker />
         <CookieConsent />
       </div>
     </I18nProvider>
