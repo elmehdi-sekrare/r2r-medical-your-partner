@@ -97,6 +97,14 @@ function ProductPage() {
     .filter((p) => p.slug !== product.slug)
     .slice(0, 4);
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setZoomStyle({ transformOrigin: `${x}% ${y}%`, transform: "scale(1.6)" });
+  };
+  const handleMouseLeave = () => setZoomStyle({});
+
   useEffect(() => {
     recordRecentlyViewed(product);
   }, [product]);
