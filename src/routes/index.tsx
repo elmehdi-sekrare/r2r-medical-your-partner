@@ -15,7 +15,6 @@ import {
   Truck,
 } from "lucide-react";
 import { useRef, useState } from "react";
-import { useHasMounted } from "@/hooks/useHasMounted";
 import { CATEGORIES, PRODUCTS } from "@/data/products";
 import { Testimonials } from "@/components/Testimonials";
 import { BrandLockup, BrandSeal } from "@/components/Brand";
@@ -81,7 +80,6 @@ function HeroPulse() {
 }
 
 function HeroCatalogueShowcase() {
-  const mounted = useHasMounted();
   const showcaseProducts = [
     PRODUCTS.find((product) => product.slug === "concentrateur-doxygene"),
     PRODUCTS.find((product) => product.rawName.includes("FAUTEUIL")),
@@ -121,7 +119,7 @@ function HeroCatalogueShowcase() {
           {showcaseProducts.map((product, index) => (
             <motion.div
               key={product.slug}
-              initial={mounted ? { opacity: 0, y: 18 } : false}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55 + index * 0.12, duration: 0.55 }}
               className="group relative overflow-hidden rounded-2xl border border-border bg-background p-3 shadow-soft"
@@ -161,7 +159,6 @@ function HeroCatalogueShowcase() {
 }
 
 function HeroMedicalShowcase() {
-  const mounted = useHasMounted();
   const carouselProducts = [
     PRODUCTS.find((product) => product.slug === "concentrateur-doxygene"),
     PRODUCTS.find((product) => product.rawName.includes("FAUTEUIL")),
@@ -175,7 +172,7 @@ function HeroMedicalShowcase() {
   return (
     <motion.div
       className="absolute inset-0 overflow-hidden rounded-3xl border border-border bg-card shadow-hero"
-      initial={mounted ? { opacity: 0, y: 34, scale: 0.96 } : false}
+      initial={{ opacity: 0, y: 34, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.85, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
     >
@@ -241,7 +238,6 @@ function HeroMedicalShowcase() {
 }
 
 function HomePage() {
-  const mounted = useHasMounted();
   const navigate = useNavigate();
   const { t } = useI18n();
   const [query, setQuery] = useState("");
@@ -272,7 +268,7 @@ function HomePage() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-7 px-4 py-6 pb-14 sm:px-6 sm:py-8 lg:grid-cols-2 lg:items-start lg:gap-10 lg:px-8 lg:py-10">
           <div>
             <motion.span
-              initial={mounted ? { opacity: 0, y: 18 } : false}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, ease: heroEase }}
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-semibold uppercase tracking-wider"
@@ -284,7 +280,7 @@ function HomePage() {
               {heroText.map((line, i) => (
                 <motion.span
                   key={line}
-                  initial={mounted ? { opacity: 0, y: 34 } : false}
+                  initial={{ opacity: 0, y: 34 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.12 + i * 0.1, ease: heroEase }}
                   className="block"
@@ -294,7 +290,7 @@ function HomePage() {
               ))}
             </h1>
             <motion.p
-              initial={mounted ? { opacity: 0, y: 22 } : false}
+              initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.44, ease: heroEase }}
               className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
@@ -302,7 +298,7 @@ function HomePage() {
               {t("heroCopy")}
             </motion.p>
             <motion.div
-              initial={mounted ? { opacity: 0, y: 20 } : false}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.58, ease: heroEase }}
               className="mt-7 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap"
@@ -321,7 +317,7 @@ function HomePage() {
               </button>
             </motion.div>
             <motion.form
-              initial={mounted ? { opacity: 0, y: 22, scale: 0.98 } : false}
+              initial={{ opacity: 0, y: 22, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.72, ease: heroEase }}
               onSubmit={(event) => {
@@ -358,7 +354,7 @@ function HomePage() {
               </div>
             </motion.form>
             <motion.div
-              initial={mounted ? { opacity: 0, y: 18 } : false}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.86, ease: heroEase }}
               className="mt-4 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0"
@@ -376,7 +372,7 @@ function HomePage() {
             </motion.div>
           </div>
           <motion.div
-            initial={mounted ? { opacity: 0, x: 28 } : false}
+            initial={{ opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.85, delay: 0.22, ease: heroEase }}
             className="relative h-[360px] sm:h-[520px] lg:h-[560px]"
@@ -518,7 +514,7 @@ function HomePage() {
             ].map((item, index) => (
               <motion.div
                 key={item.title}
-                initial={mounted ? { opacity: 0, y: 18 } : false}
+                initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.08 }}
@@ -666,7 +662,7 @@ function HomePage() {
           ].map((f, i) => (
             <motion.div
               key={f.title}
-              initial={mounted ? { opacity: 0, x: i % 2 === 0 ? -30 : 30 } : false}
+              initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.1 }}

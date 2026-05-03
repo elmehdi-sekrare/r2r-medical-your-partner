@@ -20,13 +20,15 @@ export function QuickViewModal({
   open: boolean;
   onClose: () => void;
 }) {
-  if (!product) return null;
-  const cat = getCategory(product.categorySlug);
-  const meta = getProductMeta(product);
-  const Icon = getIcon(cat?.icon ?? "Package");
   const [imgErr, setImgErr] = useState(false);
   const favorites = useFavorites();
   const compare = useCompare();
+
+  if (!product) return null;
+
+  const cat = getCategory(product.categorySlug);
+  const meta = getProductMeta(product);
+  const Icon = getIcon(cat?.icon ?? "Package");
   const favorite = favorites.isFavorite(product);
   const compared = compare.isCompared(product);
 

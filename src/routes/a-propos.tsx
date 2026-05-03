@@ -16,7 +16,6 @@ import { BrandSeal } from "@/components/Brand";
 import { useCounter } from "@/hooks/useCounter";
 import { openWhatsApp } from "@/lib/whatsapp";
 import { useRef } from "react";
-import { useHasMounted } from "@/hooks/useHasMounted";
 import { useInView } from "framer-motion";
 import heroImg from "@/assets/hero-medical.jpg";
 
@@ -47,7 +46,6 @@ function Stat({ value, suffix, label }: { value: number; suffix: string; label: 
 }
 
 function AboutPage() {
-  const mounted = useHasMounted();
   return (
     <div>
       {/* Hero */}
@@ -162,7 +160,7 @@ function AboutPage() {
             ].map((item, i) => (
               <motion.div
                 key={item.title}
-                initial={mounted ? { opacity: 0, y: 20 } : false}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "50px" }}
                 transition={{ delay: i * 0.1 }}

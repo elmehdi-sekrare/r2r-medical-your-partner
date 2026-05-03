@@ -108,8 +108,8 @@ function RootComponent() {
         <Footer />
         <WhatsAppFloat />
         <AIAssistant />
-        <BackToTop />
         <SocialProofTicker />
+        <BackToTop />
         <CookieConsent />
         <QuickViewModal product={quickView.product} open={quickView.open} onClose={quickView.close} />
       </div>

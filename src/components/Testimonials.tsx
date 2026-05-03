@@ -1,5 +1,5 @@
+import { motion } from "framer-motion";
 import { Building2 } from "lucide-react";
-import { FadeInView } from "@/components/FadeIn";
 
 const CLIENTS = [
   "CHU Mohammed VI",
@@ -61,9 +61,12 @@ export function Testimonials() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {TESTIMONIALS.map((t, i) => (
-            <FadeInView
+            <motion.div
               key={t.name}
-              delay={i * 0.1}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "50px" }}
+              transition={{ delay: i * 0.1 }}
               className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-soft"
             >
               <div className="flex gap-1 mb-4">
@@ -78,7 +81,7 @@ export function Testimonials() {
                 <p className="font-display text-sm font-bold">{t.name}</p>
                 <p className="text-xs text-muted-foreground">{t.role}</p>
               </div>
-            </FadeInView>
+            </motion.div>
           ))}
         </div>
       </div>

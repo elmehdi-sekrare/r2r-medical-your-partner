@@ -1,4 +1,3 @@
-import { useHasMounted } from "@/hooks/useHasMounted";
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, Calendar, CheckCircle2, Clock, ClipboardCheck, MessageCircle, Search, Tag } from "lucide-react";
@@ -18,7 +17,6 @@ export const Route = createFileRoute("/blog")({
 });
 
 function BlogPage() {
-  const mounted = useHasMounted();
   const location = useLocation();
 
   if (location.pathname !== "/blog") {
@@ -67,7 +65,7 @@ function BlogPage() {
 
         {/* Featured article */}
         <motion.article
-          initial={mounted ? { opacity: 0, y: 20 } : false}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="group relative mb-12 grid overflow-hidden rounded-[2rem] border border-primary/15 bg-card shadow-hero transition-all duration-300 hover:-translate-y-1 lg:grid-cols-[1.05fr_0.95fr]"
@@ -123,7 +121,7 @@ function BlogPage() {
           {BLOG_ARTICLES.slice(1).map((article, i) => (
             <motion.article
               key={article.slug}
-              initial={mounted ? { opacity: 0, y: 20 } : false}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "50px" }}
               transition={{ delay: i * 0.1 }}

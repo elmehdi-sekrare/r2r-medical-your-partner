@@ -37,7 +37,7 @@ export function SocialProofTicker() {
           initial={{ opacity: 0, y: 20, x: 0 }}
           animate={{ opacity: 1, y: 0, x: 0 }}
           exit={{ opacity: 0, y: 20 }}
-          className="fixed bottom-24 left-4 z-40 max-w-xs rounded-2xl border border-border bg-card p-4 shadow-elevated sm:bottom-6"
+          className="fixed bottom-[calc(5.25rem+env(safe-area-inset-bottom))] left-4 z-40 max-w-xs rounded-2xl border border-border bg-card p-4 shadow-elevated sm:bottom-24 sm:left-6"
         >
           <button
             onClick={() => setVisible(false)}
