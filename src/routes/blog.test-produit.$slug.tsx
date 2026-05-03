@@ -44,7 +44,7 @@ function ProductTestArticlePage() {
 
   return (
     <article className="relative overflow-hidden">
-      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_14%_18%,oklch(0.78_0.13_180_/_0.26),transparent_32%),radial-gradient(circle_at_86%_4%,oklch(0.62_0.15_155_/_0.22),transparent_34%),linear-gradient(180deg,oklch(0.97_0.03_195),transparent)]" />
+      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_14%_18%,oklch(0.65_0.18_250_/_0.26),transparent_32%),radial-gradient(circle_at_86%_4%,oklch(0.55_0.16_260_/_0.22),transparent_34%),linear-gradient(180deg,oklch(0.97_0.03_255),transparent)]" />
       <div className="absolute inset-x-0 top-0 -z-10 h-[520px] grid-pattern opacity-60" />
 
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
@@ -55,7 +55,7 @@ function ProductTestArticlePage() {
 
         <header className="mt-8 overflow-hidden rounded-[2rem] border border-primary/15 bg-card shadow-hero">
           <div className="grid lg:grid-cols-[minmax(0,1fr)_430px]">
-            <div className="relative overflow-hidden bg-[linear-gradient(135deg,var(--primary),oklch(0.34_0.08_210))] p-6 text-primary-foreground sm:p-8 lg:p-12">
+            <div className="relative overflow-hidden bg-[linear-gradient(135deg,var(--primary),oklch(0.35_0.14_260))] p-6 text-primary-foreground sm:p-8 lg:p-12">
               <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full border border-white/15" />
               <div className="absolute bottom-6 right-8 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
               <div className="relative">
@@ -74,7 +74,7 @@ function ProductTestArticlePage() {
               </div>
             </div>
 
-            <div className="relative bg-[radial-gradient(circle_at_70%_20%,oklch(0.78_0.13_180_/_0.22),transparent_34%),var(--surface)] p-6 sm:p-8">
+            <div className="relative bg-[radial-gradient(circle_at_70%_20%,oklch(0.65_0.18_250_/_0.22),transparent_34%),var(--surface)] p-6 sm:p-8">
               {product ? (
                 <ProductThumb product={product} className="aspect-square rounded-3xl border border-border bg-white shadow-elevated" imageClassName="p-8" />
               ) : (

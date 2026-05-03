@@ -70,7 +70,7 @@ function QuotePage() {
       </Link>
 
       <section className="relative mt-6 overflow-hidden rounded-[2rem] border border-border bg-card p-6 shadow-hero sm:p-8">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_10%,oklch(0.93_0.04_195),transparent_35%),radial-gradient(circle_at_90%_10%,oklch(0.9_0.08_165),transparent_34%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_10%,oklch(0.93_0.06_255),transparent_35%),radial-gradient(circle_at_90%_10%,oklch(0.88_0.1_240),transparent_34%)]" />
         <div className="absolute inset-0 grid-pattern opacity-25" />
         <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
@@ -153,7 +153,7 @@ function QuotePage() {
                   <Link
                     to="/produit/$slug"
                     params={{ slug: product.slug }}
-                    className="relative min-h-44 overflow-hidden border-b border-border bg-[radial-gradient(circle_at_50%_25%,white,oklch(0.95_0.018_190))] p-4 md:border-b-0 md:border-r"
+                    className="relative min-h-44 overflow-hidden border-b border-border bg-[radial-gradient(circle_at_50%_25%,white,oklch(0.95_0.03_250))] p-4 md:border-b-0 md:border-r"
                   >
                     <div className="absolute inset-0 brand-circuit opacity-20" />
                     <ProductThumb

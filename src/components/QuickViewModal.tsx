@@ -60,7 +60,7 @@ export function QuickViewModal({
 
             <div className="grid md:grid-cols-2">
               {/* Image */}
-              <div className="relative aspect-square overflow-hidden rounded-tl-3xl rounded-bl-3xl bg-[radial-gradient(circle_at_20%_10%,white,oklch(0.95_0.018_190))] p-4">
+              <div className="relative aspect-square overflow-hidden rounded-tl-3xl rounded-bl-3xl bg-[radial-gradient(circle_at_20%_10%,white,oklch(0.95_0.03_250))] p-4">
                 <div className="absolute inset-0 brand-circuit opacity-20" />
                 {!imgErr && product.image ? (
                   <img
