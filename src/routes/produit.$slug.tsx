@@ -18,7 +18,8 @@ import {
   ShoppingCart,
   Truck,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { R2RLogoWatermark } from "@/components/R2RLogo";
 import { AvailabilityBadge, PriceStatusBadge } from "@/components/AvailabilityBadge";
 import { getCategory, getProductBySlug, getProductMeta, getProductsByCategory } from "@/data/products";
 import { ProductCard, ProductImageFallback } from "@/components/ProductCard";
