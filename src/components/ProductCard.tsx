@@ -24,7 +24,7 @@ export function ProductImageFallback({
   const cat = getCategory(categorySlug);
   const Icon = getIcon(cat?.icon ?? "Package");
   return (
-    <div className="relative grid h-full w-full place-items-center overflow-hidden bg-[radial-gradient(circle_at_50%_25%,white,oklch(0.94_0.018_190))] p-5">
+    <div className="relative grid h-full w-full place-items-center overflow-hidden bg-[radial-gradient(circle_at_50%_25%,white,oklch(0.94_0.03_250))] p-5">
       <div className="absolute inset-0 brand-circuit opacity-30" />
       <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full border border-primary/15" />
       <div className="absolute -bottom-12 -left-8 h-32 w-32 rounded-full bg-primary-soft/70 blur-2xl" />
@@ -72,12 +72,12 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.2) }}
       className="interactive-lift group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft hover:border-primary/25"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,transparent,oklch(0.42_0.09_200),oklch(0.66_0.18_145),transparent)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,transparent,oklch(0.45_0.18_255),oklch(0.6_0.2_240),transparent)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       <Link
         to="/produit/$slug"
         params={{ slug: product.slug }}
-        className="relative block overflow-hidden bg-[radial-gradient(circle_at_50%_30%,white,oklch(0.96_0.012_200))] p-3"
+        className="relative block overflow-hidden bg-[radial-gradient(circle_at_50%_30%,white,oklch(0.96_0.02_250))] p-3"
       >
         <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border/70 bg-card shadow-sm">
           <div className="absolute inset-0 brand-circuit opacity-25 transition-opacity duration-300 group-hover:opacity-40" />

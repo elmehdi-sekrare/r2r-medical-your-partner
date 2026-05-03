@@ -12,7 +12,7 @@ type EmptyStateProps = {
 
 export function EmptyState({ icon: Icon, eyebrow = "R2R Medical", title, description, children }: EmptyStateProps) {
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-primary/15 bg-[radial-gradient(circle_at_18%_10%,oklch(0.78_0.13_180_/_0.18),transparent_32%),var(--surface)] px-6 py-12 text-center shadow-elevated sm:px-10">
+    <div className="relative overflow-hidden rounded-[2rem] border border-primary/15 bg-[radial-gradient(circle_at_18%_10%,oklch(0.65_0.18_250_/_0.18),transparent_32%),var(--surface)] px-6 py-12 text-center shadow-elevated sm:px-10">
       <div className="absolute inset-0 brand-circuit opacity-25" />
       <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full border border-primary/15" />
       <div className="absolute -bottom-20 left-10 h-44 w-44 rounded-full bg-primary-soft/70 blur-3xl" />

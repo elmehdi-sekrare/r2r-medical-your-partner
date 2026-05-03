@@ -63,7 +63,7 @@ function BlogArticlePage() {
 
   return (
     <article className="relative overflow-hidden">
-      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_18%_18%,oklch(0.78_0.13_180_/_0.24),transparent_34%),linear-gradient(180deg,oklch(0.97_0.03_195),transparent)]" />
+      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_18%_18%,oklch(0.65_0.18_250_/_0.24),transparent_34%),linear-gradient(180deg,oklch(0.97_0.03_255),transparent)]" />
       <div className="absolute inset-x-0 top-0 -z-10 h-[520px] grid-pattern opacity-50" />
 
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">

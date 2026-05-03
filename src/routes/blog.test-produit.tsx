@@ -28,11 +28,11 @@ function ProductTestsPage() {
 
   return (
     <div className="relative overflow-hidden">
-      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_16%_18%,oklch(0.78_0.13_180_/_0.28),transparent_34%),radial-gradient(circle_at_85%_16%,oklch(0.62_0.15_155_/_0.24),transparent_32%),linear-gradient(180deg,oklch(0.97_0.03_195),transparent)]" />
+      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_16%_18%,oklch(0.65_0.18_250_/_0.28),transparent_34%),radial-gradient(circle_at_85%_16%,oklch(0.55_0.16_260_/_0.24),transparent_32%),linear-gradient(180deg,oklch(0.97_0.03_255),transparent)]" />
       <div className="absolute inset-x-0 top-0 -z-10 h-[520px] grid-pattern opacity-60" />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <section className="mb-10 overflow-hidden rounded-[2rem] border border-primary/15 bg-[linear-gradient(135deg,var(--primary),oklch(0.34_0.08_210))] p-8 text-primary-foreground shadow-hero md:p-12">
+        <section className="mb-10 overflow-hidden rounded-[2rem] border border-primary/15 bg-[linear-gradient(135deg,var(--primary),oklch(0.35_0.14_260))] p-8 text-primary-foreground shadow-hero md:p-12">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider">
@@ -87,7 +87,7 @@ function ProductTestsPage() {
                 className="group overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-elevated"
               >
                 <Link to="/blog/test-produit/$slug" params={{ slug: test.slug }} className="flex h-full flex-col">
-                  <div className="relative overflow-hidden bg-[radial-gradient(circle_at_70%_20%,oklch(0.78_0.13_180_/_0.22),transparent_34%),var(--surface)] p-4">
+                  <div className="relative overflow-hidden bg-[radial-gradient(circle_at_70%_20%,oklch(0.65_0.18_250_/_0.22),transparent_34%),var(--surface)] p-4">
                     <div className="absolute right-4 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-foreground/90 text-primary-foreground shadow-soft">
                       <PlayCircle className="h-5 w-5" />
                     </div>

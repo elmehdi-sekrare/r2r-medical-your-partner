@@ -135,7 +135,7 @@ function ProductPage() {
 
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
           {/* Image */}
-          <div className="relative overflow-hidden rounded-[2rem] border border-border bg-[radial-gradient(circle_at_20%_10%,white,oklch(0.95_0.018_190))] p-3 shadow-hero">
+          <div className="relative overflow-hidden rounded-[2rem] border border-border bg-[radial-gradient(circle_at_20%_10%,white,oklch(0.95_0.03_250))] p-3 shadow-hero">
             <div className="absolute inset-0 brand-circuit opacity-25" />
             <div className="absolute left-5 top-5 z-10 flex flex-wrap gap-2">
               <AvailabilityBadge availability={meta.availability} className="backdrop-blur" />

@@ -22,8 +22,8 @@ export function MoroccoMap({ className }: { className?: string }) {
         {/* Morocco outline (simplified) */}
         <path
           d="M140 30 L180 25 L220 40 L250 70 L260 100 L250 140 L230 160 L220 200 L230 240 L210 260 L200 290 L170 300 L150 280 L140 260 L130 290 L120 320 L110 350 L100 380 L90 410 L80 440 L70 460 L60 440 L50 400 L60 360 L70 320 L80 280 L90 240 L100 200 L105 170 L110 150 L115 130 L120 100 L125 70 L130 50 Z"
-          fill="oklch(0.93 0.04 195)"
-          stroke="oklch(0.42 0.09 200)"
+          fill="oklch(0.93 0.06 255)"
+          stroke="oklch(0.45 0.18 255)"
           strokeWidth="1.5"
           className="transition-colors"
         />
@@ -35,7 +35,7 @@ export function MoroccoMap({ className }: { className?: string }) {
               cx={region.cx}
               cy={region.cy}
               r="6"
-              fill="oklch(0.42 0.09 200)"
+              fill="oklch(0.45 0.18 255)"
               opacity="0.15"
               className="animate-ping"
               style={{ transformOrigin: `${region.cx}px ${region.cy}px`, animationDuration: `${2 + Math.random() * 2}s` }}
@@ -44,7 +44,7 @@ export function MoroccoMap({ className }: { className?: string }) {
               cx={region.cx}
               cy={region.cy}
               r="4"
-              fill="oklch(0.42 0.09 200)"
+              fill="oklch(0.45 0.18 255)"
             />
             <text
               x={region.cx + 10}

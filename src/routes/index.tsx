@@ -50,8 +50,8 @@ function HeroPulse() {
     <svg viewBox="0 0 400 400" className="h-full w-full scale-125 overflow-visible">
       <defs>
         <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="oklch(0.42 0.09 200)" />
-          <stop offset="100%" stopColor="oklch(0.6 0.14 175)" />
+          <stop offset="0%" stopColor="oklch(0.45 0.18 255)" />
+          <stop offset="100%" stopColor="oklch(0.6 0.2 240)" />
         </linearGradient>
       </defs>
       <motion.circle
@@ -91,7 +91,7 @@ function HeroCatalogueShowcase() {
 
   return (
     <div className="relative h-full overflow-hidden rounded-3xl border border-border bg-card p-5 shadow-hero">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,oklch(0.93_0.04_195),transparent_34%),radial-gradient(circle_at_90%_85%,oklch(0.9_0.08_165),transparent_38%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,oklch(0.93_0.06_255),transparent_34%),radial-gradient(circle_at_90%_85%,oklch(0.88_0.1_240),transparent_38%)]" />
       <div className="relative flex h-full flex-col">
         <div className="flex items-center justify-between gap-3">
           <div>
@@ -176,7 +176,7 @@ function HeroMedicalShowcase() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.85, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,oklch(0.9_0.06_190),transparent_28%),radial-gradient(circle_at_82%_18%,oklch(0.9_0.11_155),transparent_30%),linear-gradient(145deg,white,oklch(0.97_0.02_190)_58%,oklch(0.92_0.08_165))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,oklch(0.9_0.08_250),transparent_28%),radial-gradient(circle_at_82%_18%,oklch(0.88_0.12_245),transparent_30%),linear-gradient(145deg,white,oklch(0.97_0.03_250)_58%,oklch(0.9_0.1_240))]" />
       <div className="absolute inset-0 brand-circuit opacity-60" />
       <motion.div
         className="absolute left-1/2 top-8 h-44 w-44 -translate-x-1/2 rounded-full border border-primary/10"

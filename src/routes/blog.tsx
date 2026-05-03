@@ -28,7 +28,7 @@ function BlogPage() {
 
   return (
     <div className="relative overflow-hidden">
-      <div className="absolute inset-x-0 top-0 -z-10 h-[460px] bg-[radial-gradient(circle_at_18%_15%,oklch(0.78_0.13_180_/_0.28),transparent_32%),radial-gradient(circle_at_84%_8%,oklch(0.62_0.15_155_/_0.2),transparent_30%),linear-gradient(180deg,oklch(0.97_0.03_195),transparent)]" />
+      <div className="absolute inset-x-0 top-0 -z-10 h-[460px] bg-[radial-gradient(circle_at_18%_15%,oklch(0.65_0.18_250_/_0.28),transparent_32%),radial-gradient(circle_at_84%_8%,oklch(0.55_0.16_260_/_0.2),transparent_30%),linear-gradient(180deg,oklch(0.97_0.03_255),transparent)]" />
       <div className="absolute inset-x-0 top-0 -z-10 h-[460px] grid-pattern opacity-60" />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -184,7 +184,7 @@ function BlogPage() {
         </section>
 
         {/* Newsletter CTA */}
-        <section className="mt-20 overflow-hidden rounded-[2rem] border border-primary/15 bg-[linear-gradient(135deg,var(--primary),oklch(0.34_0.08_210))] p-8 text-center text-primary-foreground shadow-hero md:p-14">
+        <section className="mt-20 overflow-hidden rounded-[2rem] border border-primary/15 bg-[linear-gradient(135deg,var(--primary),oklch(0.35_0.14_260))] p-8 text-center text-primary-foreground shadow-hero md:p-14">
           <BookOpen className="mx-auto h-10 w-10 opacity-90" />
           <h2 className="mt-4 font-display text-2xl font-bold md:text-3xl">
             Recevoir les prochains guides R2R

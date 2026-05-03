@@ -37,7 +37,7 @@ export function BrandLockup({ compact = false }: { compact?: boolean }) {
       <span>
         <BrandWordmark compact={compact} />
         {!compact && (
-          <span className="mt-1 block h-1 rounded-full bg-[linear-gradient(90deg,transparent,oklch(0.42_0.09_200),oklch(0.65_0.18_150),transparent)]" />
+          <span className="mt-1 block h-1 rounded-full bg-[linear-gradient(90deg,transparent,oklch(0.45_0.18_255),oklch(0.6_0.2_240),transparent)]" />
         )}
       </span>
     </span>

@@ -60,7 +60,7 @@ function CategorySeoPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <section className="relative overflow-hidden rounded-[2rem] border border-border bg-card shadow-hero">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_8%,oklch(0.93_0.04_195),transparent_35%),radial-gradient(circle_at_88%_12%,oklch(0.9_0.08_165),transparent_35%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_8%,oklch(0.93_0.06_255),transparent_35%),radial-gradient(circle_at_88%_12%,oklch(0.88_0.1_240),transparent_35%)]" />
         <div className="absolute inset-0 grid-pattern opacity-35" />
         <div className="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_360px] lg:p-10">
         <div>
