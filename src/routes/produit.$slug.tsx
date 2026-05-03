@@ -18,7 +18,8 @@ import {
   ShoppingCart,
   Truck,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { R2RLogoWatermark } from "@/components/R2RLogo";
 import { AvailabilityBadge, PriceStatusBadge } from "@/components/AvailabilityBadge";
 import { getCategory, getProductBySlug, getProductMeta, getProductsByCategory } from "@/data/products";
 import { ProductCard, ProductImageFallback } from "@/components/ProductCard";
@@ -85,6 +86,8 @@ function ProductPage() {
   const cat = getCategory(product.categorySlug);
   const [imgErr, setImgErr] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [zoomStyle, setZoomStyle] = useState<React.CSSProperties>({});
+  const imgContainerRef = useRef<HTMLDivElement>(null);
   const favorites = useFavorites();
   const compare = useCompare();
   const favorite = favorites.isFavorite(product);
@@ -93,6 +96,14 @@ function ProductPage() {
   const related = getProductsByCategory(product.categorySlug)
     .filter((p) => p.slug !== product.slug)
     .slice(0, 4);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setZoomStyle({ transformOrigin: `${x}% ${y}%`, transform: "scale(1.6)" });
+  };
+  const handleMouseLeave = () => setZoomStyle({});
 
   useEffect(() => {
     recordRecentlyViewed(product);
@@ -143,18 +154,26 @@ function ProductPage() {
                 {meta.productType}
               </span>
             </div>
-            <div className="relative aspect-square overflow-hidden rounded-3xl border border-border/70 bg-card">
+            <div
+              ref={imgContainerRef}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              className="relative aspect-square cursor-zoom-in overflow-hidden rounded-3xl border border-border/70 bg-card"
+            >
             {!imgErr && product.image ? (
               <img
                 src={product.image}
                 alt={product.name}
                 referrerPolicy="no-referrer"
                 onError={() => setImgErr(true)}
-                className="h-full w-full object-contain p-8 sm:p-10"
+                className="h-full w-full object-contain p-8 sm:p-10 transition-transform duration-300 ease-out"
+                style={zoomStyle}
               />
             ) : (
               <ProductImageFallback categorySlug={product.categorySlug} />
             )}
+              {/* Brand watermark */}
+              <R2RLogoWatermark className="absolute bottom-4 right-4 z-10 transition-opacity duration-300" />
             </div>
             <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
               <div className="rounded-2xl border border-primary/10 bg-primary-soft/40 px-4 py-3">
