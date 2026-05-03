@@ -197,8 +197,8 @@
   }
   .grid-pattern {
     background-image:
-      linear-gradient(to right, oklch(0.42 0.09 200 / 0.06) 1px, transparent 1px),
-      linear-gradient(to bottom, oklch(0.42 0.09 200 / 0.06) 1px, transparent 1px);
+      linear-gradient(to right, oklch(0.45 0.18 255 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0.45 0.18 255 / 0.06) 1px, transparent 1px);
     background-size: 48px 48px;
   }
   .brand-shine {
@@ -206,8 +206,8 @@
   }
   .brand-circuit {
     background-image:
-      linear-gradient(90deg, transparent 0 18%, oklch(0.42 0.09 200 / 0.14) 18% 19%, transparent 19%),
-      linear-gradient(0deg, transparent 0 68%, oklch(0.42 0.09 200 / 0.1) 68% 69%, transparent 69%);
+      linear-gradient(90deg, transparent 0 18%, oklch(0.45 0.18 255 / 0.14) 18% 19%, transparent 19%),
+      linear-gradient(0deg, transparent 0 68%, oklch(0.45 0.18 255 / 0.1) 68% 69%, transparent 69%);
     background-size: 72px 72px;
   }
   .soft-pulse {
