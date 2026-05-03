@@ -154,18 +154,26 @@ function ProductPage() {
                 {meta.productType}
               </span>
             </div>
-            <div className="relative aspect-square overflow-hidden rounded-3xl border border-border/70 bg-card">
+            <div
+              ref={imgContainerRef}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              className="relative aspect-square cursor-zoom-in overflow-hidden rounded-3xl border border-border/70 bg-card"
+            >
             {!imgErr && product.image ? (
               <img
                 src={product.image}
                 alt={product.name}
                 referrerPolicy="no-referrer"
                 onError={() => setImgErr(true)}
-                className="h-full w-full object-contain p-8 sm:p-10"
+                className="h-full w-full object-contain p-8 sm:p-10 transition-transform duration-300 ease-out"
+                style={zoomStyle}
               />
             ) : (
               <ProductImageFallback categorySlug={product.categorySlug} />
             )}
+              {/* Brand watermark */}
+              <R2RLogoWatermark className="absolute bottom-4 right-4 z-10 transition-opacity duration-300" />
             </div>
             <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
               <div className="rounded-2xl border border-primary/10 bg-primary-soft/40 px-4 py-3">
