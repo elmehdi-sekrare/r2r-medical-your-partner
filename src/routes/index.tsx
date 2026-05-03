@@ -389,8 +389,11 @@ function HomePage() {
         </motion.div>
       </section>
 
+      {/* BRAND MARQUEE */}
+      <BrandMarquee />
+
       {/* FAST PATHS */}
-      <section className="relative z-10 -mt-8 pb-10">
+      <section className="relative z-10 pb-10">
         <div className="mx-auto grid max-w-7xl gap-3 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
           {[
             { icon: Search, title: t("fastFindTitle"), text: t("fastFindText"), to: "/catalogue" },
