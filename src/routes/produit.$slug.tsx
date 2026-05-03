@@ -86,6 +86,8 @@ function ProductPage() {
   const cat = getCategory(product.categorySlug);
   const [imgErr, setImgErr] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [zoomStyle, setZoomStyle] = useState<React.CSSProperties>({});
+  const imgContainerRef = useRef<HTMLDivElement>(null);
   const favorites = useFavorites();
   const compare = useCompare();
   const favorite = favorites.isFavorite(product);
