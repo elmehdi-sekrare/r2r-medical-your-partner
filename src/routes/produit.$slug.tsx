@@ -444,9 +444,12 @@ function ProductPage() {
           </Tabs>
         </section>
 
+        {/* Recommendations */}
+        <ProductRecommendations product={product} />
+
         {/* Related */}
         {related.length > 0 && (
-          <section className="mt-20">
+          <section className="mt-16">
             <h2 className="font-display text-2xl font-bold mb-6">Produits similaires</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {related.map((p, i) => (
@@ -456,6 +459,16 @@ function ProductPage() {
           </section>
         )}
       </div>
+
+      {/* Lightbox */}
+      {product.image && !imgErr && (
+        <ImageLightbox
+          src={product.image}
+          alt={product.name}
+          open={lightboxOpen}
+          onClose={() => setLightboxOpen(false)}
+        />
+      )}
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-card/95 px-3 py-3 shadow-hero backdrop-blur lg:hidden">
         <div className="mx-auto grid max-w-xl grid-cols-[auto_1fr_1fr] items-center gap-2">
           <div className="inline-flex h-12 items-center rounded-full border border-border bg-surface p-1">
