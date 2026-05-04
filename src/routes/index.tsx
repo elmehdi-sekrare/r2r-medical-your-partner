@@ -441,11 +441,11 @@ function HomePage() {
               Une expérience pensée pour commander vite et clairement.
             </h2>
           </div>
-          <div className="grid grid-cols-2 gap-5 rounded-3xl border border-border bg-card/80 p-6 shadow-soft backdrop-blur md:grid-cols-4">
-            <StatItem value={412} suffix="+" label={t("products")} />
-            <StatItem value={10} label={t("categories")} />
-            <StatItem value={100} suffix="%" label={t("deliveryMorocco")} />
-            <StatItem value={7} suffix="j/7" label={t("whatsappSupport")} />
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <StatItem value={412} suffix="+" label={t("products")} icon={Package} />
+            <StatItem value={10} label={t("categories")} icon={Search} />
+            <StatItem value={100} suffix="%" label={t("deliveryMorocco")} icon={Truck} />
+            <StatItem value={7} suffix="j/7" label={t("whatsappSupport")} icon={Headphones} />
           </div>
         </div>
       </section>
