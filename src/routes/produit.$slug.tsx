@@ -20,9 +20,12 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { R2RLogoWatermark } from "@/components/R2RLogo";
+import { ImageLightbox } from "@/components/ImageLightbox";
 import { AvailabilityBadge, PriceStatusBadge } from "@/components/AvailabilityBadge";
 import { getCategory, getProductBySlug, getProductMeta, getProductsByCategory } from "@/data/products";
 import { ProductCard, ProductImageFallback } from "@/components/ProductCard";
+import { ProductRecommendations } from "@/components/ProductRecommendations";
+import { FAQSection, PRODUCT_FAQS } from "@/components/FAQ";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { addToQuote, recordRecentlyViewed, toggleCompare, toggleFavorite, useCompare, useFavorites } from "@/lib/quote";
 import { canonical, seoMeta } from "@/lib/seo";
@@ -86,6 +89,7 @@ function ProductPage() {
   const cat = getCategory(product.categorySlug);
   const [imgErr, setImgErr] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [zoomStyle, setZoomStyle] = useState<React.CSSProperties>({});
   const imgContainerRef = useRef<HTMLDivElement>(null);
   const favorites = useFavorites();
@@ -158,6 +162,7 @@ function ProductPage() {
               ref={imgContainerRef}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
+              onClick={() => !imgErr && product.image && setLightboxOpen(true)}
               className="relative aspect-square cursor-zoom-in overflow-hidden rounded-3xl border border-border/70 bg-card"
             >
             {!imgErr && product.image ? (
@@ -434,37 +439,17 @@ function ProductPage() {
             </TabsContent>
 
             <TabsContent value="faq" className="mt-6">
-              <div className="grid gap-3 md:grid-cols-3">
-                {[
-                  {
-                    q: "Le produit est-il disponible ?",
-                    a: "La disponibilité est confirmée par WhatsApp selon la quantité et la ville.",
-                  },
-                  {
-                    q: "Puis-je recevoir une fiche technique ?",
-                    a: "Oui, l'équipe peut confirmer les détails techniques et documents disponibles.",
-                  },
-                  {
-                    q: "Comment commander ?",
-                    a: "Ajoutez au devis ou contactez directement R2R Medical via WhatsApp.",
-                  },
-                ].map((item) => (
-                  <div key={item.q} className="rounded-xl border border-border bg-surface p-4">
-                    <div className="grid h-9 w-9 place-items-center rounded-lg bg-primary-soft text-primary">
-                      <HelpCircle className="h-4 w-4" />
-                    </div>
-                    <h3 className="mt-4 font-display text-sm font-bold">{item.q}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
-                  </div>
-                ))}
-              </div>
+              <FAQSection items={PRODUCT_FAQS} compact />
             </TabsContent>
           </Tabs>
         </section>
 
+        {/* Recommendations */}
+        <ProductRecommendations product={product} />
+
         {/* Related */}
         {related.length > 0 && (
-          <section className="mt-20">
+          <section className="mt-16">
             <h2 className="font-display text-2xl font-bold mb-6">Produits similaires</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {related.map((p, i) => (
@@ -474,6 +459,16 @@ function ProductPage() {
           </section>
         )}
       </div>
+
+      {/* Lightbox */}
+      {product.image && !imgErr && (
+        <ImageLightbox
+          src={product.image}
+          alt={product.name}
+          open={lightboxOpen}
+          onClose={() => setLightboxOpen(false)}
+        />
+      )}
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-card/95 px-3 py-3 shadow-hero backdrop-blur lg:hidden">
         <div className="mx-auto grid max-w-xl grid-cols-[auto_1fr_1fr] items-center gap-2">
           <div className="inline-flex h-12 items-center rounded-full border border-border bg-surface p-1">

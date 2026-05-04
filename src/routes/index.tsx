@@ -22,7 +22,9 @@ import { BrandMarquee } from "@/components/BrandMarquee";
 import { CategoryCard } from "@/components/CategoryCard";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductThumb } from "@/components/ProductThumb";
+import { RecentlyViewedCarousel } from "@/components/RecentlyViewedCarousel";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
+import { TrustBadges } from "@/components/TrustBadges";
 import { useCounter } from "@/hooks/useCounter";
 import { useI18n } from "@/lib/i18n";
 import { openWhatsApp, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
@@ -31,18 +33,30 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-function StatItem({ value, label, suffix = "" }: { value: number; label: string; suffix?: string }) {
+function StatItem({ value, label, suffix = "", icon: Icon }: { value: number; label: string; suffix?: string; icon?: React.ComponentType<{ className?: string }> }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
   const n = useCounter(value, 1600, inView);
   return (
-    <div ref={ref} className="text-center">
-      <div className="font-display text-4xl md:text-5xl font-bold text-primary">
-        {n}
-        {suffix}
+    <motion.div
+      ref={ref}
+      whileHover={{ y: -3 }}
+      className="group relative overflow-hidden rounded-2xl border border-border bg-card/60 p-5 text-center shadow-soft backdrop-blur transition-shadow hover:shadow-elevated"
+    >
+      <div className="absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 bg-[radial-gradient(circle_at_50%_0%,oklch(0.92_0.08_245),transparent_65%)]" />
+      <div className="relative">
+        {Icon && (
+          <div className="mx-auto mb-3 grid h-10 w-10 place-items-center rounded-xl bg-primary-soft text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+            <Icon className="h-5 w-5" />
+          </div>
+        )}
+        <div className="font-display text-3xl md:text-4xl font-bold text-primary">
+          {n}
+          {suffix}
+        </div>
+        <div className="mt-1 text-xs font-semibold text-muted-foreground">{label}</div>
       </div>
-      <div className="mt-1 text-sm text-muted-foreground">{label}</div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -427,14 +441,17 @@ function HomePage() {
               Une expérience pensée pour commander vite et clairement.
             </h2>
           </div>
-          <div className="grid grid-cols-2 gap-5 rounded-3xl border border-border bg-card/80 p-6 shadow-soft backdrop-blur md:grid-cols-4">
-            <StatItem value={412} suffix="+" label={t("products")} />
-            <StatItem value={10} label={t("categories")} />
-            <StatItem value={100} suffix="%" label={t("deliveryMorocco")} />
-            <StatItem value={7} suffix="j/7" label={t("whatsappSupport")} />
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <StatItem value={412} suffix="+" label={t("products")} icon={Package} />
+            <StatItem value={10} label={t("categories")} icon={Search} />
+            <StatItem value={100} suffix="%" label={t("deliveryMorocco")} icon={Truck} />
+            <StatItem value={7} suffix="j/7" label={t("whatsappSupport")} icon={Headphones} />
           </div>
         </div>
       </section>
+
+      {/* TRUST BADGES */}
+      <TrustBadges />
 
       {/* TRUST */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
@@ -686,6 +703,9 @@ function HomePage() {
       </section>
 
       <Testimonials />
+
+      {/* RECENTLY VIEWED */}
+      <RecentlyViewedCarousel />
 
       {/* CTA */}
       <section className="py-24 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

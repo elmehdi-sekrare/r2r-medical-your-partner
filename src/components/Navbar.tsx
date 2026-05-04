@@ -1,8 +1,9 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { GitCompare, Globe2, Heart, MessageCircle, Menu, ShoppingCart, X } from "lucide-react";
+import { GitCompare, Globe2, Heart, MessageCircle, Menu, Search, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 import { BrandHeroLockup } from "@/components/Brand";
+import { CommandSearch, useCommandSearch } from "@/components/CommandSearch";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { MegaMenu } from "@/components/MegaMenu";
 import { useI18n } from "@/lib/i18n";
@@ -35,6 +36,7 @@ export function Navbar() {
   const favorites = useFavorites();
   const compare = useCompare();
   const { language, t, toggleLanguage } = useI18n();
+  const cmdSearch = useCommandSearch();
 
   return (
     <motion.header
@@ -87,6 +89,13 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-1.5 sm:gap-2">
+          <button
+            onClick={() => cmdSearch.setOpen(true)}
+            className="hidden sm:inline-grid relative h-10 w-10 place-items-center rounded-full border border-border bg-card text-foreground shadow-soft transition-colors hover:border-primary/25 hover:text-primary"
+            title="Recherche rapide (⌘K)"
+          >
+            <Search className="h-4 w-4" />
+          </button>
           <Link
             to="/favoris"
             className="hidden sm:inline-grid relative h-10 w-10 place-items-center rounded-full border border-border bg-card text-foreground shadow-soft transition-colors hover:border-primary/25 hover:text-primary"
@@ -224,6 +233,7 @@ export function Navbar() {
           </div>
         </motion.div>
       )}
+      <CommandSearch open={cmdSearch.open} onClose={() => cmdSearch.setOpen(false)} />
     </motion.header>
   );
 }

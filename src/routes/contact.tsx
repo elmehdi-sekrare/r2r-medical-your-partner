@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { MessageCircle, Mail, MapPin, Clock, Check } from "lucide-react";
+import { FAQSection } from "@/components/FAQ";
 import { useState } from "react";
 import { buildWhatsAppMessageUrl, openWhatsApp, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 
@@ -179,6 +180,11 @@ function ContactPage() {
             </form>
           )}
         </motion.div>
+      </div>
+
+      {/* FAQ */}
+      <div className="mx-auto max-w-3xl">
+        <FAQSection />
       </div>
     </div>
   );

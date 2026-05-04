@@ -1,52 +1,81 @@
-# R2R Medical —Premium Upgrade Plan
 
-## do directly phase 2 3
+# Premium Feature Upgrades for R2R Medical
 
----
-
-## Phase 2 — Design Upgrades
-
-9. **Professional SVG logo** — Replace the generic teal circle+plus with a proper R2R Medical wordmark/logo SVG
-10. **Mega-menu for Categories** — On desktop, hovering "Catégories" shows a dropdown grid of all 10 categories with icons and product counts
-11. **Page transition animations** — Smooth fade between routes using TanStack Router's transition hooks
-12. **Skeleton loading states** — Add skeleton placeholders for product cards and category cards while content loads
-13. **Product quick-view modal** — Click a "Quick view" button on product cards to see details in a modal without navigating away
-14. **Product specifications table** — On product detail pages, show a structured specs table (auto-generated from product name/category)
-15. **Breadcrumb navigation** — Wire the existing Breadcrumb UI component into product detail and category pages
+Based on a full scan of the codebase, here are **8 high-impact features** that will elevate this app to a world-class medical equipment e-commerce platform. All will maintain the existing premium blue-branded UI/UX style.
 
 ---
 
-## Phase 3 — Premium Features
+## 1. Product Image Gallery with Lightbox (produit.$slug)
 
-16. **Recently viewed products bar** — Persistent bar on catalogue and product pages showing last 5 viewed items
-17. **Social proof ticker** — Animated banner showing "Dr. X from Casablanca just requested a quote" (simulated)
-18. **Interactive Morocco map** — On the A-propos page, show delivery coverage with an SVG map
-19. **Product image gallery** — On product detail page, add image zoom on hover and thumbnail navigation
-20. **Accessibility audit** — Add proper ARIA labels, keyboard navigation, focus rings, skip-to-content link
-21. **Performance optimization** — Lazy load below-fold sections, optimize image loading with proper `srcset`
+Currently the product detail page shows a single image. Add a thumbnail strip + full-screen lightbox overlay with zoom, swipe gestures, and keyboard navigation.
+
+**Files:** `src/routes/produit.$slug.tsx`, new `src/components/ImageLightbox.tsx`
 
 ---
 
-## Technical Details
+## 2. "Recently Viewed" Carousel on Homepage
 
-**FadeIn component pattern:**
+The `useRecentlyViewed` hook already exists in `src/lib/quote.ts` but is only used on the catalogue page. Add a horizontal scroll carousel section on the homepage showing the user's recently viewed products — personalization that big sites always have.
 
-```tsx
-function FadeIn({ children, className, delay = 0 }) {
-  const mounted = useHasMounted();
-  return (
-    <motion.div
-      initial={mounted ? { opacity: 0, y: 20 } : false}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-```
+**Files:** `src/routes/index.tsx`, new `src/components/RecentlyViewedCarousel.tsx`
 
-Setting `initial` to `false` when not yet mounted tells Framer Motion to skip the initial state and render at the animate values immediately (visible), then only animate on subsequent client-side renders.
+---
 
-**Files changed (estimated):** ~15 files across components and routes.
+## 3. Advanced Search with Keyboard Navigation + Instant Results
+
+The current search bar opens `SearchSuggestions` but lacks keyboard arrow-key navigation, Enter-to-select, and rich instant results with product thumbnails. Upgrade to a Command-palette style (Cmd+K) global search modal.
+
+**Files:** new `src/components/CommandSearch.tsx`, `src/components/Navbar.tsx`
+
+---
+
+## 4. Product Recommendations ("Produits similaires" + "Souvent commandés ensemble")
+
+On the product detail page, add a smart "Frequently ordered together" section (products from the same category with complementary types) and improve the existing related products section with better filtering logic.
+
+**Files:** `src/routes/produit.$slug.tsx`, new `src/components/ProductRecommendations.tsx`
+
+---
+
+## 5. Sticky "Add to Quote" Bar on Product Page (Mobile)
+
+On mobile, when the user scrolls past the CTA buttons on the product page, show a sticky bottom bar with the product name, price, and quick "Ajouter au devis" + WhatsApp buttons — like Amazon/Jumia mobile.
+
+**Files:** `src/routes/produit.$slug.tsx`, new `src/components/StickyProductBar.tsx`
+
+---
+
+## 6. Trust Badges & Certification Section
+
+Add a visually rich trust section on the homepage with animated certification badges (CE, ISO 13485, Normes Marocaines), partner logos, and a "Pourquoi R2R" value proposition grid with icons and micro-animations.
+
+**Files:** `src/routes/index.tsx`, new `src/components/TrustBadges.tsx`
+
+---
+
+## 7. FAQ Accordion on Product + Contact Pages
+
+Add a professionally styled FAQ section using the existing Accordion component. Product page gets product-specific FAQs (delivery, warranty, returns). Contact page gets general business FAQs.
+
+**Files:** `src/routes/produit.$slug.tsx`, `src/routes/contact.tsx`, new `src/components/FAQ.tsx`
+
+---
+
+## 8. Animated Statistics / Counter Section Upgrade
+
+The current stats section works but is basic. Upgrade with glassmorphism cards, subtle gradient borders, hover micro-interactions, and iconography for each stat (products, categories, cities served, years of experience).
+
+**Files:** `src/routes/index.tsx`
+
+---
+
+## Implementation Approach
+
+All features will be built with:
+- Framer Motion animations consistent with existing patterns
+- Blue brand palette (OKLCH 240-260 range) with existing CSS variables
+- Mobile-first responsive design
+- Accessible markup (ARIA labels, keyboard navigation)
+- No new dependencies beyond what's already installed
+
+Estimated: 8 components created/upgraded across ~12 files.
