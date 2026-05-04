@@ -439,30 +439,7 @@ function ProductPage() {
             </TabsContent>
 
             <TabsContent value="faq" className="mt-6">
-              <div className="grid gap-3 md:grid-cols-3">
-                {[
-                  {
-                    q: "Le produit est-il disponible ?",
-                    a: "La disponibilité est confirmée par WhatsApp selon la quantité et la ville.",
-                  },
-                  {
-                    q: "Puis-je recevoir une fiche technique ?",
-                    a: "Oui, l'équipe peut confirmer les détails techniques et documents disponibles.",
-                  },
-                  {
-                    q: "Comment commander ?",
-                    a: "Ajoutez au devis ou contactez directement R2R Medical via WhatsApp.",
-                  },
-                ].map((item) => (
-                  <div key={item.q} className="rounded-xl border border-border bg-surface p-4">
-                    <div className="grid h-9 w-9 place-items-center rounded-lg bg-primary-soft text-primary">
-                      <HelpCircle className="h-4 w-4" />
-                    </div>
-                    <h3 className="mt-4 font-display text-sm font-bold">{item.q}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
-                  </div>
-                ))}
-              </div>
+              <FAQSection items={PRODUCT_FAQS} compact />
             </TabsContent>
           </Tabs>
         </section>
