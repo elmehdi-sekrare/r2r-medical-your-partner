@@ -181,6 +181,11 @@ function ContactPage() {
           )}
         </motion.div>
       </div>
+
+      {/* FAQ */}
+      <div className="mx-auto max-w-3xl">
+        <FAQSection />
+      </div>
     </div>
   );
 }
