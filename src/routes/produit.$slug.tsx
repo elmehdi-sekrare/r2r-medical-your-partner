@@ -162,6 +162,7 @@ function ProductPage() {
               ref={imgContainerRef}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
+              onClick={() => !imgErr && product.image && setLightboxOpen(true)}
               className="relative aspect-square cursor-zoom-in overflow-hidden rounded-3xl border border-border/70 bg-card"
             >
             {!imgErr && product.image ? (
