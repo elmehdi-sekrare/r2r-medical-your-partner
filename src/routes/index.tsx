@@ -389,11 +389,8 @@ function HomePage() {
         </motion.div>
       </section>
 
-      {/* BRAND MARQUEE */}
-      <BrandMarquee />
-
       {/* FAST PATHS */}
-      <section className="relative z-10 pb-10">
+      <section className="relative z-10 -mt-8 pb-10">
         <div className="mx-auto grid max-w-7xl gap-3 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
           {[
             { icon: Search, title: t("fastFindTitle"), text: t("fastFindText"), to: "/catalogue" },
@@ -628,7 +625,11 @@ function HomePage() {
       </section>
 
       {/* REQUESTED */}
-      <section className="py-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="relative py-20">
+        <div className="pointer-events-none absolute inset-x-0 top-0 overflow-hidden">
+          <BrandMarquee className="border-primary/15 bg-primary/[0.055] py-3.5" />
+        </div>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between mb-10 gap-4">
           <div>
             <span className="text-xs font-semibold uppercase tracking-wider text-primary">{t("frequentRequests")}</span>
@@ -645,6 +646,7 @@ function HomePage() {
           {requested.map((p, i) => (
             <ProductCard key={p.slug} product={p} index={i} />
           ))}
+        </div>
         </div>
       </section>
 

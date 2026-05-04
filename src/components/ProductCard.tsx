@@ -7,7 +7,7 @@ import { BrandMark } from "@/components/Brand";
 import type { Product } from "@/data/products";
 import { getCategory, getProductMeta } from "@/data/products";
 import { getIcon } from "@/lib/icon-map";
-import { addToQuote, toggleCompare, toggleFavorite, useCompare, useFavorites } from "@/lib/quote";
+import { addToQuote, removeFromQuote, toggleCompare, toggleFavorite, useCompare, useFavorites, useQuoteBasket } from "@/lib/quote";
 import { cn } from "@/lib/utils";
 import { openWhatsApp } from "@/lib/whatsapp";
 import { motion } from "framer-motion";
@@ -59,8 +59,10 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
   const cat = getCategory(product.categorySlug);
   const favorites = useFavorites();
   const compare = useCompare();
+  const quote = useQuoteBasket();
   const favorite = favorites.isFavorite(product);
   const compared = compare.isCompared(product);
+  const inQuote = quote.lines.some((item) => item.slug === product.slug);
   const meta = getProductMeta(product);
   const categoryLabel = cat?.name.split(" & ")[0] ?? product.category;
 
@@ -169,12 +171,17 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
             Voir détails <ArrowRight className="rtl-flip h-3.5 w-3.5" />
           </Link>
           <button
-            onClick={() => addToQuote(product)}
-            className="grid h-10 w-10 place-items-center rounded-xl bg-primary-soft text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-            aria-label={`Ajouter ${product.name} au devis`}
-            title="Ajouter au devis"
+            onClick={() => (inQuote ? removeFromQuote(product.slug) : addToQuote(product))}
+            className={cn(
+              "grid h-10 w-10 place-items-center rounded-xl transition-colors",
+              inQuote
+                ? "bg-primary text-primary-foreground shadow-soft hover:bg-primary/90"
+                : "bg-primary-soft text-primary hover:bg-primary hover:text-primary-foreground",
+            )}
+            aria-label={inQuote ? `Retirer ${product.name} du devis` : `Ajouter ${product.name} au devis`}
+            title={inQuote ? "Retirer du devis" : "Ajouter au devis"}
           >
-            <ShoppingCart className="h-4 w-4" />
+            <ShoppingCart className={cn("h-4 w-4", inQuote && "fill-primary-foreground/20")} />
           </button>
           <button
             onClick={() => openWhatsApp(product.name)}

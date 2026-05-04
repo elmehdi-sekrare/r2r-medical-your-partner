@@ -1,5 +1,5 @@
-import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { R2RLogo } from "@/components/R2RLogo";
 
 type BrandMarkProps = {
   className?: string;
@@ -10,13 +10,11 @@ export function BrandMark({ className, iconClassName }: BrandMarkProps) {
   return (
     <span
       className={cn(
-        "relative grid shrink-0 place-items-center overflow-hidden rounded-2xl bg-primary text-primary-foreground shadow-soft",
+        "relative inline-grid shrink-0 place-items-center overflow-visible",
         className,
       )}
     >
-      <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,white_0%,transparent_25%)] opacity-20" />
-      <span className="absolute -bottom-6 -right-5 h-12 w-12 rounded-full border border-white/20" />
-      <Plus className={cn("relative h-5 w-5", iconClassName)} strokeWidth={3} />
+      <R2RLogo className={cn("h-full w-full object-contain drop-shadow-sm", iconClassName)} />
     </span>
   );
 }
@@ -39,6 +37,21 @@ export function BrandLockup({ compact = false }: { compact?: boolean }) {
         {!compact && (
           <span className="mt-1 block h-1 rounded-full bg-[linear-gradient(90deg,transparent,oklch(0.45_0.18_255),oklch(0.6_0.2_240),transparent)]" />
         )}
+      </span>
+    </span>
+  );
+}
+
+export function BrandHeroLockup({ compact = false }: { compact?: boolean }) {
+  return (
+    <span className="inline-flex items-center gap-2.5">
+      <R2RLogo size={compact ? 58 : 66} />
+      <span className="min-w-0">
+        <span className="inline-flex items-baseline gap-1.5 font-display font-bold tracking-tight">
+          <span className={cn("text-foreground", compact ? "text-xl" : "text-2xl")}>R2R</span>
+          <span className={cn("text-primary", compact ? "text-xl" : "text-2xl")}>Medical</span>
+        </span>
+        <span className="mt-1 block h-1 rounded-full bg-[linear-gradient(90deg,transparent,oklch(0.45_0.18_255),oklch(0.6_0.2_240),transparent)]" />
       </span>
     </span>
   );

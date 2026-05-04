@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { GitCompare, Globe2, Heart, MessageCircle, Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
-import { BrandLockup } from "@/components/Brand";
+import { BrandHeroLockup } from "@/components/Brand";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { MegaMenu } from "@/components/MegaMenu";
 import { useI18n } from "@/lib/i18n";
@@ -48,9 +48,9 @@ export function Navbar() {
       <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-3 sm:px-6 lg:px-8">
         <Link
           to="/"
-          className="group inline-flex min-w-0 shrink items-center rounded-full border border-transparent transition-colors hover:border-primary/10 hover:bg-card/60 sm:shrink-0"
+          className="group inline-flex min-w-0 shrink items-center transition-transform hover:-translate-y-0.5 sm:shrink-0"
         >
-          <BrandLockup compact />
+          <BrandHeroLockup compact />
         </Link>
 
         <nav className="relative hidden items-center gap-1 rounded-full border border-border/70 bg-card/70 p-1 shadow-soft backdrop-blur lg:flex">
