@@ -89,6 +89,13 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-1.5 sm:gap-2">
+          <button
+            onClick={() => cmdSearch.setOpen(true)}
+            className="hidden sm:inline-grid relative h-10 w-10 place-items-center rounded-full border border-border bg-card text-foreground shadow-soft transition-colors hover:border-primary/25 hover:text-primary"
+            title="Recherche rapide (⌘K)"
+          >
+            <Search className="h-4 w-4" />
+          </button>
           <Link
             to="/favoris"
             className="hidden sm:inline-grid relative h-10 w-10 place-items-center rounded-full border border-border bg-card text-foreground shadow-soft transition-colors hover:border-primary/25 hover:text-primary"
