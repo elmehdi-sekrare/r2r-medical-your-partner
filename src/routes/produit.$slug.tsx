@@ -20,9 +20,12 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { R2RLogoWatermark } from "@/components/R2RLogo";
+import { ImageLightbox } from "@/components/ImageLightbox";
 import { AvailabilityBadge, PriceStatusBadge } from "@/components/AvailabilityBadge";
 import { getCategory, getProductBySlug, getProductMeta, getProductsByCategory } from "@/data/products";
 import { ProductCard, ProductImageFallback } from "@/components/ProductCard";
+import { ProductRecommendations } from "@/components/ProductRecommendations";
+import { FAQSection, PRODUCT_FAQS } from "@/components/FAQ";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { addToQuote, recordRecentlyViewed, toggleCompare, toggleFavorite, useCompare, useFavorites } from "@/lib/quote";
 import { canonical, seoMeta } from "@/lib/seo";
@@ -86,6 +89,7 @@ function ProductPage() {
   const cat = getCategory(product.categorySlug);
   const [imgErr, setImgErr] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [zoomStyle, setZoomStyle] = useState<React.CSSProperties>({});
   const imgContainerRef = useRef<HTMLDivElement>(null);
   const favorites = useFavorites();
