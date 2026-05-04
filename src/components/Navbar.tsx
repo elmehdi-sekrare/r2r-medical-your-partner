@@ -36,6 +36,7 @@ export function Navbar() {
   const favorites = useFavorites();
   const compare = useCompare();
   const { language, t, toggleLanguage } = useI18n();
+  const cmdSearch = useCommandSearch();
 
   return (
     <motion.header
