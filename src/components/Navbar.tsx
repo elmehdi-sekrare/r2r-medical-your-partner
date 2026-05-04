@@ -1,8 +1,9 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { GitCompare, Globe2, Heart, MessageCircle, Menu, ShoppingCart, X } from "lucide-react";
+import { GitCompare, Globe2, Heart, MessageCircle, Menu, Search, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 import { BrandHeroLockup } from "@/components/Brand";
+import { CommandSearch, useCommandSearch } from "@/components/CommandSearch";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
 import { MegaMenu } from "@/components/MegaMenu";
 import { useI18n } from "@/lib/i18n";
