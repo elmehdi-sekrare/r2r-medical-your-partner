@@ -233,6 +233,7 @@ export function Navbar() {
           </div>
         </motion.div>
       )}
+      <CommandSearch open={cmdSearch.open} onClose={() => cmdSearch.setOpen(false)} />
     </motion.header>
   );
 }
