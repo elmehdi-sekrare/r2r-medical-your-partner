@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { PRODUCTS, type Product } from "@/data/products";
 
 const QUOTE_KEY = "r2r.quote.items";
