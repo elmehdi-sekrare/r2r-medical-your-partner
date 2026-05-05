@@ -10,6 +10,7 @@ import { BackToTop } from "@/components/BackToTop";
 import { CookieConsent } from "@/components/CookieConsent";
 import { ReassuranceStrip } from "@/components/ReassuranceStrip";
 import { SocialProofTicker } from "@/components/SocialProofTicker";
+import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider } from "@/lib/i18n";
 import { DEFAULT_OG_IMAGE, SITE_URL, canonical, seoMeta } from "@/lib/seo";
 
