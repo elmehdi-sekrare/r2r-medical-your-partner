@@ -703,6 +703,9 @@ function HomePage() {
         </div>
       </section>
 
+      {/* TIMELINE */}
+      <Timeline />
+
       <Testimonials />
 
       {/* RECENTLY VIEWED */}
