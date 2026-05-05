@@ -1,81 +1,77 @@
+# Next-Level Features for R2R Medical
 
-# Premium Feature Upgrades for R2R Medical
-
-Based on a full scan of the codebase, here are **8 high-impact features** that will elevate this app to a world-class medical equipment e-commerce platform. All will maintain the existing premium blue-branded UI/UX style.
-
----
-
-## 1. Product Image Gallery with Lightbox (produit.$slug)
-
-Currently the product detail page shows a single image. Add a thumbnail strip + full-screen lightbox overlay with zoom, swipe gestures, and keyboard navigation.
-
-**Files:** `src/routes/produit.$slug.tsx`, new `src/components/ImageLightbox.tsx`
+You already have a solid foundation (search, comparison, favorites, FAQ, lightbox, recommendations, trust badges). Here are 8 high-impact features to take it further:
 
 ---
 
-## 2. "Recently Viewed" Carousel on Homepage
+## 1. Animated Product Category Showcase (Homepage)
 
-The `useRecentlyViewed` hook already exists in `src/lib/quote.ts` but is only used on the catalogue page. Add a horizontal scroll carousel section on the homepage showing the user's recently viewed products — personalization that big sites always have.
+Replace the static category grid with an interactive, animated showcase — each category card reveals a mini product preview on hover with a smooth 3D tilt effect and particle/gradient animations. Think Apple product pages.
 
-**Files:** `src/routes/index.tsx`, new `src/components/RecentlyViewedCarousel.tsx`
-
----
-
-## 3. Advanced Search with Keyboard Navigation + Instant Results
-
-The current search bar opens `SearchSuggestions` but lacks keyboard arrow-key navigation, Enter-to-select, and rich instant results with product thumbnails. Upgrade to a Command-palette style (Cmd+K) global search modal.
-
-**Files:** new `src/components/CommandSearch.tsx`, `src/components/Navbar.tsx`
+**Files:** `src/routes/index.tsx`, `src/components/CategoryCard.tsx`
 
 ---
 
-## 4. Product Recommendations ("Produits similaires" + "Souvent commandés ensemble")
+## 2. Smart Product Filters with Animated Sidebar
 
-On the product detail page, add a smart "Frequently ordered together" section (products from the same category with complementary types) and improve the existing related products section with better filtering logic.
+Add a collapsible filter panel on the catalogue page with price range slider, availability toggle, and category chips — all with smooth open/close animations and instant results count updates.
 
-**Files:** `src/routes/produit.$slug.tsx`, new `src/components/ProductRecommendations.tsx`
-
----
-
-## 5. Sticky "Add to Quote" Bar on Product Page (Mobile)
-
-On mobile, when the user scrolls past the CTA buttons on the product page, show a sticky bottom bar with the product name, price, and quick "Ajouter au devis" + WhatsApp buttons — like Amazon/Jumia mobile.
-
-**Files:** `src/routes/produit.$slug.tsx`, new `src/components/StickyProductBar.tsx`
+**Files:** `src/routes/catalogue.tsx`, new `src/components/ProductFilters.tsx`
 
 ---
 
-## 6. Trust Badges & Certification Section
+## 3. Product Quick Quote (Multi-Product WhatsApp Cart)
 
-Add a visually rich trust section on the homepage with animated certification badges (CE, ISO 13485, Normes Marocaines), partner logos, and a "Pourquoi R2R" value proposition grid with icons and micro-animations.
+Enhance the devis (quote) page with quantity selectors per product, a running total, and a single "Send All via WhatsApp" button that generates a formatted multi-product message. Add a floating cart badge in the navbar showing item count.
 
-**Files:** `src/routes/index.tsx`, new `src/components/TrustBadges.tsx`
-
----
-
-## 7. FAQ Accordion on Product + Contact Pages
-
-Add a professionally styled FAQ section using the existing Accordion component. Product page gets product-specific FAQs (delivery, warranty, returns). Contact page gets general business FAQs.
-
-**Files:** `src/routes/produit.$slug.tsx`, `src/routes/contact.tsx`, new `src/components/FAQ.tsx`
+**Files:** `src/routes/devis.tsx`, `src/components/Navbar.tsx`
 
 ---
 
-## 8. Animated Statistics / Counter Section Upgrade
+## 4. Scroll-Triggered Storytelling Section (Homepage)
 
-The current stats section works but is basic. Upgrade with glassmorphism cards, subtle gradient borders, hover micro-interactions, and iconography for each stat (products, categories, cities served, years of experience).
+Add a premium "Notre Histoire" section with parallax scroll animations — as the user scrolls, timeline milestones animate in with counters, icons, and connecting lines. Medical companies with a story build trust.
 
-**Files:** `src/routes/index.tsx`
+**Files:** `src/routes/index.tsx`, new `src/components/Timeline.tsx`
+
+---
+
+## 5. Interactive Product Comparison Table
+
+Upgrade the comparison page with a side-by-side visual table showing product images, specs, price, and availability — with highlight on differences and smooth add/remove animations.
+
+**Files:** `src/routes/comparaison.tsx`
+
+---
+
+## 6. Notification Toast System for User Actions
+
+Add elegant toast notifications (slide-in from bottom-right) for actions like "Added to quote", "Added to favorites", "Copied link" — using the existing Sonner setup but with branded styling and icons.
+
+**Files:** Multiple components, `src/styles.css`
+
+---
+
+## 7. Dynamic Breadcrumbs with Micro-Animations
+
+Add breadcrumb navigation on product, category, and blog pages with smooth transitions between levels. Improves navigation and SEO.
+
+**Files:** New `src/components/Breadcrumbs.tsx`, update route pages
+
+---
+
+## 8. Premium Loading Skeleton System
+
+Replace any loading states with branded skeleton screens using the R2R blue gradient pulse animation — for product cards, images, and page transitions. Gives a polished feel during navigation.
+
+**Files:** New `src/components/ProductSkeleton.tsx`, update key pages
+
+9. upgrade the design of contact us to something like big compagnies the ui and ux should be next level aslo a propos 
 
 ---
 
 ## Implementation Approach
 
-All features will be built with:
-- Framer Motion animations consistent with existing patterns
-- Blue brand palette (OKLCH 240-260 range) with existing CSS variables
-- Mobile-first responsive design
-- Accessible markup (ARIA labels, keyboard navigation)
-- No new dependencies beyond what's already installed
-
-Estimated: 8 components created/upgraded across ~12 files.
+- All features use Framer Motion, existing blue brand palette, and mobile-first responsive design
+- No new dependencies needed
+- Estimated: ~8 components created/updated across ~12 files
