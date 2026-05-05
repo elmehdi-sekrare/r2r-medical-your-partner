@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import {
   ArrowLeft,
   Check,
