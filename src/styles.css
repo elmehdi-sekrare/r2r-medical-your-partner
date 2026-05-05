@@ -257,6 +257,10 @@
   }
 }
 
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
 @keyframes brand-shine {
   0%,
   45% {

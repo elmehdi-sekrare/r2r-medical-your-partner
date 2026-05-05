@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { PRODUCTS, type Product } from "@/data/products";
 
 const QUOTE_KEY = "r2r.quote.items";
@@ -73,6 +74,7 @@ export function addToQuote(product: Product, quantity = 1) {
       )
     : [...items, { slug: product.slug, quantity: Math.max(1, quantity) }];
   writeJson(QUOTE_KEY, next);
+  toast.success(`${product.name.slice(0, 40)} ajouté au devis`, { description: `Quantité : ${existing ? existing.quantity + quantity : quantity}` });
 }
 
 export function updateQuoteQuantity(slug: string, quantity: number) {
@@ -101,10 +103,12 @@ export function getFavoriteSlugs(): string[] {
 
 export function toggleFavorite(product: Product) {
   const favorites = getFavoriteSlugs();
-  const next = favorites.includes(product.slug)
+  const removing = favorites.includes(product.slug);
+  const next = removing
     ? favorites.filter((slug) => slug !== product.slug)
     : [...favorites, product.slug];
   writeJson(FAVORITES_KEY, next);
+  toast(removing ? "Retiré des favoris" : "Ajouté aux favoris ❤️", { description: product.name.slice(0, 50) });
 }
 
 export function useQuoteBasket() {
@@ -136,10 +140,12 @@ export function getCompareSlugs(): string[] {
 
 export function toggleCompare(product: Product) {
   const selected = getCompareSlugs();
-  const next = selected.includes(product.slug)
+  const removing = selected.includes(product.slug);
+  const next = removing
     ? selected.filter((slug) => slug !== product.slug)
     : [...selected, product.slug].slice(-4);
   writeJson(COMPARE_KEY, next);
+  toast(removing ? "Retiré du comparateur" : "Ajouté au comparateur", { description: product.name.slice(0, 50) });
 }
 
 export function removeFromCompare(slug: string) {

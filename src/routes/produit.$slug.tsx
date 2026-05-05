@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import {
   ArrowLeft,
   Check,
@@ -138,15 +139,11 @@ function ProductPage() {
     <>
       <div className="mx-auto max-w-7xl px-4 pb-28 pt-8 sm:px-6 lg:px-8 lg:py-12">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-xs text-muted-foreground mb-6 flex-wrap">
-          <Link to="/" className="hover:text-primary">Accueil</Link>
-          <ChevronRight className="h-3 w-3" />
-          <Link to="/catalogue" className="hover:text-primary">Catalogue</Link>
-          <ChevronRight className="h-3 w-3" />
-          <Link to="/catalogue" search={{ category: product.categorySlug }} className="hover:text-primary">{cat?.name}</Link>
-          <ChevronRight className="h-3 w-3" />
-          <span className="text-foreground font-medium truncate max-w-[200px]">{product.name}</span>
-        </nav>
+        <Breadcrumbs items={[
+          { label: "Catalogue", to: "/catalogue" },
+          { label: cat?.name ?? product.category, to: "/catalogue", search: { category: product.categorySlug } },
+          { label: product.name },
+        ]} />
 
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
           {/* Image */}
