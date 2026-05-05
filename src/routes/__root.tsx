@@ -115,6 +115,7 @@ function RootComponent() {
         <BackToTop />
         <CookieConsent />
         <QuickViewModal product={quickView.product} open={quickView.open} onClose={quickView.close} />
+        <Toaster position="bottom-right" richColors />
       </div>
     </I18nProvider>
   );
