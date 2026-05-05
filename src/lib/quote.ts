@@ -103,10 +103,12 @@ export function getFavoriteSlugs(): string[] {
 
 export function toggleFavorite(product: Product) {
   const favorites = getFavoriteSlugs();
-  const next = favorites.includes(product.slug)
+  const removing = favorites.includes(product.slug);
+  const next = removing
     ? favorites.filter((slug) => slug !== product.slug)
     : [...favorites, product.slug];
   writeJson(FAVORITES_KEY, next);
+  toast(removing ? "Retiré des favoris" : "Ajouté aux favoris ❤️", { description: product.name.slice(0, 50) });
 }
 
 export function useQuoteBasket() {
