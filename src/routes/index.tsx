@@ -24,6 +24,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { ProductThumb } from "@/components/ProductThumb";
 import { RecentlyViewedCarousel } from "@/components/RecentlyViewedCarousel";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
+import { Timeline } from "@/components/Timeline";
 import { TrustBadges } from "@/components/TrustBadges";
 import { useCounter } from "@/hooks/useCounter";
 import { useI18n } from "@/lib/i18n";
