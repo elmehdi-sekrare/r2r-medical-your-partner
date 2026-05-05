@@ -74,6 +74,7 @@ export function addToQuote(product: Product, quantity = 1) {
       )
     : [...items, { slug: product.slug, quantity: Math.max(1, quantity) }];
   writeJson(QUOTE_KEY, next);
+  toast.success(`${product.name.slice(0, 40)} ajouté au devis`, { description: `Quantité : ${existing ? existing.quantity + quantity : quantity}` });
 }
 
 export function updateQuoteQuantity(slug: string, quantity: number) {
