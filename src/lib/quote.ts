@@ -140,10 +140,12 @@ export function getCompareSlugs(): string[] {
 
 export function toggleCompare(product: Product) {
   const selected = getCompareSlugs();
-  const next = selected.includes(product.slug)
+  const removing = selected.includes(product.slug);
+  const next = removing
     ? selected.filter((slug) => slug !== product.slug)
     : [...selected, product.slug].slice(-4);
   writeJson(COMPARE_KEY, next);
+  toast(removing ? "Retiré du comparateur" : "Ajouté au comparateur", { description: product.name.slice(0, 50) });
 }
 
 export function removeFromCompare(slug: string) {
