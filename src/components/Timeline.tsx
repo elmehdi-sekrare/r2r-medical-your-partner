@@ -48,24 +48,31 @@ function TimelineItem({ milestone, index }: { milestone: typeof MILESTONES[0]; i
   const Icon = milestone.icon;
   const isLeft = index % 2 === 0;
 
+  const cardContent = (align: "left" | "right") => (
+    <div className={`rounded-2xl border border-border bg-card p-6 shadow-soft transition-all hover:shadow-elevated hover:-translate-y-1`}>
+      <div className={`flex items-center gap-3 ${align === "left" ? "md:justify-end" : ""}`}>
+        <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-soft text-primary">
+          <Icon className="h-5 w-5" />
+        </div>
+        <span className="font-display text-2xl font-bold text-primary">{milestone.year}</span>
+      </div>
+      <h3 className={`mt-3 font-display text-lg font-bold ${align === "left" ? "md:text-right" : ""}`}>{milestone.title}</h3>
+      <p className={`mt-2 text-sm leading-relaxed text-muted-foreground ${align === "left" ? "md:text-right" : ""}`}>{milestone.text}</p>
+    </div>
+  );
+
   return (
     <div ref={ref} className="relative grid md:grid-cols-[1fr_60px_1fr] gap-0 md:gap-4">
-      {/* Left content */}
+      {/* Left column */}
       <motion.div
         initial={{ opacity: 0, x: -40 }}
         animate={inView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.6, delay: 0.15 }}
-        className={`${isLeft ? "md:text-right" : "md:order-3"} pb-8 md:pb-0`}
+        className="pb-8 md:pb-0"
       >
-        <div className={`rounded-2xl border border-border bg-card p-6 shadow-soft transition-all hover:shadow-elevated hover:-translate-y-1 ${isLeft ? "" : "md:hidden"}`}>
-          <div className={`flex items-center gap-3 ${isLeft ? "md:justify-end" : ""}`}>
-            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-soft text-primary">
-              <Icon className="h-5 w-5" />
-            </div>
-            <span className="font-display text-2xl font-bold text-primary">{milestone.year}</span>
-          </div>
-          <h3 className="mt-3 font-display text-lg font-bold">{milestone.title}</h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{milestone.text}</p>
+        {/* Mobile: always show. Desktop: only show if isLeft */}
+        <div className={isLeft ? "" : "md:hidden"}>
+          {cardContent(isLeft ? "left" : "right")}
         </div>
       </motion.div>
 
@@ -82,22 +89,14 @@ function TimelineItem({ milestone, index }: { milestone: typeof MILESTONES[0]; i
         <div className="w-px flex-1 bg-border" />
       </div>
 
-      {/* Right content */}
+      {/* Right column — desktop only, show if NOT isLeft */}
       <motion.div
         initial={{ opacity: 0, x: 40 }}
         animate={inView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.6, delay: 0.15 }}
-        className={`${isLeft ? "md:order-3" : ""} hidden md:block`}
+        className="hidden md:block"
       >
-        <div className={`rounded-2xl border border-border bg-card p-6 shadow-soft transition-all hover:shadow-elevated hover:-translate-y-1 ${isLeft ? "" : ""}`}>
-          {!isLeft && (
-            <>
-              <div className="flex items-center gap-3">
-                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-soft text-primary">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <span className="font-display text-2xl font-bold text-primary">{milestone.year}</span>
-              </div>
+        {!isLeft && cardContent("right")}
               <h3 className="mt-3 font-display text-lg font-bold">{milestone.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{milestone.text}</p>
             </>
