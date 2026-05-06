@@ -97,11 +97,6 @@ function TimelineItem({ milestone, index }: { milestone: typeof MILESTONES[0]; i
         className="hidden md:block"
       >
         {!isLeft && cardContent("right")}
-              <h3 className="mt-3 font-display text-lg font-bold">{milestone.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{milestone.text}</p>
-            </>
-          )}
-        </div>
       </motion.div>
     </div>
   );
