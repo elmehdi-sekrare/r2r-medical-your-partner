@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, Check, ClipboardList, HelpCircle, MessageCircle, PackageCheck, Search, ShieldCheck, Truck } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
-import { CATEGORIES, getCategory, getProductMeta, getProductsByCategory, type Product } from "@/data/products";
+import { CATEGORIES, getCategory, getProductMeta, getProductsByCategory, type Category, type Product } from "@/data/products";
 import { getIcon } from "@/lib/icon-map";
 import { canonical, seoMeta } from "@/lib/seo";
 import { openWhatsApp } from "@/lib/whatsapp";
@@ -194,7 +194,7 @@ function CategorySeoPage() {
       <section className="mt-12 rounded-2xl border border-border bg-surface p-6">
         <h2 className="font-display text-2xl font-bold">Autres catégories médicales</h2>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {siblingCategories.map((item) => (
+          {siblingCategories.map((item: Category) => (
             <Link
               key={item.slug}
               to="/categorie/$slug"
