@@ -9,9 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReferencesRouteImport } from './routes/references'
+import { Route as MarchesPublicsRouteImport } from './routes/marches-publics'
+import { Route as GlossaireRouteImport } from './routes/glossaire'
 import { Route as FavorisRouteImport } from './routes/favoris'
 import { Route as DevisRouteImport } from './routes/devis'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ConformiteRouteImport } from './routes/conformite'
 import { Route as ComparaisonRouteImport } from './routes/comparaison'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as CatalogueRouteImport } from './routes/catalogue'
@@ -26,6 +30,21 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as BlogTestProduitSlugRouteImport } from './routes/blog.test-produit.$slug'
 
+const ReferencesRoute = ReferencesRouteImport.update({
+  id: '/references',
+  path: '/references',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarchesPublicsRoute = MarchesPublicsRouteImport.update({
+  id: '/marches-publics',
+  path: '/marches-publics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossaireRoute = GlossaireRouteImport.update({
+  id: '/glossaire',
+  path: '/glossaire',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FavorisRoute = FavorisRouteImport.update({
   id: '/favoris',
   path: '/favoris',
@@ -39,6 +58,11 @@ const DevisRoute = DevisRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConformiteRoute = ConformiteRouteImport.update({
+  id: '/conformite',
+  path: '/conformite',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComparaisonRoute = ComparaisonRouteImport.update({
@@ -115,9 +139,13 @@ export interface FileRoutesByFullPath {
   '/catalogue': typeof CatalogueRoute
   '/categories': typeof CategoriesRoute
   '/comparaison': typeof ComparaisonRoute
+  '/conformite': typeof ConformiteRoute
   '/contact': typeof ContactRoute
   '/devis': typeof DevisRoute
   '/favoris': typeof FavorisRoute
+  '/glossaire': typeof GlossaireRoute
+  '/marches-publics': typeof MarchesPublicsRoute
+  '/references': typeof ReferencesRoute
   '/api/chat': typeof ApiChatRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/test-produit': typeof BlogTestProduitRouteWithChildren
@@ -133,9 +161,13 @@ export interface FileRoutesByTo {
   '/catalogue': typeof CatalogueRoute
   '/categories': typeof CategoriesRoute
   '/comparaison': typeof ComparaisonRoute
+  '/conformite': typeof ConformiteRoute
   '/contact': typeof ContactRoute
   '/devis': typeof DevisRoute
   '/favoris': typeof FavorisRoute
+  '/glossaire': typeof GlossaireRoute
+  '/marches-publics': typeof MarchesPublicsRoute
+  '/references': typeof ReferencesRoute
   '/api/chat': typeof ApiChatRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/test-produit': typeof BlogTestProduitRouteWithChildren
@@ -152,9 +184,13 @@ export interface FileRoutesById {
   '/catalogue': typeof CatalogueRoute
   '/categories': typeof CategoriesRoute
   '/comparaison': typeof ComparaisonRoute
+  '/conformite': typeof ConformiteRoute
   '/contact': typeof ContactRoute
   '/devis': typeof DevisRoute
   '/favoris': typeof FavorisRoute
+  '/glossaire': typeof GlossaireRoute
+  '/marches-publics': typeof MarchesPublicsRoute
+  '/references': typeof ReferencesRoute
   '/api/chat': typeof ApiChatRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/test-produit': typeof BlogTestProduitRouteWithChildren
@@ -172,9 +208,13 @@ export interface FileRouteTypes {
     | '/catalogue'
     | '/categories'
     | '/comparaison'
+    | '/conformite'
     | '/contact'
     | '/devis'
     | '/favoris'
+    | '/glossaire'
+    | '/marches-publics'
+    | '/references'
     | '/api/chat'
     | '/blog/$slug'
     | '/blog/test-produit'
@@ -190,9 +230,13 @@ export interface FileRouteTypes {
     | '/catalogue'
     | '/categories'
     | '/comparaison'
+    | '/conformite'
     | '/contact'
     | '/devis'
     | '/favoris'
+    | '/glossaire'
+    | '/marches-publics'
+    | '/references'
     | '/api/chat'
     | '/blog/$slug'
     | '/blog/test-produit'
@@ -208,9 +252,13 @@ export interface FileRouteTypes {
     | '/catalogue'
     | '/categories'
     | '/comparaison'
+    | '/conformite'
     | '/contact'
     | '/devis'
     | '/favoris'
+    | '/glossaire'
+    | '/marches-publics'
+    | '/references'
     | '/api/chat'
     | '/blog/$slug'
     | '/blog/test-produit'
@@ -227,9 +275,13 @@ export interface RootRouteChildren {
   CatalogueRoute: typeof CatalogueRoute
   CategoriesRoute: typeof CategoriesRoute
   ComparaisonRoute: typeof ComparaisonRoute
+  ConformiteRoute: typeof ConformiteRoute
   ContactRoute: typeof ContactRoute
   DevisRoute: typeof DevisRoute
   FavorisRoute: typeof FavorisRoute
+  GlossaireRoute: typeof GlossaireRoute
+  MarchesPublicsRoute: typeof MarchesPublicsRoute
+  ReferencesRoute: typeof ReferencesRoute
   ApiChatRoute: typeof ApiChatRoute
   CategorieSlugRoute: typeof CategorieSlugRoute
   ProduitSlugRoute: typeof ProduitSlugRoute
@@ -237,6 +289,27 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/references': {
+      id: '/references'
+      path: '/references'
+      fullPath: '/references'
+      preLoaderRoute: typeof ReferencesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marches-publics': {
+      id: '/marches-publics'
+      path: '/marches-publics'
+      fullPath: '/marches-publics'
+      preLoaderRoute: typeof MarchesPublicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossaire': {
+      id: '/glossaire'
+      path: '/glossaire'
+      fullPath: '/glossaire'
+      preLoaderRoute: typeof GlossaireRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/favoris': {
       id: '/favoris'
       path: '/favoris'
@@ -256,6 +329,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conformite': {
+      id: '/conformite'
+      path: '/conformite'
+      fullPath: '/conformite'
+      preLoaderRoute: typeof ConformiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/comparaison': {
@@ -384,9 +464,13 @@ const rootRouteChildren: RootRouteChildren = {
   CatalogueRoute: CatalogueRoute,
   CategoriesRoute: CategoriesRoute,
   ComparaisonRoute: ComparaisonRoute,
+  ConformiteRoute: ConformiteRoute,
   ContactRoute: ContactRoute,
   DevisRoute: DevisRoute,
   FavorisRoute: FavorisRoute,
+  GlossaireRoute: GlossaireRoute,
+  MarchesPublicsRoute: MarchesPublicsRoute,
+  ReferencesRoute: ReferencesRoute,
   ApiChatRoute: ApiChatRoute,
   CategorieSlugRoute: CategorieSlugRoute,
   ProduitSlugRoute: ProduitSlugRoute,

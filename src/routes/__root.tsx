@@ -10,6 +10,9 @@ import { BackToTop } from "@/components/BackToTop";
 import { CookieConsent } from "@/components/CookieConsent";
 import { ReassuranceStrip } from "@/components/ReassuranceStrip";
 import { SocialProofTicker } from "@/components/SocialProofTicker";
+import { TopLoadingBar } from "@/components/TopLoadingBar";
+import { KeyboardShortcuts } from "@/components/KeyboardShortcuts";
+import { ExitIntentModal } from "@/components/ExitIntentModal";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider } from "@/lib/i18n";
 import { DEFAULT_OG_IMAGE, SITE_URL, canonical, seoMeta } from "@/lib/seo";
@@ -57,6 +60,7 @@ export const Route = createRootRoute({
       ...canonical("/"),
       { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "apple-touch-icon", href: "/favicon.png" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "stylesheet", href: appCss },
       {
         rel: "stylesheet",
@@ -102,9 +106,16 @@ function RootComponent() {
   const quickView = useQuickView();
   return (
     <I18nProvider>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-primary-foreground focus:shadow-elevated"
+      >
+        Aller au contenu principal
+      </a>
       <div className="min-h-screen flex flex-col">
+        <TopLoadingBar />
         <Navbar />
-        <main className="flex-1 pt-16">
+        <main id="main-content" className="flex-1 pt-16">
           <Outlet />
         </main>
         <ReassuranceStrip />
@@ -114,6 +125,8 @@ function RootComponent() {
         <SocialProofTicker />
         <BackToTop />
         <CookieConsent />
+        <ExitIntentModal />
+        <KeyboardShortcuts />
         <QuickViewModal product={quickView.product} open={quickView.open} onClose={quickView.close} />
         <Toaster position="bottom-right" richColors />
       </div>

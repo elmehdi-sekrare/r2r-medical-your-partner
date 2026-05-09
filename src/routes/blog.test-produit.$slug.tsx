@@ -1,7 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, CheckCircle2, MessageCircle, PlayCircle, Star, XCircle } from "lucide-react";
 import { ProductThumb } from "@/components/ProductThumb";
-import { getProductTest } from "@/data/blog";
+import { getProductTest, type ProductTestArticle } from "@/data/blog";
+
+type TestSection = ProductTestArticle["sections"][number];
 import { getProductBySlug } from "@/data/products";
 
 export const Route = createFileRoute("/blog/test-produit/$slug")({
@@ -124,7 +126,7 @@ function ProductTestArticlePage() {
               <h2 className="font-display text-2xl font-bold">Verdict rapide</h2>
               <p className="mt-4 text-lg leading-8 text-muted-foreground">{test.verdict}</p>
               <div className="mt-6 flex flex-wrap gap-2">
-                {test.testedFor.map((item) => (
+                {test.testedFor.map((item: string) => (
                   <span key={item} className="rounded-full border border-primary/15 bg-primary-soft px-3 py-1.5 text-xs font-bold text-primary">
                     {item}
                   </span>
@@ -139,7 +141,7 @@ function ProductTestArticlePage() {
                   Points forts
                 </h2>
                 <ul className="mt-5 space-y-3">
-                  {test.strengths.map((item) => (
+                  {test.strengths.map((item: string) => (
                     <li key={item} className="flex gap-3 text-sm leading-6 text-muted-foreground">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       {item}
@@ -154,7 +156,7 @@ function ProductTestArticlePage() {
                   À vérifier
                 </h2>
                 <ul className="mt-5 space-y-3">
-                  {test.limits.map((item) => (
+                  {test.limits.map((item: string) => (
                     <li key={item} className="flex gap-3 text-sm leading-6 text-muted-foreground">
                       <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
                       {item}
@@ -164,11 +166,11 @@ function ProductTestArticlePage() {
               </section>
             </div>
 
-            {test.sections.map((section) => (
+            {test.sections.map((section: TestSection) => (
               <section key={section.title} className="rounded-[1.75rem] border border-border bg-card p-6 shadow-soft sm:p-8">
                 <h2 className="font-display text-2xl font-bold">{section.title}</h2>
                 <div className="mt-4 space-y-4">
-                  {section.body.map((paragraph) => (
+                  {section.body.map((paragraph: string) => (
                     <p key={paragraph} className="leading-8 text-muted-foreground">
                       {paragraph}
                     </p>

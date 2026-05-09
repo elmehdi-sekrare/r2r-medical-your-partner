@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { StickyBuyBar } from "@/components/StickyBuyBar";
 import {
   ArrowLeft,
   Check,
@@ -503,6 +504,7 @@ function ProductPage() {
           </button>
         </div>
       </div>
+      <StickyBuyBar product={product} />
     </>
   );
 }

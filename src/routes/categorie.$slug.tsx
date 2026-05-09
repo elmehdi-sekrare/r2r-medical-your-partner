@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, Check, ClipboardList, HelpCircle, MessageCircle, PackageCheck, Search, ShieldCheck, Truck } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
-import { CATEGORIES, getCategory, getProductMeta, getProductsByCategory } from "@/data/products";
+import { CATEGORIES, getCategory, getProductMeta, getProductsByCategory, type Category, type Product } from "@/data/products";
 import { getIcon } from "@/lib/icon-map";
 import { canonical, seoMeta } from "@/lib/seo";
 import { openWhatsApp } from "@/lib/whatsapp";
@@ -46,11 +46,11 @@ export const Route = createFileRoute("/categorie/$slug")({
 function CategorySeoPage() {
   const { category, products, siblingCategories } = Route.useLoaderData();
   const Icon = getIcon(category.icon);
-  const priced = products.filter((product) => product.price).slice(0, 4);
+  const priced = products.filter((product: Product) => product.price).slice(0, 4);
   const popular = products.slice(0, 8);
-  const productTypes = Array.from(new Set(products.map((product) => getProductMeta(product).productType))).slice(0, 6);
-  const useCases = Array.from(new Set(products.map((product) => getProductMeta(product).useCase))).slice(0, 5);
-  const quoteRequired = products.filter((product) => !product.price).length;
+  const productTypes = Array.from(new Set(products.map((product: Product) => getProductMeta(product).productType))).slice(0, 6) as string[];
+  const useCases = Array.from(new Set(products.map((product: Product) => getProductMeta(product).useCase))).slice(0, 5) as string[];
+  const quoteRequired = products.filter((product: Product) => !product.price).length;
   const checklist = [
     "Confirmer le modèle, les dimensions et les accessoires nécessaires",
     "Préciser la quantité souhaitée et la ville de livraison",
@@ -112,7 +112,7 @@ function CategorySeoPage() {
           <div className="mt-5 grid grid-cols-2 gap-3">
             {[
               { label: "Produits", value: products.length, icon: PackageCheck },
-              { label: "Prix affichés", value: products.filter((product) => product.price).length, icon: ClipboardList },
+              { label: "Prix affichés", value: products.filter((product: Product) => product.price).length, icon: ClipboardList },
               { label: "Sur devis", value: quoteRequired, icon: MessageCircle },
               { label: "Livraison", value: "Maroc", icon: Truck },
             ].map((item) => (
@@ -175,7 +175,7 @@ function CategorySeoPage() {
         <section className="mt-12">
           <h2 className="font-display text-2xl font-bold">Produits avec prix affiché</h2>
           <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {priced.map((product, index) => (
+            {priced.map((product: Product, index: number) => (
               <ProductCard key={product.slug} product={product} index={index} />
             ))}
           </div>
@@ -185,7 +185,7 @@ function CategorySeoPage() {
       <section className="mt-12">
         <h2 className="font-display text-2xl font-bold">Produits populaires dans cette catégorie</h2>
         <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {popular.map((product, index) => (
+          {popular.map((product: Product, index: number) => (
             <ProductCard key={product.slug} product={product} index={index} />
           ))}
         </div>
@@ -194,7 +194,7 @@ function CategorySeoPage() {
       <section className="mt-12 rounded-2xl border border-border bg-surface p-6">
         <h2 className="font-display text-2xl font-bold">Autres catégories médicales</h2>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {siblingCategories.map((item) => (
+          {siblingCategories.map((item: Category) => (
             <Link
               key={item.slug}
               to="/categorie/$slug"

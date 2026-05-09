@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Clock, FileText, MapPin, MessageCircle, ShieldCheck, Truck } from "lucide-react";
+import { Clock, FileText, Instagram, MapPin, MessageCircle, ShieldCheck, Truck } from "lucide-react";
 import { Newsletter } from "@/components/Newsletter";
 import { BrandLockup, BrandSeal } from "@/components/Brand";
 import { CATEGORIES } from "@/data/products";
@@ -68,6 +68,11 @@ export function Footer() {
                 { to: "/categories", label: t("navCategories") },
                 { to: "/devis", label: t("quoteRequest") },
                 { to: "/comparaison", label: t("navCompare") },
+                { to: "/blog", label: "Blog" },
+                { to: "/glossaire", label: "Glossaire médical" },
+                { to: "/references", label: "Cas clients" },
+                { to: "/conformite", label: "Conformité & Qualité" },
+                { to: "/marches-publics", label: "Marchés publics" },
                 { to: "/contact", label: t("navContact") },
               ].map((n) => (
                 <li key={n.to}>
@@ -118,6 +123,18 @@ export function Footer() {
             </ul>
             <div className="mt-6">
               <Newsletter />
+            </div>
+            <div className="mt-6 flex items-center gap-2">
+              <a
+                href="https://www.instagram.com/r2r.medical/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram R2R Medical"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-pink-500 via-fuchsia-500 to-orange-400 text-white shadow-soft transition-transform hover:-translate-y-0.5"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
+              <span className="text-xs text-muted-foreground">@r2r.medical</span>
             </div>
           </div>
         </div>
