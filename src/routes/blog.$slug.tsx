@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, ListChecks, MessageCircle, Tag } from "lucide-react";
+import { ReadingProgress } from "@/components/ReadingProgress";
 import { BLOG_ARTICLES, getBlogArticle, type BlogArticle } from "@/data/blog";
 
 type BlogSection = BlogArticle["sections"][number];
@@ -65,6 +66,7 @@ function BlogArticlePage() {
 
   return (
     <article className="relative overflow-hidden">
+      <ReadingProgress targetSelector="article" />
       <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_18%_18%,oklch(0.65_0.18_250_/_0.24),transparent_34%),linear-gradient(180deg,oklch(0.97_0.03_255),transparent)]" />
       <div className="absolute inset-x-0 top-0 -z-10 h-[520px] grid-pattern opacity-50" />
 
