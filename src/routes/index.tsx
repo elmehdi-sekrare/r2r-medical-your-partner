@@ -23,6 +23,7 @@ import { CategoryCard } from "@/components/CategoryCard";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductThumb } from "@/components/ProductThumb";
 import { RecentlyViewedCarousel } from "@/components/RecentlyViewedCarousel";
+import { InstagramSection } from "@/components/InstagramSection";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { Timeline } from "@/components/Timeline";
 import { TrustBadges } from "@/components/TrustBadges";
@@ -710,6 +711,9 @@ function HomePage() {
 
       {/* RECENTLY VIEWED */}
       <RecentlyViewedCarousel />
+
+      {/* INSTAGRAM */}
+      <InstagramSection />
 
       {/* CTA */}
       <section className="py-24 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
