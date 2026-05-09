@@ -1,6 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, ListChecks, MessageCircle, Tag } from "lucide-react";
-import { BLOG_ARTICLES, getBlogArticle } from "@/data/blog";
+import { BLOG_ARTICLES, getBlogArticle, type BlogArticle } from "@/data/blog";
+
+type BlogSection = BlogArticle["sections"][number];
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {
@@ -129,7 +131,7 @@ function BlogArticlePage() {
           <section className="mt-8 rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-8">
             <h2 className="font-display text-2xl font-bold">À retenir</h2>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              {article.keyPoints.map((point) => (
+              {article.keyPoints.map((point: string) => (
                 <div key={point} className="flex gap-3 rounded-2xl bg-surface p-4">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                   <p className="text-sm leading-6 text-muted-foreground">{point}</p>
@@ -139,11 +141,11 @@ function BlogArticlePage() {
           </section>
 
           <div className="mt-8 space-y-8">
-            {article.sections.map((section, index) => (
+            {article.sections.map((section: BlogSection, index: number) => (
               <section id={`section-${index + 1}`} key={section.title} className="scroll-mt-28 rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-8">
                 <h2 className="font-display text-2xl font-bold">{section.title}</h2>
                 <div className="mt-4 space-y-4">
-                  {section.body.map((paragraph) => (
+                  {section.body.map((paragraph: string) => (
                     <p key={paragraph} className="leading-8 text-muted-foreground">
                       {paragraph}
                     </p>
@@ -171,7 +173,7 @@ function BlogArticlePage() {
           <div className="rounded-3xl border border-border bg-card p-6 shadow-soft">
             <p className="text-xs font-semibold uppercase tracking-wider text-primary">Dans cet article</p>
             <div className="mt-4 space-y-3">
-              {article.sections.map((section, index) => (
+              {article.sections.map((section: BlogSection, index: number) => (
                 <a
                   key={section.title}
                   href={`#section-${index + 1}`}
